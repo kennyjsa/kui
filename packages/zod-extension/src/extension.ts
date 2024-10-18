@@ -1,0 +1,203 @@
+import { z } from "zod";
+import type { KuiOptions, RelationOptions, GridOptions, KuiMetadata } from "./types";
+
+/**
+ * Símbolo para armazenar metadados KUI no schema Zod
+ */
+export const KUI_METADATA = Symbol("kui_metadata");
+
+/**
+ * Anexa metadados KUI a um schema Zod
+ */
+function withKuiMetadata<T extends z.ZodTypeAny>(
+  schema: T,
+  metadata: KuiMetadata
+): T {
+  (schema as any)[KUI_METADATA] = metadata;
+  return schema;
+}
+
+/**
+ * Obtém metadados KUI de um schema Zod
+ */
+export function getKuiMetadata(schema: z.ZodTypeAny): KuiMetadata | undefined {
+  return (schema as any)[KUI_METADATA];
+}
+
+/**
+ * Extensões KUI para Zod
+ */
+export const zKUI = {
+  /**
+   * Campo identificador (ID) - sempre readonly e oculto no create
+   */
+  identifier(label: string, options: Partial<KuiOptions> = {}) {
+    return withKuiMetadata(
+      z.string().or(z.number()).optional(),
+      {
+        label,
+        type: "identifier",
+        options: {
+          ...options,
+          readOnly: true,
+          hiddenIn: ["create"],
+        },
+      }
+    );
+  },
+
+  /**
+   * Campo de texto
+   */
+  text(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.string(),
+      {
+        label,
+        type: "text",
+        options,
+      }
+    );
+  },
+
+  /**
+   * Campo numérico
+   */
+  number(label: string, options: KuiOptions = {}) {
+    // Campos derivados são opcionais
+    const schema = options.derived ? z.number().optional() : z.number();
+
+    return withKuiMetadata(
+      schema,
+      {
+        label,
+        type: "number",
+        options,
+      }
+    );
+  },
+
+  /**
+   * Campo de data
+   */
+  date(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.date().or(z.string()),
+      {
+        label,
+        type: "date",
+        options,
+      }
+    );
+  },
+
+  /**
+   * Campo booleano (checkbox/switch)
+   */
+  boolean(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.boolean(),
+      {
+        label,
+        type: "boolean",
+        options,
+      }
+    );
+  },
+
+  /**
+   * Campo de email
+   */
+  email(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.string().email(),
+      {
+        label,
+        type: "email",
+        options,
+      }
+    );
+  },
+
+  /**
+   * Campo de senha
+   */
+  password(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.string(),
+      {
+        label,
+        type: "password",
+        options,
+      }
+    );
+  },
+
+  /**
+   * Campo de seleção (select)
+   */
+  select(label: string, values: string[], options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.enum(values as [string, ...string[]]),
+      {
+        label,
+        type: "select",
+        options,
+      }
+    );
+  },
+
+  /**
+   * Campo de data do sistema - automático e readonly
+   */
+  systemDate(label: string, options: Partial<KuiOptions> = {}) {
+    return withKuiMetadata(
+      z.date().or(z.string()),
+      {
+        label,
+        type: "systemDate",
+        options: {
+          ...options,
+          readOnly: true,
+          derived: true,
+        },
+      }
+    );
+  },
+
+  /**
+   * Campo de relação/associação
+   */
+  relation(label: string, relationOptions: RelationOptions) {
+    return withKuiMetadata(
+      relationOptions.multiple ? z.array(z.any()) : z.any(),
+      {
+        label,
+        type: "relation",
+        options: relationOptions,
+      }
+    );
+  },
+
+  /**
+   * Campo de grid (sublista 1..N)
+   */
+  grid(label: string, gridOptions: GridOptions) {
+    return withKuiMetadata(
+      z.array(gridOptions.itemSchema),
+      {
+        label,
+        type: "grid",
+        options: gridOptions,
+      }
+    );
+  },
+
+  /**
+   * Cria um objeto com metadados KUI
+   */
+  object<T extends z.ZodRawShape>(shape: T) {
+    return z.object(shape);
+  },
+};
+
