@@ -42,12 +42,18 @@ export type KuiOptions = {
     md?: number;
     lg?: number;
   };
-  
+
   /** Número de linhas para textarea */
   rows?: number;
-  
+
   /** Comprimento máximo do texto */
   maxLength?: number;
+  
+  /** Código da moeda (ISO 4217) para campos currency */
+  currency?: string;
+  
+  /** Locale para formatação (ex: pt-BR, en-US) */
+  locale?: string;
 };
 
 /**

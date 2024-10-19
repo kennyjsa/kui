@@ -39,6 +39,10 @@ export const pessoaSchema = zKUI.object({
     rows: 3,
     maxLength: 500,
   }),
+  salario: zKUI.currency("Salário Mensal", {
+    currency: "BRL",
+    locale: "pt-BR",
+  }),
 });
 
 export type Pessoa = typeof pessoaSchema._type;

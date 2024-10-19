@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Input, Label, MaskedInput, Textarea } from "@kui/ui";
+import { Input, Label, MaskedInput, Textarea, CurrencyInput } from "@kui/ui";
 import type { FieldRendererProps } from "../types";
 import { isFieldReadOnly, shouldShowField } from "../utils/shouldShowField";
 
@@ -44,7 +44,7 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
                   />
                 );
               }
-              
+
               return (
                 <Input
                   {...field}
@@ -104,6 +104,19 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
                   disabled={isReadOnly}
                   aria-invalid={!!error}
                   onChange={(e) => field.onChange(Number(e.target.value))}
+                />
+              );
+
+            case "currency":
+              return (
+                <CurrencyInput
+                  id={config.name}
+                  value={field.value}
+                  onChange={field.onChange}
+                  currency={config.options.currency}
+                  locale={config.options.locale}
+                  disabled={isReadOnly}
+                  aria-invalid={!!error}
                 />
               );
 

@@ -80,13 +80,31 @@ export const zKUI = {
   number(label: string, options: KuiOptions = {}) {
     // Campos derivados são opcionais
     const schema = options.derived ? z.number().optional() : z.number();
-
+    
     return withKuiMetadata(
       schema,
       {
         label,
         type: "number",
         options,
+      }
+    );
+  },
+
+  /**
+   * Campo de valor monetário
+   */
+  currency(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.number(),
+      {
+        label,
+        type: "currency",
+        options: {
+          currency: "BRL",
+          locale: "pt-BR",
+          ...options,
+        },
       }
     );
   },
