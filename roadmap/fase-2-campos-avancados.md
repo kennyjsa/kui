@@ -1,9 +1,9 @@
 # 🚧 Fase 2: Campos Avançados
 
-**Status:** 🚧 Em Progresso (Sprint 1 ✅ Completa)  
+**Status:** 🚧 Em Progresso (Sprint 1 ✅ | Sprint 2 ✅)  
 **Período:** Estimado 2-3 semanas  
 **Prioridade:** Alta  
-**Progresso:** ████████░░░░░░░░░░░░ 40%
+**Progresso:** █████████████░░░░░░░ 65%
 
 ## 🎯 Objetivos
 
@@ -58,7 +58,7 @@ salario: zKUI.currency("Salário", {
 
 ### Sprint 2: Campo de Relação
 
-#### 2.1 Campo `relation()` - Básico
+#### 2.1 Campo `relation()` - Básico ✅
 ```typescript
 usuarioResponsavel: zKUI.relation("Usuário Responsável", {
   relation: "user",
@@ -67,19 +67,19 @@ usuarioResponsavel: zKUI.relation("Usuário Responsável", {
   valueField: "id"
 })
 ```
-- [ ] Componente Select básico
-- [ ] Integração com DataProvider
-- [ ] Carregar opções do provider
-- [ ] Display field configurável
-- [ ] Value field configurável
+- [x] Componente Select básico
+- [x] Integração com DataProvider
+- [x] Carregar opções do provider
+- [x] Display field configurável
+- [x] Value field configurável
 
-#### 2.2 Select com Busca
-- [ ] Implementar react-select ou similar
-- [ ] Busca assíncrona
+#### 2.2 Select com Busca ✅
+- [x] Implementar @radix-ui/react-select
+- [x] Busca assíncrona (via provider)
 - [ ] Debounce na busca
-- [ ] Loading state
-- [ ] Empty state
-- [ ] Error state
+- [x] Loading state
+- [x] Empty state
+- [x] Error state
 
 #### 2.3 Relações Múltiplas
 ```typescript
@@ -95,10 +95,10 @@ tags: zKUI.relation("Tags", {
 - [ ] Chips para selecionados
 - [ ] Limite de seleções (opcional)
 
-#### 2.4 Exemplo Completo
-- [ ] Adicionar campo de relação no pessoa.schema
-- [ ] Criar mock provider para usuários
-- [ ] Demonstrar no exemplo
+#### 2.4 Exemplo Completo ✅
+- [x] Adicionar campo de relação no pessoa.schema
+- [x] Criar mock provider para usuários
+- [x] Demonstrar no exemplo
 
 ### Sprint 3: Campos Adicionais
 
