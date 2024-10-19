@@ -8,6 +8,9 @@ export type { ButtonProps } from "./components/Button";
 export { Input } from "./components/Input";
 export type { InputProps } from "./components/Input";
 
+export { MaskedInput } from "./components/MaskedInput";
+export type { MaskedInputProps } from "./components/MaskedInput";
+
 export { Label } from "./components/Label";
 
 export {

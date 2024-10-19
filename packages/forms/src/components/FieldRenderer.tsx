@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Input, Label } from "@kui/ui";
+import { Input, Label, MaskedInput } from "@kui/ui";
 import type { FieldRendererProps } from "../types";
 import { isFieldReadOnly, shouldShowField } from "../utils/shouldShowField";
 
@@ -30,6 +30,21 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
           switch (config.type) {
             case "text":
             case "email":
+              // Se tem máscara, usa MaskedInput
+              if (config.options.mask) {
+                return (
+                  <MaskedInput
+                    id={config.name}
+                    mask={config.options.mask}
+                    value={field.value || ""}
+                    onChange={field.onChange}
+                    placeholder={config.options.placeholder}
+                    disabled={isReadOnly}
+                    aria-invalid={!!error}
+                  />
+                );
+              }
+              
               return (
                 <Input
                   {...field}
