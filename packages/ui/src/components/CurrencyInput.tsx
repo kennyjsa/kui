@@ -32,10 +32,10 @@ const CurrencyInput = React.forwardRef<HTMLInputElement, CurrencyInputProps>(
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const input = e.target.value;
-      
+
       // Remove tudo exceto dígitos
       const numbersOnly = input.replace(/\D/g, "");
-      
+
       if (numbersOnly === "") {
         setDisplayValue("");
         onChange?.(null);
@@ -44,10 +44,10 @@ const CurrencyInput = React.forwardRef<HTMLInputElement, CurrencyInputProps>(
 
       // Converte para número (centavos para reais)
       const numericValue = parseInt(numbersOnly, 10) / 100;
-      
+
       // Formata para exibição
       setDisplayValue(formatCurrency(numericValue));
-      
+
       // Chama onChange com o valor numérico
       onChange?.(numericValue);
     };

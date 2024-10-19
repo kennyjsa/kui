@@ -30,6 +30,12 @@ export {
 
 export { Label } from "./components/Label";
 
+export { Checkbox } from "./components/Checkbox";
+
+export { RadioGroup, RadioGroupItem } from "./components/RadioGroup";
+
+export { Switch } from "./components/Switch";
+
 export {
   Card,
   CardHeader,

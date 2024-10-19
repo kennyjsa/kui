@@ -80,7 +80,7 @@ export const zKUI = {
   number(label: string, options: KuiOptions = {}) {
     // Campos derivados são opcionais
     const schema = options.derived ? z.number().optional() : z.number();
-    
+
     return withKuiMetadata(
       schema,
       {
@@ -132,6 +132,51 @@ export const zKUI = {
       {
         label,
         type: "boolean",
+        options,
+      }
+    );
+  },
+
+  /**
+   * Campo checkbox
+   */
+  checkbox(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.boolean().default(false),
+      {
+        label,
+        type: "checkbox",
+        options,
+      }
+    );
+  },
+
+  /**
+   * Campo radio group
+   */
+  radio(label: string, radioOptions: Array<{ label: string; value: string }>, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.string(),
+      {
+        label,
+        type: "radio",
+        options: {
+          ...options,
+          options: radioOptions,
+        },
+      }
+    );
+  },
+
+  /**
+   * Campo switch (toggle)
+   */
+  switch(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.boolean().default(false),
+      {
+        label,
+        type: "switch",
         options,
       }
     );

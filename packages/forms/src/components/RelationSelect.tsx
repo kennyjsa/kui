@@ -99,7 +99,7 @@ export function RelationSelect({
     const selectedItem = items.find(
       (item) => String(item[options.valueField]) === selectedValue
     );
-    
+
     // Retorna apenas o valor ou o item completo (dependendo do comportamento desejado)
     onChange(selectedItem ? selectedItem[options.valueField] : null);
   };

@@ -50,6 +50,16 @@ export const pessoaSchema = zKUI.object({
     valueField: "id",
     placeholder: "Selecione o usuário responsável",
   }),
+  aceitaTermos: zKUI.checkbox("Aceito os termos de uso", {
+    required: true,
+  }),
+  estadoCivil: zKUI.radio("Estado Civil", [
+    { label: "Solteiro(a)", value: "solteiro" },
+    { label: "Casado(a)", value: "casado" },
+    { label: "Divorciado(a)", value: "divorciado" },
+    { label: "Viúvo(a)", value: "viuvo" },
+  ]),
+  ativo: zKUI.switch("Cadastro Ativo"),
 });
 
 export type Pessoa = typeof pessoaSchema._type;

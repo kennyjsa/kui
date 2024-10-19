@@ -48,12 +48,15 @@ export type KuiOptions = {
 
   /** Comprimento máximo do texto */
   maxLength?: number;
-  
+
   /** Código da moeda (ISO 4217) para campos currency */
   currency?: string;
-  
+
   /** Locale para formatação (ex: pt-BR, en-US) */
   locale?: string;
+  
+  /** Opções para select, radio, etc */
+  options?: Array<{ label: string; value: string | number }>;
 };
 
 /**

@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Input, Label, MaskedInput, Textarea, CurrencyInput } from "@kui/ui";
+import { Input, Label, MaskedInput, Textarea, CurrencyInput, Checkbox, RadioGroup, RadioGroupItem, Switch } from "@kui/ui";
 import type { RelationOptions } from "@kui/zod-extension";
 import type { FieldRendererProps } from "../types";
 import { isFieldReadOnly, shouldShowField } from "../utils/shouldShowField";
@@ -149,6 +149,53 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
                   onChange={(e) => field.onChange(e.target.checked)}
                   className="h-4 w-4 rounded border-input"
                 />
+              );
+
+            case "checkbox":
+              return (
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id={config.name}
+                    checked={field.value || false}
+                    onCheckedChange={field.onChange}
+                    disabled={isReadOnly}
+                  />
+                  <label
+                    htmlFor={config.name}
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    {config.label}
+                  </label>
+                </div>
+              );
+
+            case "radio":
+              return (
+                <RadioGroup
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  disabled={isReadOnly}
+                >
+                  {config.options.options?.map((option: any) => (
+                    <div key={option.value} className="flex items-center space-x-2">
+                      <RadioGroupItem value={option.value} id={`${config.name}-${option.value}`} />
+                      <Label htmlFor={`${config.name}-${option.value}`}>{option.label}</Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              );
+
+            case "switch":
+              return (
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id={config.name}
+                    checked={field.value || false}
+                    onCheckedChange={field.onChange}
+                    disabled={isReadOnly}
+                  />
+                  <Label htmlFor={config.name}>{config.label}</Label>
+                </div>
               );
 
             case "identifier":
