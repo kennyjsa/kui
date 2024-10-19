@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Input, Label, MaskedInput, Textarea, CurrencyInput, Checkbox, RadioGroup, RadioGroupItem, Switch } from "@kui/ui";
+import { Input, Label, MaskedInput, Textarea, CurrencyInput, Checkbox, RadioGroup, RadioGroupItem, Switch, Rating } from "@kui/ui";
 import type { RelationOptions } from "@kui/zod-extension";
 import type { FieldRendererProps } from "../types";
 import { isFieldReadOnly, shouldShowField } from "../utils/shouldShowField";
@@ -196,6 +196,17 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
                   />
                   <Label htmlFor={config.name}>{config.label}</Label>
                 </div>
+              );
+
+            case "rating":
+              return (
+                <Rating
+                  id={config.name}
+                  value={field.value || 0}
+                  onChange={field.onChange}
+                  max={config.options.max || 5}
+                  disabled={isReadOnly}
+                />
               );
 
             case "identifier":

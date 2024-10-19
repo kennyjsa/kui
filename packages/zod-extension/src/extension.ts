@@ -225,6 +225,23 @@ export const zKUI = {
   },
 
   /**
+   * Campo de avaliação por estrelas
+   */
+  rating(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.number().min(0).max(options.max || 5),
+      {
+        label,
+        type: "rating",
+        options: {
+          max: 5,
+          ...options,
+        },
+      }
+    );
+  },
+
+  /**
    * Campo de data do sistema - automático e readonly
    */
   systemDate(label: string, options: Partial<KuiOptions> = {}) {

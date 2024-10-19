@@ -57,6 +57,12 @@ export type KuiOptions = {
   
   /** Opções para select, radio, etc */
   options?: Array<{ label: string; value: string | number }>;
+  
+  /** Número máximo para rating */
+  max?: number;
+  
+  /** Permite meia estrela no rating */
+  allowHalf?: boolean;
 };
 
 /**

@@ -60,6 +60,10 @@ export const pessoaSchema = zKUI.object({
     { label: "Viúvo(a)", value: "viuvo" },
   ]),
   ativo: zKUI.switch("Cadastro Ativo"),
+  avaliacaoAtendimento: zKUI.rating("Avaliação do Atendimento", {
+    max: 5,
+    helperText: "Como você avalia nosso atendimento?",
+  }),
 });
 
 export type Pessoa = typeof pessoaSchema._type;
