@@ -1,6 +1,7 @@
 // Components
 export { FormBuilder } from "./components/FormBuilder";
 export { FieldRenderer } from "./components/FieldRenderer";
+export { RelationSelect } from "./components/RelationSelect";
 
 // Hooks
 export { useKuiForm } from "./hooks/useKuiForm";

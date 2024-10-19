@@ -17,6 +17,17 @@ export type { TextareaProps } from "./components/Textarea";
 export { CurrencyInput } from "./components/CurrencyInput";
 export type { CurrencyInputProps } from "./components/CurrencyInput";
 
+export {
+  Select,
+  SelectGroup,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+} from "./components/Select";
+
 export { Label } from "./components/Label";
 
 export {

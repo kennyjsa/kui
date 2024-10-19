@@ -1,7 +1,9 @@
 import { Controller } from "react-hook-form";
 import { Input, Label, MaskedInput, Textarea, CurrencyInput } from "@kui/ui";
+import type { RelationOptions } from "@kui/zod-extension";
 import type { FieldRendererProps } from "../types";
 import { isFieldReadOnly, shouldShowField } from "../utils/shouldShowField";
+import { RelationSelect } from "./RelationSelect";
 
 /**
  * Renderiza um campo baseado na configuração
@@ -157,6 +159,18 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
                   id={config.name}
                   disabled
                   value={field.value || ""}
+                />
+              );
+
+            case "relation":
+              return (
+                <RelationSelect
+                  id={config.name}
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={config.options as RelationOptions}
+                  disabled={isReadOnly}
+                  placeholder={config.options.placeholder}
                 />
               );
 

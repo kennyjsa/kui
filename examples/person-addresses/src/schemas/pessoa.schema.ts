@@ -43,6 +43,13 @@ export const pessoaSchema = zKUI.object({
     currency: "BRL",
     locale: "pt-BR",
   }),
+  usuarioResponsavel: zKUI.relation("Usuário Responsável", {
+    relation: "user",
+    provider: "userProvider",
+    displayField: "nome",
+    valueField: "id",
+    placeholder: "Selecione o usuário responsável",
+  }),
 });
 
 export type Pessoa = typeof pessoaSchema._type;
