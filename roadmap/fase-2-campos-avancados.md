@@ -1,8 +1,9 @@
 # 🚧 Fase 2: Campos Avançados
 
-**Status:** Em Planejamento  
+**Status:** 🚧 Em Progresso (Sprint 1 ✅ Completa)  
 **Período:** Estimado 2-3 semanas  
-**Prioridade:** Alta
+**Prioridade:** Alta  
+**Progresso:** ████████░░░░░░░░░░░░ 40%
 
 ## 🎯 Objetivos
 
@@ -12,47 +13,48 @@ Expandir os tipos de campos disponíveis e implementar funcionalidades essenciai
 
 ### Sprint 1: Máscaras e Campos Básicos
 
-#### 1.1 Máscaras de Input Funcionais
-- [ ] Integrar `react-input-mask` ou `imask`
-- [ ] Aplicar máscaras declarativas do schema
-- [ ] Máscaras disponíveis:
-  - [ ] CPF: `999.999.999-99`
-  - [ ] CNPJ: `99.999.999/9999-99`
-  - [ ] Telefone: `(99) 99999-9999`
-  - [ ] CEP: `99999-999`
-  - [ ] Data: `99/99/9999`
-  - [ ] Hora: `99:99`
-- [ ] Validação integrada com máscara
-- [ ] Exemplo no person-addresses
+#### 1.1 Máscaras de Input Funcionais ✅
+- [x] Integrar `react-input-mask` ou `imask`
+- [x] Aplicar máscaras declarativas do schema
+- [x] Máscaras disponíveis:
+  - [x] CPF: `999.999.999-99`
+  - [x] CNPJ: `99.999.999/9999-99`
+  - [x] Telefone: `(99) 99999-9999`
+  - [x] CEP: `99999-999`
+  - [x] Data: `99/99/9999`
+  - [x] Hora: `99:99`
+- [x] Validação integrada com máscara
+- [x] Exemplo no person-addresses
 
 **Critérios de Aceitação:**
 - Máscaras aplicadas automaticamente ao digitar
 - Valor sem máscara enviado ao submit
 - Validação respeitando formato da máscara
 
-#### 1.2 Campo `textarea()`
+#### 1.2 Campo `textarea()` ✅
 ```typescript
 descricao: zKUI.textarea("Descrição", {
   rows: 4,
   maxLength: 500
 })
 ```
-- [ ] Implementar componente Textarea
-- [ ] Suporte a rows configurável
+- [x] Implementar componente Textarea
+- [x] Suporte a rows configurável
+- [x] Suporte a maxLength
 - [ ] Contador de caracteres (opcional)
 - [ ] Auto-resize (opcional)
 
-#### 1.3 Campo `currency()`
+#### 1.3 Campo `currency()` ✅
 ```typescript
 salario: zKUI.currency("Salário", {
   currency: "BRL",
   locale: "pt-BR"
 })
 ```
-- [ ] Formatação monetária
-- [ ] Suporte a múltiplas moedas
-- [ ] Integração com Intl.NumberFormat
-- [ ] Validação de valores
+- [x] Formatação monetária
+- [x] Suporte a múltiplas moedas
+- [x] Integração com Intl.NumberFormat
+- [x] Valor armazenado como número
 
 ### Sprint 2: Campo de Relação
 
