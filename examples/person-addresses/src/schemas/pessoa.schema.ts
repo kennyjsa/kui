@@ -34,6 +34,11 @@ export const pessoaSchema = zKUI.object({
   telefone: zKUI.text("Telefone", {
     mask: "(99) 99999-9999",
   }),
+  observacoes: zKUI.textarea("Observações", {
+    placeholder: "Informações adicionais sobre a pessoa",
+    rows: 3,
+    maxLength: 500,
+  }),
 });
 
 export type Pessoa = typeof pessoaSchema._type;

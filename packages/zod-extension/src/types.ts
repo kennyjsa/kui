@@ -42,6 +42,12 @@ export type KuiOptions = {
     md?: number;
     lg?: number;
   };
+  
+  /** Número de linhas para textarea */
+  rows?: number;
+  
+  /** Comprimento máximo do texto */
+  maxLength?: number;
 };
 
 /**

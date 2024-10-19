@@ -61,6 +61,20 @@ export const zKUI = {
   },
 
   /**
+   * Campo de texto longo (textarea)
+   */
+  textarea(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.string(),
+      {
+        label,
+        type: "textarea",
+        options,
+      }
+    );
+  },
+
+  /**
    * Campo numérico
    */
   number(label: string, options: KuiOptions = {}) {

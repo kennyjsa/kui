@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Input, Label, MaskedInput } from "@kui/ui";
+import { Input, Label, MaskedInput, Textarea } from "@kui/ui";
 import type { FieldRendererProps } from "../types";
 import { isFieldReadOnly, shouldShowField } from "../utils/shouldShowField";
 
@@ -65,6 +65,19 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
                   placeholder={config.options.placeholder}
                   disabled={isReadOnly}
                   aria-invalid={!!error}
+                />
+              );
+
+            case "textarea":
+              return (
+                <Textarea
+                  {...field}
+                  id={config.name}
+                  placeholder={config.options.placeholder}
+                  disabled={isReadOnly}
+                  aria-invalid={!!error}
+                  rows={config.options.rows || 4}
+                  maxLength={config.options.maxLength}
                 />
               );
 
