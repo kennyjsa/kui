@@ -63,16 +63,16 @@ export type KuiOptions = {
 
   /** Permite meia estrela no rating */
   allowHalf?: boolean;
-  
+
   /** Accept types para file input (ex: "image/*") */
   accept?: string;
-  
+
   /** Tamanho máximo do arquivo em bytes */
   maxSize?: number;
-  
+
   /** Permite múltiplos arquivos */
   multiple?: boolean;
-  
+
   /** Exibe preview de imagens */
   preview?: boolean;
 };
