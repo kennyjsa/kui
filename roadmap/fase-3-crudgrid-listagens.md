@@ -1,8 +1,9 @@
 # 📅 Fase 3: CrudGrid e Listagens
 
-**Status:** Planejada  
-**Período:** Estimado 3-4 semanas  
-**Prioridade:** Alta
+**Status:** 🚧 Em Progresso (Sprint 1 ✅ Completa, Sprint 2 ✅ Completa)  
+**Período:** 1 dia (19/10/2024)  
+**Prioridade:** Alta  
+**Progresso:** ████████████░░░░░░░░ 60%
 
 ## 🎯 Objetivos
 
@@ -30,7 +31,7 @@ GridItemModal  → Modal para CRUD de item
 
 ### Sprint 1: Campo Grid Básico
 
-#### 1.1 Campo `grid()` - Estrutura
+#### 1.1 Campo `grid()` - Estrutura ✅
 ```typescript
 enderecos: zKUI.grid("Endereços", {
   itemSchema: enderecoSchema,
@@ -40,31 +41,31 @@ enderecos: zKUI.grid("Endereços", {
   allowDelete: true
 })
 ```
-- [ ] Tipo e interface Grid
-- [ ] Metadados para campo grid
-- [ ] Validação de itemSchema
-- [ ] Integração com FormBuilder
+- [x] Tipo e interface GridOptions
+- [x] Metadados para campo grid
+- [x] Validação de itemSchema (minItems, maxItems)
+- [x] Integração com FormBuilder via FieldRenderer
 
-#### 1.2 GridField Component (Tabela Desktop)
-- [ ] Tabela HTML simples e performática
-- [ ] Header com nomes das colunas (extraídos do schema)
-- [ ] Linhas com dados formatados
-- [ ] Botões de ação por linha (editar, excluir)
-- [ ] Botão "Adicionar" no footer
-- [ ] Indicadores visuais de status (badges: novo, editado, excluído)
-- [ ] Empty state quando vazio
+#### 1.2 GridField Component (Tabela Desktop) ✅
+- [x] Tabela HTML simples e performática
+- [x] Header com nomes das colunas (extraídos do schema)
+- [x] Linhas com dados formatados
+- [x] Botões de ação por linha (editar, excluir, restaurar)
+- [x] Botão "Adicionar" no footer
+- [x] Indicadores visuais de status (badges: novo, editado, excluído)
+- [x] Empty state quando vazio
 - [ ] Busca simples (input texto filtra localmente)
 - [ ] Ordenação por coluna (click no header)
 
-#### 1.3 GridItemModal Component
-- [ ] Modal para CRUD de item
-- [ ] Modos: create, edit, view
-- [ ] FormBuilder reutilizado com itemSchema
-- [ ] Botões: Salvar, Cancelar
-- [ ] Salvar NÃO persiste backend (só atualiza array local)
-- [ ] Validação com Zod antes de salvar
+#### 1.3 GridItemModal Component ✅
+- [x] Modal para CRUD de item com Dialog (Radix UI)
+- [x] Modos: create, edit, view
+- [x] FormBuilder reutilizado com itemSchema
+- [x] Botões: Salvar, Cancelar
+- [x] Salvar NÃO persiste backend (só atualiza array local)
+- [x] Validação com Zod antes de salvar
 
-#### 1.4 Controle de Estado Local
+#### 1.4 Controle de Estado Local ✅
 ```typescript
 type GridItem<T> = {
   data: T;
@@ -72,16 +73,16 @@ type GridItem<T> = {
   _tempId?: string; // Para itens novos sem ID do backend
 };
 ```
-- [ ] Array de itens no formulário (react-hook-form)
-- [ ] Tracking de mudanças por item
-- [ ] Soft delete (marca como deleted, não remove do array)
-- [ ] Hard delete para itens 'new' (remove do array)
-- [ ] Validação do array completo (minItems, maxItems)
-- [ ] Submit retorna array completo com tracking
+- [x] Array de itens no formulário (react-hook-form)
+- [x] Tracking de mudanças por item
+- [x] Soft delete (marca como deleted, não remove do array)
+- [x] Hard delete para itens 'new' (remove do array)
+- [x] Validação do array completo (minItems, maxItems) via Zod
+- [x] Submit retorna array completo (sem tracking, apenas dados)
 
 ### Sprint 2: ListField Component (Cards Mobile)
 
-#### 2.1 ListField - Estrutura Base
+#### 2.1 ListField - Estrutura Base ✅
 ```typescript
 <ListField
   items={enderecos}
@@ -93,15 +94,15 @@ type GridItem<T> = {
   allowDelete={true}
 />
 ```
-- [ ] Cards empilhados verticalmente
-- [ ] Extração automática de campos do schema
-- [ ] Título + campos principais no card
-- [ ] Botões de ação no card (editar, excluir)
-- [ ] Mesma lógica de estado do GridField
-- [ ] Compartilha GridItemModal
-- [ ] Empty state
+- [x] Cards empilhados verticalmente
+- [x] Extração automática de campos do schema
+- [x] Título + campos principais no card
+- [x] Botões de ação no card (editar, excluir, restaurar)
+- [x] Mesma lógica de estado do GridField
+- [x] Compartilha GridItemModal
+- [x] Empty state
 
-#### 2.2 ResponsiveGrid Component
+#### 2.2 ResponsiveGrid Component ✅
 ```typescript
 <ResponsiveGrid
   value={field.value}
@@ -111,11 +112,11 @@ type GridItem<T> = {
   breakpoint="md" // < md = list, >= md = grid
 />
 ```
-- [ ] Hook useMediaQuery para detectar viewport
-- [ ] Auto-switch Grid ↔ List
-- [ ] Mesmo estado compartilhado
-- [ ] Transition suave entre modos
-- [ ] Breakpoint configurável (xs, sm, md, lg)
+- [x] Hook useMediaQuery para detectar viewport
+- [x] Auto-switch Grid ↔ List
+- [x] Mesmo estado compartilhado
+- [x] Renderização condicional baseada em breakpoint
+- [x] Breakpoint configurável (xs, sm, md, lg, xl)
 
 ### Sprint 3: Features Locais
 
