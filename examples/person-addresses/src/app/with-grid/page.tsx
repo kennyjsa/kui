@@ -9,10 +9,10 @@ export default function WithGridPage() {
   const handleSubmit = async (data: any) => {
     console.log("=== DADOS COMPLETOS DO FORMULÁRIO ===");
     console.log(JSON.stringify(data, null, 2));
-    
+
     console.log("\n=== ARRAY DE ENDEREÇOS ===");
     console.log(JSON.stringify(data.enderecos, null, 2));
-    
+
     alert("✅ Formulário com Grid enviado! Veja o console para os dados completos.");
   };
 
@@ -65,7 +65,7 @@ export default function WithGridPage() {
           <div className="bg-white rounded-lg p-6 border shadow-sm">
             <h2 className="text-xl font-semibold mb-2">🏘️ Campo Grid - Relação 1:N</h2>
             <p className="text-muted-foreground text-sm">
-              Esta página demonstra o campo <code className="bg-muted px-2 py-1 rounded">grid()</code> 
+              Esta página demonstra o campo <code className="bg-muted px-2 py-1 rounded">grid()</code>
               {" "}para gerenciar sublistas (Pessoa → Endereços).
             </p>
             <ul className="mt-3 text-sm text-muted-foreground space-y-1 list-disc list-inside">

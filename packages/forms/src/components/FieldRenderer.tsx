@@ -18,10 +18,10 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
   const isReadOnly = isFieldReadOnly(config, mode);
   const error = errors[config.name];
 
-  // Grid ocupa coluna completa, sem label padrão
+  // Grid ocupa coluna completa
   if (config.type === "grid") {
     return (
-      <div className="col-span-full space-y-2">
+      <div className="md:col-span-2 space-y-2">
         <Label>
           {config.label}
           {config.options.required && <span className="text-destructive ml-1">*</span>}
