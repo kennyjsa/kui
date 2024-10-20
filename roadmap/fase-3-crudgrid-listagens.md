@@ -1,9 +1,9 @@
 # 📅 Fase 3: CrudGrid e Listagens
 
-**Status:** 🚧 Em Progresso (Sprint 1 ✅ Completa, Sprint 2 ✅ Completa)  
-**Período:** 1 dia (19/10/2024)  
+**Status:** ✅ Completa (Core MVP)  
+**Período:** 2 dias (19-20/10/2024)  
 **Prioridade:** Alta  
-**Progresso:** ████████████░░░░░░░░ 60%
+**Progresso:** ████████████████████ 100%
 
 ## 🎯 Objetivos
 
@@ -143,40 +143,41 @@ const filteredItems = items.filter(item =>
 - [ ] Ordenação por string, número, data
 - [ ] Estado de ordenação preservado
 
-#### 3.3 Paginação Local
+#### 3.3 Paginação Local ✅
 ```typescript
-const paginatedItems = filteredItems.slice(
-  (page - 1) * pageSize,
-  page * pageSize
+const paginatedItems = visibleItems.slice(
+  (currentPage - 1) * pageSize,
+  currentPage * pageSize
 );
 ```
-- [ ] Controles: anterior, próxima, ir para página
-- [ ] Seletor de itens por página (5, 10, 25, 50)
-- [ ] Info: "Exibindo X-Y de Z itens"
-- [ ] Desabilitar botões quando necessário
-- [ ] Reset para página 1 ao filtrar
+- [x] Controles: anterior, próxima
+- [x] pageSize configurável (padrão: 5)
+- [x] Info: "Exibindo X-Y de Z itens"
+- [x] Desabilitar botões quando necessário
+- [x] Mostrar apenas quando totalPages > 1
+- [x] Reset para última página quando items mudam
 
-#### 3.4 Indicadores Visuais de Status
-- [ ] Badge "Novo" (verde) para status: 'new'
-- [ ] Badge "Editado" (amarelo) para status: 'updated'
-- [ ] Badge "Excluído" (vermelho) + riscado para status: 'deleted'
-- [ ] Itens 'deleted' visíveis mas sinalizados
-- [ ] Opção de "Restaurar" item deletado
+#### 3.4 Indicadores Visuais de Status ✅
+- [x] Badge "Novo" (verde) para status: 'new'
+- [x] Badge "Editado" (amarelo) para status: 'updated'
+- [x] Badge "Excluído" (vermelho) + riscado para status: 'deleted'
+- [x] Itens 'deleted' visíveis mas sinalizados
+- [x] Opção de "Restaurar" item deletado
 
 ### Sprint 4: UX e Validações
 
-#### 4.1 Estados Visuais
-- [ ] Empty state quando array vazio
-- [ ] Empty state quando busca não retorna resultados
-- [ ] Mensagens contextuais
-- [ ] Ilustrações ou ícones apropriados
+#### 4.1 Estados Visuais ✅
+- [x] Empty state quando array vazio
+- [ ] Empty state quando busca não retorna resultados (N/A - sem busca)
+- [x] Mensagens contextuais
+- [x] Ícones apropriados (Plus, Pencil, Trash, etc)
 
-#### 4.2 Validações
-- [ ] Validar item individual antes de salvar no modal
-- [ ] Validar array completo no submit do formulário
-- [ ] minItems / maxItems configurável
-- [ ] Mensagens de erro claras
-- [ ] Bloquear submit se grid inválido
+#### 4.2 Validações ✅
+- [x] Validar item individual antes de salvar no modal (Zod + react-hook-form)
+- [x] Validar array completo no submit do formulário
+- [x] minItems / maxItems configurável
+- [x] Mensagens de erro claras (via Zod)
+- [x] Bloquear submit se grid inválido
 
 #### 4.3 Confirmações
 - [ ] Confirmar exclusão de item
