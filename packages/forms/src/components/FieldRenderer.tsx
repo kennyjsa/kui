@@ -1,9 +1,10 @@
 import { Controller } from "react-hook-form";
 import { Input, Label, MaskedInput, Textarea, CurrencyInput, Checkbox, RadioGroup, RadioGroupItem, Switch, Rating, ColorPicker, FileUpload } from "@kui/ui";
-import type { RelationOptions } from "@kui/zod-extension";
+import type { RelationOptions, GridOptions } from "@kui/zod-extension";
 import type { FieldRendererProps } from "../types";
 import { isFieldReadOnly, shouldShowField } from "../utils/shouldShowField";
 import { RelationSelect } from "./RelationSelect";
+import { ResponsiveGrid } from "./ResponsiveGrid";
 
 /**
  * Renderiza um campo baseado na configuração
@@ -16,6 +17,39 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
 
   const isReadOnly = isFieldReadOnly(config, mode);
   const error = errors[config.name];
+
+  // Grid ocupa coluna completa, sem label padrão
+  if (config.type === "grid") {
+    return (
+      <div className="col-span-full space-y-2">
+        <Label>
+          {config.label}
+          {config.options.required && <span className="text-destructive ml-1">*</span>}
+        </Label>
+
+        <Controller
+          name={config.name}
+          control={control}
+          render={({ field }) => (
+            <ResponsiveGrid
+              value={field.value}
+              onChange={field.onChange}
+              options={config.options as GridOptions}
+              mode={mode}
+            />
+          )}
+        />
+
+        {/* Helper text */}
+        {config.options.helperText && (
+          <p className="text-sm text-muted-foreground">{config.options.helperText}</p>
+        )}
+
+        {/* Error message */}
+        {error && <p className="text-sm text-destructive">{error.message}</p>}
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-2">
@@ -130,11 +164,7 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
                   type="date"
                   disabled={isReadOnly}
                   aria-invalid={!!error}
-                  value={
-                    field.value
-                      ? new Date(field.value).toISOString().split("T")[0]
-                      : ""
-                  }
+                  value={field.value ? new Date(field.value).toISOString().split("T")[0] : ""}
                 />
               );
 
@@ -235,14 +265,7 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
 
             case "identifier":
             case "systemDate":
-              return (
-                <Input
-                  {...field}
-                  id={config.name}
-                  disabled
-                  value={field.value || ""}
-                />
-              );
+              return <Input {...field} id={config.name} disabled value={field.value || ""} />;
 
             case "relation":
               return (
@@ -253,6 +276,16 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
                   options={config.options as RelationOptions}
                   disabled={isReadOnly}
                   placeholder={config.options.placeholder}
+                />
+              );
+
+            case "grid":
+              return (
+                <ResponsiveGrid
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={config.options as GridOptions}
+                  mode={mode}
                 />
               );
 

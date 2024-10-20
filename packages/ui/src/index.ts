@@ -46,6 +46,19 @@ export { FileUpload } from "./components/FileUpload";
 export type { FileUploadProps } from "./components/FileUpload";
 
 export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from "./components/Dialog";
+
+export {
   Card,
   CardHeader,
   CardFooter,

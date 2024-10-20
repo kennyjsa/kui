@@ -105,7 +105,10 @@ export type GridOptions = KuiOptions & {
   itemSchema: any;
 
   /** Colunas visíveis no grid */
-  columns?: string[];
+  columns: string[];
+
+  /** Campos exibidos nos cards (modo mobile) */
+  displayFields?: string[];
 
   /** Permite adicionar novos itens */
   allowCreate?: boolean;
@@ -115,6 +118,15 @@ export type GridOptions = KuiOptions & {
 
   /** Permite remover itens */
   allowDelete?: boolean;
+
+  /** Mínimo de itens obrigatórios */
+  minItems?: number;
+
+  /** Máximo de itens permitidos */
+  maxItems?: number;
+
+  /** Breakpoint para switch Grid ↔ List (padrão: 'md') */
+  breakpoint?: "xs" | "sm" | "md" | "lg" | "xl";
 };
 
 /**

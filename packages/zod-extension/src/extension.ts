@@ -308,14 +308,33 @@ export const zKUI = {
    * Campo de grid (sublista 1..N)
    */
   grid(label: string, gridOptions: GridOptions) {
-    return withKuiMetadata(
-      z.array(gridOptions.itemSchema),
-      {
-        label,
-        type: "grid",
-        options: gridOptions,
-      }
-    );
+    let schema = z.array(gridOptions.itemSchema);
+
+    // Aplicar validações de quantidade
+    if (gridOptions.minItems !== undefined) {
+      schema = schema.min(
+        gridOptions.minItems,
+        `Mínimo de ${gridOptions.minItems} ${gridOptions.minItems === 1 ? "item" : "itens"} obrigatório`
+      );
+    }
+    if (gridOptions.maxItems !== undefined) {
+      schema = schema.max(
+        gridOptions.maxItems,
+        `Máximo de ${gridOptions.maxItems} itens permitido`
+      );
+    }
+
+    return withKuiMetadata(schema, {
+      label,
+      type: "grid",
+      options: {
+        allowCreate: true,
+        allowEdit: true,
+        allowDelete: true,
+        breakpoint: "md",
+        ...gridOptions,
+      },
+    });
   },
 
   /**
