@@ -11,13 +11,15 @@ export interface MaskedInputProps
 }
 
 const MaskedInput = React.forwardRef<HTMLInputElement, MaskedInputProps>(
-  ({ className, mask, value, onChange, maskChar = "_", ...props }, ref) => {
+  ({ className, mask, value, onChange, maskChar = "_", disabled, readOnly, ...props }, ref) => {
     return (
       <InputMask
         mask={mask}
         value={value || ""}
         onChange={(e) => onChange?.(e.target.value)}
         maskChar={maskChar}
+        disabled={disabled}
+        readOnly={readOnly}
       >
         {(inputProps: any) => (
           <input
