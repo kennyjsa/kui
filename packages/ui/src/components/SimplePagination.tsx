@@ -42,7 +42,7 @@ export function SimplePagination({
           <ChevronLeft className="h-4 w-4" />
           Anterior
         </Button>
-        
+
         <div className="text-sm font-medium">
           Página {currentPage} de {totalPages}
         </div>
