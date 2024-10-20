@@ -256,6 +256,23 @@ export const zKUI = {
   },
 
   /**
+   * Campo de upload de arquivo
+   */
+  file(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      options.multiple ? z.array(z.any()) : z.any(),
+      {
+        label,
+        type: "file",
+        options: {
+          preview: true,
+          ...options,
+        },
+      }
+    );
+  },
+
+  /**
    * Campo de data do sistema - automático e readonly
    */
   systemDate(label: string, options: Partial<KuiOptions> = {}) {

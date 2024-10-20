@@ -42,6 +42,9 @@ export type { RatingProps } from "./components/Rating";
 export { ColorPicker } from "./components/ColorPicker";
 export type { ColorPickerProps } from "./components/ColorPicker";
 
+export { FileUpload } from "./components/FileUpload";
+export type { FileUploadProps } from "./components/FileUpload";
+
 export {
   Card,
   CardHeader,

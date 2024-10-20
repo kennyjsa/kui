@@ -29,6 +29,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.546.0",
+    "react-dropzone": "^14.3.8",
     "react-input-mask": "^2.0.4",
     "tailwind-merge": "^2.2.0"
   },

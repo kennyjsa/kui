@@ -67,6 +67,12 @@ export const pessoaSchema = zKUI.object({
   corFavorita: zKUI.color("Cor Favorita", {
     helperText: "Escolha sua cor favorita",
   }),
+  foto: zKUI.file("Foto de Perfil", {
+    accept: "image/*",
+    maxSize: 5 * 1024 * 1024, // 5MB
+    preview: true,
+    helperText: "Formatos aceitos: JPG, PNG, GIF (máx. 5MB)",
+  }),
 });
 
 export type Pessoa = typeof pessoaSchema._type;

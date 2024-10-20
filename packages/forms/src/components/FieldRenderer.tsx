@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Input, Label, MaskedInput, Textarea, CurrencyInput, Checkbox, RadioGroup, RadioGroupItem, Switch, Rating, ColorPicker } from "@kui/ui";
+import { Input, Label, MaskedInput, Textarea, CurrencyInput, Checkbox, RadioGroup, RadioGroupItem, Switch, Rating, ColorPicker, FileUpload } from "@kui/ui";
 import type { RelationOptions } from "@kui/zod-extension";
 import type { FieldRendererProps } from "../types";
 import { isFieldReadOnly, shouldShowField } from "../utils/shouldShowField";
@@ -215,6 +215,20 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
                   id={config.name}
                   value={field.value}
                   onChange={field.onChange}
+                  disabled={isReadOnly}
+                />
+              );
+
+            case "file":
+              return (
+                <FileUpload
+                  id={config.name}
+                  value={field.value}
+                  onChange={field.onChange}
+                  accept={config.options.accept}
+                  maxSize={config.options.maxSize}
+                  multiple={config.options.multiple}
+                  preview={config.options.preview}
                   disabled={isReadOnly}
                 />
               );
