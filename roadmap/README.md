@@ -7,8 +7,8 @@ Este diretório contém o planejamento detalhado de desenvolvimento do KUI Frame
 | Fase | Nome | Status | Arquivo |
 |------|------|--------|---------|
 | ✅ 1 | Consolidação | Completa | [fase-1-consolidacao.md](./fase-1-consolidacao.md) |
-| 🚧 2 | Campos Avançados | Em andamento | [fase-2-campos-avancados.md](./fase-2-campos-avancados.md) |
-| 📅 3 | CrudGrid e Listagens | Planejada | [fase-3-crudgrid-listagens.md](./fase-3-crudgrid-listagens.md) |
+| ✅ 2 | Campos Avançados | Completa | [fase-2-campos-avancados.md](./fase-2-campos-avancados.md) |
+| 📅 3 | CrudGrid e Listagens | Próxima | [fase-3-crudgrid-listagens.md](./fase-3-crudgrid-listagens.md) |
 | 📅 4 | Integração e Backend | Planejada | [fase-4-integracao-backend.md](./fase-4-integracao-backend.md) |
 | 📅 5 | UX e Refinamentos | Planejada | [fase-5-ux-refinamentos.md](./fase-5-ux-refinamentos.md) |
 | 📅 6 | Qualidade e Testes | Planejada | [fase-6-qualidade-testes.md](./fase-6-qualidade-testes.md) |
@@ -16,15 +16,15 @@ Este diretório contém o planejamento detalhado de desenvolvimento do KUI Frame
 
 ## 🎯 Fase Atual
 
-**Fase 2: Campos Avançados**
+**Fase 3: CrudGrid e Listagens**
 
-Foco em expandir os tipos de campos disponíveis e implementar funcionalidades essenciais como relações e máscaras.
+Implementar sistema completo de gerenciamento de listas e sublistas (relações 1:N).
 
 ## 📊 Progresso Geral
 
 ```
 Fase 1: ████████████████████ 100%
-Fase 2: ████░░░░░░░░░░░░░░░░  20%
+Fase 2: ████████████████████ 100%
 Fase 3: ░░░░░░░░░░░░░░░░░░░░   0%
 Fase 4: ░░░░░░░░░░░░░░░░░░░░   0%
 Fase 5: ░░░░░░░░░░░░░░░░░░░░   0%
