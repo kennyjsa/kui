@@ -38,25 +38,22 @@ export function RelationSelect({
     setMounted(true);
   }, []);
 
-  let provider;
+  // Sempre chama o hook, mas trata o erro internamente
+  let provider = null;
   try {
     provider = useKuiProvider(options.provider);
-  } catch (err) {
-    // Provider não disponível durante SSR
-    if (!mounted) {
-      return (
-        <Select disabled>
-          <SelectTrigger id={id}>
-            <SelectValue placeholder="Carregando..." />
-          </SelectTrigger>
-        </Select>
-      );
-    }
-    throw err;
+  } catch (err: any) {
+    // Captura o erro mas não lança - será tratado no useEffect
+    console.warn(`Provider "${options.provider}" não encontrado no registry.`);
   }
 
   // Carrega os itens do provider
   React.useEffect(() => {
+    if (!mounted || !provider) {
+      setLoading(false);
+      return;
+    }
+
     const loadItems = async () => {
       try {
         setLoading(true);
@@ -72,7 +69,7 @@ export function RelationSelect({
     };
 
     loadItems();
-  }, [provider, options.provider]);
+  }, [mounted, provider, options.provider]);
 
   if (loading) {
     return (
