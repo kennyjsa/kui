@@ -6,7 +6,25 @@
 
 ## 🎯 Objetivos
 
-Implementar sistema completo de gerenciamento de listas e sublistas (relações 1:N).
+Implementar sistema completo de gerenciamento de listas e sublistas (relações 1:N) com **estado local** e **persistência única** no submit.
+
+## 🏗️ Arquitetura Definida
+
+### Princípios
+- ✅ **Estado 100% local** - array no formulário
+- ✅ **Operações client-side** - filtro, ordenação, paginação em JS
+- ✅ **CRUD via modal** - create/edit/view sem sair do contexto
+- ✅ **Persistência única** - submit do formulário pai salva tudo
+- ✅ **Tracking de mudanças** - new, updated, deleted, unchanged
+- ✅ **Responsivo** - Grid (desktop) ↔ List (mobile)
+
+### Componentes
+```
+GridField      → Tabela HTML (desktop)
+ListField      → Cards (mobile)
+ResponsiveGrid → Auto-switch baseado em breakpoint
+GridItemModal  → Modal para CRUD de item
+```
 
 ## 📋 Entregas Planejadas
 
@@ -27,127 +45,149 @@ enderecos: zKUI.grid("Endereços", {
 - [ ] Validação de itemSchema
 - [ ] Integração com FormBuilder
 
-#### 1.2 GridField Component
-- [ ] Tabela inline para exibir itens
-- [ ] Botões de ação (adicionar, editar, remover)
-- [ ] Modal ou drawer para edição
-- [ ] Estado interno (novo, editado, removido)
-- [ ] Validação de itens individuais
+#### 1.2 GridField Component (Tabela Desktop)
+- [ ] Tabela HTML simples e performática
+- [ ] Header com nomes das colunas (extraídos do schema)
+- [ ] Linhas com dados formatados
+- [ ] Botões de ação por linha (editar, excluir)
+- [ ] Botão "Adicionar" no footer
+- [ ] Indicadores visuais de status (badges: novo, editado, excluído)
+- [ ] Empty state quando vazio
+- [ ] Busca simples (input texto filtra localmente)
+- [ ] Ordenação por coluna (click no header)
 
-#### 1.3 Controle de Estado
-- [ ] Array de itens no formulário
-- [ ] Tracking de mudanças (added, updated, deleted)
-- [ ] Validação do array completo
-- [ ] Submit com diff de mudanças
+#### 1.3 GridItemModal Component
+- [ ] Modal para CRUD de item
+- [ ] Modos: create, edit, view
+- [ ] FormBuilder reutilizado com itemSchema
+- [ ] Botões: Salvar, Cancelar
+- [ ] Salvar NÃO persiste backend (só atualiza array local)
+- [ ] Validação com Zod antes de salvar
 
-### Sprint 2: CrudGrid Component
-
-#### 2.1 CrudGrid - Estrutura Base
+#### 1.4 Controle de Estado Local
 ```typescript
-<CrudGrid
-  provider={pessoaProvider}
-  columns={[
-    { key: "id", label: "ID" },
-    { key: "nome", label: "Nome" },
-    { key: "email", label: "E-mail" },
-  ]}
-  schema={pessoaSchema}
-  onEdit={(id) => navigate(`/pessoa/${id}`)}
+type GridItem<T> = {
+  data: T;
+  status: 'new' | 'updated' | 'deleted' | 'unchanged';
+  _tempId?: string; // Para itens novos sem ID do backend
+};
+```
+- [ ] Array de itens no formulário (react-hook-form)
+- [ ] Tracking de mudanças por item
+- [ ] Soft delete (marca como deleted, não remove do array)
+- [ ] Hard delete para itens 'new' (remove do array)
+- [ ] Validação do array completo (minItems, maxItems)
+- [ ] Submit retorna array completo com tracking
+
+### Sprint 2: ListField Component (Cards Mobile)
+
+#### 2.1 ListField - Estrutura Base
+```typescript
+<ListField
+  items={enderecos}
+  onChange={handleChange}
+  itemSchema={enderecoSchema}
+  displayFields={["rua", "numero", "cidade"]}
+  allowCreate={true}
+  allowEdit={true}
+  allowDelete={true}
 />
 ```
-- [ ] Componente CrudGrid independente
-- [ ] Integração com DataProvider
-- [ ] Configuração de colunas
-- [ ] Ações padrão (criar, editar, excluir)
+- [ ] Cards empilhados verticalmente
+- [ ] Extração automática de campos do schema
+- [ ] Título + campos principais no card
+- [ ] Botões de ação no card (editar, excluir)
+- [ ] Mesma lógica de estado do GridField
+- [ ] Compartilha GridItemModal
+- [ ] Empty state
 
-#### 2.2 Paginação
-- [ ] Paginação server-side
-- [ ] Controles de navegação (anterior, próxima)
-- [ ] Seletor de itens por página
-- [ ] Info de total de registros
-- [ ] Integração com provider.list()
+#### 2.2 ResponsiveGrid Component
+```typescript
+<ResponsiveGrid
+  value={field.value}
+  onChange={field.onChange}
+  itemSchema={enderecoSchema}
+  columns={["rua", "numero", "cidade"]}
+  breakpoint="md" // < md = list, >= md = grid
+/>
+```
+- [ ] Hook useMediaQuery para detectar viewport
+- [ ] Auto-switch Grid ↔ List
+- [ ] Mesmo estado compartilhado
+- [ ] Transition suave entre modos
+- [ ] Breakpoint configurável (xs, sm, md, lg)
 
-#### 2.3 Busca e Filtros
-- [ ] Campo de busca global
-- [ ] Filtros por coluna
-- [ ] Filtros avançados (modal)
-- [ ] Múltiplos filtros combinados
-- [ ] Clear filters
+### Sprint 3: Features Locais
 
-#### 2.4 Ordenação
+#### 3.1 Busca e Filtro Local
+```typescript
+// Busca simples em múltiplas colunas
+const filteredItems = items.filter(item =>
+  columns.some(col =>
+    String(item[col]).toLowerCase().includes(search.toLowerCase())
+  )
+);
+```
+- [ ] Input de busca acima do grid
+- [ ] Filtro em tempo real (client-side)
+- [ ] Busca em múltiplas colunas
+- [ ] Debounce (300ms)
+- [ ] Clear search
+- [ ] Contador de resultados
+
+#### 3.2 Ordenação Local
 - [ ] Click em header para ordenar
-- [ ] Indicador visual de ordenação
-- [ ] Ordenação ascendente/descendente
-- [ ] Ordenação por múltiplas colunas
+- [ ] Indicador visual (seta up/down)
+- [ ] Toggle ascendente/descendente
+- [ ] Ordenação por string, número, data
+- [ ] Estado de ordenação preservado
 
-### Sprint 3: Funcionalidades Avançadas
-
-#### 3.1 Seleção de Linhas
-- [ ] Checkbox para seleção
-- [ ] Selecionar todos
-- [ ] Ações em massa
-- [ ] Contador de selecionados
-
-#### 3.2 Ações Personalizadas
+#### 3.3 Paginação Local
 ```typescript
-<CrudGrid
-  actions={[
-    { 
-      label: "Exportar", 
-      icon: <Download />,
-      onClick: (selected) => exportData(selected)
-    }
-  ]}
-/>
+const paginatedItems = filteredItems.slice(
+  (page - 1) * pageSize,
+  page * pageSize
+);
 ```
-- [ ] Ações customizadas globais
-- [ ] Ações por linha
-- [ ] Confirmação de ações destrutivas
-- [ ] Loading state em ações
+- [ ] Controles: anterior, próxima, ir para página
+- [ ] Seletor de itens por página (5, 10, 25, 50)
+- [ ] Info: "Exibindo X-Y de Z itens"
+- [ ] Desabilitar botões quando necessário
+- [ ] Reset para página 1 ao filtrar
 
-#### 3.3 Renderização Customizada
-```typescript
-<CrudGrid
-  columns={[
-    { 
-      key: "status", 
-      label: "Status",
-      render: (value) => <Badge>{value}</Badge>
-    }
-  ]}
-/>
-```
-- [ ] Render functions por coluna
-- [ ] Componentes customizados
-- [ ] Formatação de dados (data, moeda, etc)
+#### 3.4 Indicadores Visuais de Status
+- [ ] Badge "Novo" (verde) para status: 'new'
+- [ ] Badge "Editado" (amarelo) para status: 'updated'
+- [ ] Badge "Excluído" (vermelho) + riscado para status: 'deleted'
+- [ ] Itens 'deleted' visíveis mas sinalizados
+- [ ] Opção de "Restaurar" item deletado
 
-#### 3.4 Export de Dados
-- [ ] Export para CSV
-- [ ] Export para Excel (XLSX)
-- [ ] Export para PDF (opcional)
-- [ ] Export com filtros aplicados
-- [ ] Export de selecionados
-
-### Sprint 4: UX do Grid
+### Sprint 4: UX e Validações
 
 #### 4.1 Estados Visuais
-- [ ] Loading skeleton
-- [ ] Empty state
-- [ ] Error state
-- [ ] Retry em caso de erro
-- [ ] Placeholder quando sem dados
+- [ ] Empty state quando array vazio
+- [ ] Empty state quando busca não retorna resultados
+- [ ] Mensagens contextuais
+- [ ] Ilustrações ou ícones apropriados
 
-#### 4.2 Responsividade
-- [ ] Layout mobile (cards)
-- [ ] Scroll horizontal em desktop
-- [ ] Colunas colapsáveis
-- [ ] Prioridade de colunas
+#### 4.2 Validações
+- [ ] Validar item individual antes de salvar no modal
+- [ ] Validar array completo no submit do formulário
+- [ ] minItems / maxItems configurável
+- [ ] Mensagens de erro claras
+- [ ] Bloquear submit se grid inválido
 
-#### 4.3 Performance
-- [ ] Virtualização de linhas (react-window)
-- [ ] Lazy loading de dados
-- [ ] Debounce em busca
-- [ ] Cache de queries
+#### 4.3 Confirmações
+- [ ] Confirmar exclusão de item
+- [ ] Dialog: "Tem certeza?"
+- [ ] Cancelar exclusão
+- [ ] Restaurar item deletado
+
+#### 4.4 Performance
+- [ ] Memoização de linhas
+- [ ] Virtualização opcional (para grids muito grandes)
+- [ ] Debounce em busca (300ms)
+- [ ] Re-render otimizado
 
 ## 📊 Exemplo Completo
 
@@ -160,13 +200,13 @@ export const enderecoSchema = zKUI.object({
   complemento: zKUI.text("Complemento"),
   bairro: zKUI.text("Bairro", { required: true }),
   cidade: zKUI.text("Cidade", { required: true }),
-  uf: zKUI.select("UF", ["AC", "AL", "AM", "..."], { required: true }),
+  uf: zKUI.select("UF", ["AC", "AL", "AM", "BA", "CE", "..."], { required: true }),
   cep: zKUI.text("CEP", { mask: "99999-999", required: true }),
-  principal: zKUI.boolean("Endereço Principal"),
+  principal: zKUI.switch("Endereço Principal"),
 });
 ```
 
-### Schema de Pessoa com Endereços
+### Schema de Pessoa com Endereços (Campo grid)
 ```typescript
 export const pessoaComEnderecosSchema = zKUI.object({
   ...pessoaSchema.shape,
@@ -176,72 +216,132 @@ export const pessoaComEnderecosSchema = zKUI.object({
     allowCreate: true,
     allowEdit: true,
     allowDelete: true,
-    minItems: 1 // Pelo menos um endereço
+    minItems: 1, // Pelo menos um endereço
+    maxItems: 10 // Máximo 10 endereços
   }),
 });
 ```
 
-### Página com CrudGrid
+### Formulário com Grid Inline
 ```typescript
-export default function PessoasPage() {
+export default function PessoaForm() {
+  const handleSubmit = async (data) => {
+    // data.enderecos = array completo com tracking
+    // [
+    //   { data: {...}, status: 'new' },
+    //   { data: {...}, status: 'updated' },
+    //   { data: {...}, status: 'deleted' },
+    //   { data: {...}, status: 'unchanged' }
+    // ]
+    
+    await api.savePessoa(data); // Persiste tudo de uma vez
+  };
+
   return (
-    <CrudGrid
-      provider={pessoaProvider}
-      schema={pessoaSchema}
-      columns={[
-        { key: "nome", label: "Nome", sortable: true },
-        { key: "email", label: "E-mail" },
-        { key: "telefone", label: "Telefone" },
-      ]}
-      searchable
-      exportable
+    <FormBuilder
+      schema={pessoaComEnderecosSchema}
+      mode="edit"
+      defaultValues={pessoa}
+      onSubmit={handleSubmit}
     />
   );
 }
 ```
 
+### Estado do Array
+```typescript
+// Exemplo de estado interno do GridField
+const items = [
+  { 
+    data: { id: 1, rua: "Rua A", numero: "100" },
+    status: 'unchanged' 
+  },
+  { 
+    data: { rua: "Rua B", numero: "200" },
+    status: 'new',
+    _tempId: 'temp-uuid-1' 
+  },
+  { 
+    data: { id: 3, rua: "Rua C", numero: "300" },
+    status: 'deleted' // Visível mas riscado
+  },
+];
+```
+
 ## 📊 Critérios de Sucesso
 
-- [ ] Grid renderiza 1000+ linhas sem lag (com virtualização)
-- [ ] Paginação funciona corretamente
-- [ ] Busca e filtros são rápidos (< 300ms)
-- [ ] Sublistas (grid field) funcionam perfeitamente
-- [ ] Export funciona para grandes datasets
+- [ ] Grid renderiza até 100 itens sem lag (paginação local)
+- [ ] Busca local instantânea (< 50ms)
+- [ ] Ordenação local instantânea
+- [ ] Modal de CRUD funciona perfeitamente
+- [ ] Tracking de status correto (new, updated, deleted)
+- [ ] Submit retorna array completo
+- [ ] Responsivo: Grid (desktop) ↔ List (mobile)
+- [ ] Validações funcionando (minItems, maxItems)
 - [ ] Acessibilidade completa (keyboard navigation)
 
 ## 🔗 Dependências
 
-- @tanstack/react-table (gerenciamento de tabela)
-- react-window (virtualização)
-- papaparse (export CSV)
-- xlsx (export Excel)
+**Nenhuma dependência externa nova!** 🎉
+
+Vamos usar apenas:
+- React (hooks nativos)
+- Componentes já criados (@kui/ui)
+- HTML table nativo
+- CSS Grid/Flexbox para cards
 
 ## 📝 Notas Técnicas
 
-### Performance
-- Virtualização obrigatória para > 100 linhas
-- Paginação server-side preferível
-- Cache inteligente de queries
-- Debounce em todas as buscas
+### Estado Local
+```typescript
+// Estado gerenciado por react-hook-form
+const form = useForm({
+  defaultValues: {
+    nome: "João",
+    enderecos: [ // Array de objetos simples
+      { id: 1, rua: "Rua A", numero: "100" },
+      { id: 2, rua: "Rua B", numero: "200" }
+    ]
+  }
+});
 
-### Estado
-- Estado do grid separado do formulário
-- Sincronização com URL (filtros, página, ordenação)
-- Persist state em localStorage (opcional)
+// GridField adiciona tracking internamente
+// Mas no submit retorna apenas os dados
+```
+
+### Tracking de Mudanças
+- Internamente: `GridItem<T>` com status
+- No submit: Pode retornar tracking ou só dados (configurável)
+- Soft delete: mantém no array com status 'deleted'
+- Hard delete: remove do array (apenas para 'new')
+
+### Performance
+- Paginação local para arrays grandes (> 50 itens)
+- Busca com debounce (300ms)
+- Memoização de linhas/cards
+- Virtualização opcional (futura) se necessário
 
 ### Validação
-- Validar itens individuais do grid
-- Validar array completo (minItems, maxItems)
-- Mostrar erros inline no grid
+- Item individual: validado no modal antes de salvar
+- Array completo: validado no submit do formulário pai
+- Regras: minItems, maxItems
+- Erros exibidos no formulário pai
+
+### Responsividade
+- MediaQuery: `(min-width: 768px)` → Grid
+- MediaQuery: `(max-width: 767px)` → List
+- Hook personalizado: `useMediaQuery()`
+- Mesmo estado, renderização diferente
 
 ## 🐛 Riscos e Mitigações
 
 | Risco | Impacto | Mitigação |
 |-------|---------|-----------|
-| Performance ruim com muitos dados | Alto | Virtualização obrigatória |
-| Complexidade do estado | Médio | Usar @tanstack/react-table |
-| Export trava navegador | Médio | Web Workers para processamento |
-| Grid muito genérico perde flexibilidade | Alto | Permitir overrides e customizações |
+| Performance com muitos itens (> 100) | Médio | Paginação local obrigatória |
+| Complexidade de estado com tracking | Médio | Estado simples e bem documentado |
+| Sincronização grid ↔ formulário | Alto | Usar react-hook-form corretamente |
+| Perder mudanças ao fechar modal | Baixo | Confirmação antes de cancelar |
+| Grid muito genérico perde flexibilidade | Médio | Props de customização |
 
 ## ➡️ Próxima Fase
 
