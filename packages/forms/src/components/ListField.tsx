@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Plus, Pencil, Trash2, RotateCcw } from "lucide-react";
-import { Button, Badge, Card, CardHeader, CardTitle, CardContent } from "@kui/ui";
+import { Button, Badge, Card, CardHeader, CardTitle, CardContent, SimplePagination } from "@kui/ui";
 import type { GridOptions } from "@kui/zod-extension";
 import type { FormMode } from "../types";
 import { extractFields } from "../utils/extractFields";
@@ -21,10 +21,12 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalMode, setModalMode] = React.useState<FormMode>("create");
   const [selectedIndex, setSelectedIndex] = React.useState<number | null>(null);
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const isReadOnly = mode === "view";
   const fields = extractFields(options.itemSchema);
   const displayFields = options.displayFields || options.columns.slice(0, 3); // Primeiros 3 campos
+  const pageSize = options.pageSize || 5;
 
   // Inicializa items do value
   React.useEffect(() => {
@@ -120,6 +122,20 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
 
   const visibleItems = items.filter((item) => item.status !== "deleted" || true);
 
+  // Paginação
+  const totalItems = visibleItems.length;
+  const totalPages = Math.ceil(totalItems / pageSize);
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedItems = visibleItems.slice(startIndex, endIndex);
+
+  // Reset para página 1 quando items mudam
+  React.useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
+
   // Empty state
   if (items.length === 0) {
     return (
@@ -147,11 +163,15 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
   return (
     <div className="space-y-3">
       {/* Cards */}
-      {visibleItems.map((item, index) => (
-        <Card
-          key={item._tempId || item.data.id || index}
-          className={item.status === "deleted" ? "opacity-50" : ""}
-        >
+      {paginatedItems.map((item, paginatedIndex) => {
+        const originalIndex = visibleItems.findIndex(
+          (i) => i._tempId === item._tempId || i.data.id === item.data.id
+        );
+        return (
+          <Card
+            key={item._tempId || item.data.id || paginatedIndex}
+            className={item.status === "deleted" ? "opacity-50" : ""}
+          >
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-base">
@@ -181,7 +201,7 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
                         type="button"
                         variant="ghost"
                         size="icon"
-                        onClick={() => handleRestore(index)}
+                        onClick={() => handleRestore(originalIndex)}
                       >
                         <RotateCcw className="h-4 w-4" />
                       </Button>
@@ -192,7 +212,7 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
                             type="button"
                             variant="ghost"
                             size="icon"
-                            onClick={() => handleEdit(index)}
+                            onClick={() => handleEdit(originalIndex)}
                           >
                             <Pencil className="h-4 w-4" />
                           </Button>
@@ -202,7 +222,7 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
                             type="button"
                             variant="ghost"
                             size="icon"
-                            onClick={() => handleDelete(index)}
+                            onClick={() => handleDelete(originalIndex)}
                           >
                             <Trash2 className="h-4 w-4 text-destructive" />
                           </Button>
@@ -225,7 +245,21 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
             </div>
           </CardContent>
         </Card>
-      ))}
+        );
+      })}
+
+      {/* Paginação */}
+      {totalPages > 1 && (
+        <div className="border rounded-lg">
+          <SimplePagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={totalItems}
+            pageSize={pageSize}
+            onPageChange={setCurrentPage}
+          />
+        </div>
+      )}
 
       {/* Botão adicionar */}
       {!isReadOnly && options.allowCreate !== false && (

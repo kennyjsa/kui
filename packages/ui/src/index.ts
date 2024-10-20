@@ -70,3 +70,6 @@ export {
 export { Badge, badgeVariants } from "./components/Badge";
 export type { BadgeProps } from "./components/Badge";
 
+export { SimplePagination } from "./components/SimplePagination";
+export type { SimplePaginationProps } from "./components/SimplePagination";
+

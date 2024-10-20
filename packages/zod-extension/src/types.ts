@@ -127,6 +127,9 @@ export type GridOptions = KuiOptions & {
 
   /** Breakpoint para switch Grid ↔ List (padrão: 'md') */
   breakpoint?: "xs" | "sm" | "md" | "lg" | "xl";
+
+  /** Número de itens por página (padrão: 5) */
+  pageSize?: number;
 };
 
 /**

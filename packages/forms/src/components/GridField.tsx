@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Plus, Pencil, Trash2, RotateCcw } from "lucide-react";
-import { Button, Badge } from "@kui/ui";
+import { Button, Badge, SimplePagination } from "@kui/ui";
 import type { GridOptions } from "@kui/zod-extension";
 import type { FormMode } from "../types";
 import { extractFields } from "../utils/extractFields";
@@ -26,9 +26,11 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalMode, setModalMode] = React.useState<FormMode>("create");
   const [selectedIndex, setSelectedIndex] = React.useState<number | null>(null);
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const isReadOnly = mode === "view";
   const fields = extractFields(options.itemSchema);
+  const pageSize = options.pageSize || 5;
 
   // Inicializa items do value
   React.useEffect(() => {
@@ -140,6 +142,20 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
 
   const visibleItems = items.filter((item) => item.status !== "deleted" || true); // Mostrar todos, inclusive deleted
 
+  // Paginação
+  const totalItems = visibleItems.length;
+  const totalPages = Math.ceil(totalItems / pageSize);
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedItems = visibleItems.slice(startIndex, endIndex);
+
+  // Reset para página 1 quando items mudam
+  React.useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
+
   // Empty state
   if (items.length === 0) {
     return (
@@ -181,13 +197,17 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
             </tr>
           </thead>
           <tbody>
-            {visibleItems.map((item, index) => (
-              <tr
-                key={item._tempId || item.data.id || index}
-                className={`border-t ${
-                  item.status === "deleted" ? "opacity-50 line-through" : ""
-                }`}
-              >
+            {paginatedItems.map((item, paginatedIndex) => {
+              const originalIndex = visibleItems.findIndex(
+                (i) => i._tempId === item._tempId || i.data.id === item.data.id
+              );
+              return (
+                <tr
+                  key={item._tempId || item.data.id || paginatedIndex}
+                  className={`border-t ${
+                    item.status === "deleted" ? "opacity-50 line-through" : ""
+                  }`}
+                >
                 {options.columns.map((column) => (
                   <td key={column} className="p-3">
                     {getColumnValue(item.data, column)}
@@ -215,7 +235,7 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
                         type="button"
                         variant="ghost"
                         size="icon"
-                        onClick={() => handleRestore(index)}
+                        onClick={() => handleRestore(originalIndex)}
                         title="Restaurar"
                       >
                         <RotateCcw className="h-4 w-4" />
@@ -227,7 +247,7 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
                             type="button"
                             variant="ghost"
                             size="icon"
-                            onClick={() => handleView(index)}
+                            onClick={() => handleView(originalIndex)}
                             title="Visualizar"
                           >
                             <Pencil className="h-4 w-4" />
@@ -239,7 +259,7 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
                                 type="button"
                                 variant="ghost"
                                 size="icon"
-                                onClick={() => handleEdit(index)}
+                                onClick={() => handleEdit(originalIndex)}
                                 title="Editar"
                               >
                                 <Pencil className="h-4 w-4" />
@@ -250,7 +270,7 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
                                 type="button"
                                 variant="ghost"
                                 size="icon"
-                                onClick={() => handleDelete(index)}
+                                onClick={() => handleDelete(originalIndex)}
                                 title="Excluir"
                               >
                                 <Trash2 className="h-4 w-4 text-destructive" />
@@ -263,9 +283,21 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
                   </div>
                 </td>
               </tr>
-            ))}
+            );
+          })}
           </tbody>
         </table>
+
+        {/* Paginação */}
+        {totalPages > 1 && (
+          <SimplePagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={totalItems}
+            pageSize={pageSize}
+            onPageChange={setCurrentPage}
+          />
+        )}
       </div>
 
       {/* Botão adicionar */}
