@@ -242,6 +242,20 @@ export const zKUI = {
   },
 
   /**
+   * Campo de seleção de cor
+   */
+  color(label: string, options: KuiOptions = {}) {
+    return withKuiMetadata(
+      z.string().regex(/^#[0-9A-F]{6}$/i, "Cor inválida"),
+      {
+        label,
+        type: "color",
+        options,
+      }
+    );
+  },
+
+  /**
    * Campo de data do sistema - automático e readonly
    */
   systemDate(label: string, options: Partial<KuiOptions> = {}) {

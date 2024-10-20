@@ -39,6 +39,9 @@ export { Switch } from "./components/Switch";
 export { Rating } from "./components/Rating";
 export type { RatingProps } from "./components/Rating";
 
+export { ColorPicker } from "./components/ColorPicker";
+export type { ColorPickerProps } from "./components/ColorPicker";
+
 export {
   Card,
   CardHeader,

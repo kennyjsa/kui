@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Input, Label, MaskedInput, Textarea, CurrencyInput, Checkbox, RadioGroup, RadioGroupItem, Switch, Rating } from "@kui/ui";
+import { Input, Label, MaskedInput, Textarea, CurrencyInput, Checkbox, RadioGroup, RadioGroupItem, Switch, Rating, ColorPicker } from "@kui/ui";
 import type { RelationOptions } from "@kui/zod-extension";
 import type { FieldRendererProps } from "../types";
 import { isFieldReadOnly, shouldShowField } from "../utils/shouldShowField";
@@ -205,6 +205,16 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
                   value={field.value || 0}
                   onChange={field.onChange}
                   max={config.options.max || 5}
+                  disabled={isReadOnly}
+                />
+              );
+
+            case "color":
+              return (
+                <ColorPicker
+                  id={config.name}
+                  value={field.value}
+                  onChange={field.onChange}
                   disabled={isReadOnly}
                 />
               );

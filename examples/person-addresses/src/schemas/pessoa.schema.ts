@@ -64,6 +64,9 @@ export const pessoaSchema = zKUI.object({
     max: 5,
     helperText: "Como você avalia nosso atendimento?",
   }),
+  corFavorita: zKUI.color("Cor Favorita", {
+    helperText: "Escolha sua cor favorita",
+  }),
 });
 
 export type Pessoa = typeof pessoaSchema._type;

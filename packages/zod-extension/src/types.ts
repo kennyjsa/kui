@@ -54,13 +54,13 @@ export type KuiOptions = {
 
   /** Locale para formatação (ex: pt-BR, en-US) */
   locale?: string;
-  
+
   /** Opções para select, radio, etc */
   options?: Array<{ label: string; value: string | number }>;
-  
+
   /** Número máximo para rating */
   max?: number;
-  
+
   /** Permite meia estrela no rating */
   allowHalf?: boolean;
 };
