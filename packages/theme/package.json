@@ -1,7 +1,19 @@
 {
   "name": "@kui/theme",
-  "version": "0.1.0",
-  "description": "Tema KUI - Tokens, configuração Tailwind e integração ShadCN",
+  "version": "0.0.1",
+  "description": "Sistema de temas KUI Framework - Design tokens, Tailwind preset e estilos globais",
+  "keywords": ["kui", "theme", "tailwind", "design-tokens", "css", "styling"],
+  "homepage": "https://github.com/kennyjsa/kui#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kennyjsa/kui.git",
+    "directory": "packages/theme"
+  },
+  "bugs": {
+    "url": "https://github.com/kennyjsa/kui/issues"
+  },
+  "license": "MIT",
+  "author": "Kenny JSA",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

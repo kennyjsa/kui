@@ -1,7 +1,19 @@
 {
   "name": "@kui/zod-extension",
-  "version": "0.1.0",
-  "description": "Extensões declarativas para Zod com metadados KUI",
+  "version": "0.0.1",
+  "description": "Extensões Zod para KUI Framework - Schemas declarativos para geração automática de UI",
+  "keywords": ["zod", "schema", "validation", "typescript", "react", "forms", "kui"],
+  "homepage": "https://github.com/kennyjsa/kui#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kennyjsa/kui.git",
+    "directory": "packages/zod-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/kennyjsa/kui/issues"
+  },
+  "license": "MIT",
+  "author": "Kenny JSA",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

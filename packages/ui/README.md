@@ -1,65 +1,85 @@
 # @kui/ui
 
-Componentes visuais base do KUI Framework.
+Componentes UI KUI Framework - Biblioteca React com Radix UI e Tailwind CSS.
 
-## Instalação
+## 📦 Instalação
 
 ```bash
-pnpm add @kui/ui
+npm install @kui/ui @kui/theme react react-dom
+# or
+pnpm add @kui/ui @kui/theme react react-dom
 ```
 
-## Componentes
+## 🚀 Uso
 
-### Button
+```typescript
+import { Button, Input, Label, Card } from '@kui/ui';
 
-```tsx
-import { Button } from "@kui/ui";
-
-<Button variant="default">Click me</Button>
-<Button variant="outline">Outline</Button>
-<Button variant="ghost" size="sm">Small Ghost</Button>
+function MyForm() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Meu Formulário</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="name">Nome</Label>
+            <Input id="name" placeholder="Digite seu nome" />
+          </div>
+          
+          <Button type="submit">Salvar</Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 ```
 
-### Input
+## 🎨 Componentes Disponíveis
 
-```tsx
-import { Input } from "@kui/ui";
+### Form Elements
+- `Input` - Campo de texto
+- `MaskedInput` - Input com máscara
+- `Textarea` - Área de texto
+- `CurrencyInput` - Input monetário
+- `Label` - Rótulo de campo
 
-<Input type="text" placeholder="Digite aqui..." />
-<Input type="email" />
-```
+### Selection
+- `Select` - Seletor dropdown
+- `Checkbox` - Caixa de seleção
+- `RadioGroup` - Grupo de opções
+- `Switch` - Toggle on/off
 
-### Label
+### Specialized
+- `Rating` - Avaliação com estrelas
+- `ColorPicker` - Seletor de cores
+- `FileUpload` - Upload de arquivos
 
-```tsx
-import { Label } from "@kui/ui";
+### Layout
+- `Card` - Container de conteúdo
+- `Badge` - Tags e status
+- `Dialog` - Modal/Dialog
+- `Button` - Botões com variantes
 
-<Label htmlFor="name">Nome</Label>
-<Input id="name" />
-```
+### Feedback
+- `Skeleton` - Loading placeholder
+- `FormSkeleton` - Skeleton de formulário
+- `GridSkeleton` - Skeleton de tabela
+- `ErrorBoundary` - Tratamento de erros
 
-### Card
+### Navigation
+- `SimplePagination` - Paginação simples
 
-```tsx
-import { Card, CardHeader, CardTitle, CardContent } from "@kui/ui";
+## 🎯 Features
 
-<Card>
-  <CardHeader>
-    <CardTitle>Título</CardTitle>
-  </CardHeader>
-  <CardContent>
-    Conteúdo do card
-  </CardContent>
-</Card>
-```
+- ✅ Baseado em **Radix UI** (acessibilidade)
+- ✅ Estilizado com **Tailwind CSS**
+- ✅ **Variantes** configuráveis
+- ✅ **TypeScript** com tipos completos
+- ✅ **Tree-shakeable**
+- ✅ **SSR-ready**
 
-### Badge
+## 📄 Licença
 
-```tsx
-import { Badge } from "@kui/ui";
-
-<Badge>Default</Badge>
-<Badge variant="secondary">Secondary</Badge>
-<Badge variant="destructive">Error</Badge>
-```
-
+MIT © Kenny JSA

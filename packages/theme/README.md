@@ -1,48 +1,83 @@
 # @kui/theme
 
-Tema e design tokens do KUI Framework.
+Sistema de temas KUI Framework - Design tokens, Tailwind preset e estilos globais.
 
-## Instalação
+## 📦 Instalação
 
 ```bash
+npm install @kui/theme tailwindcss
+# or
 pnpm add @kui/theme tailwindcss
 ```
 
-## Configuração
+## 🚀 Setup
 
-### Tailwind
+### 1. Configurar Tailwind
 
-```javascript
+```js
 // tailwind.config.js
-module.exports = {
-  presets: [require("@kui/theme/tailwind")],
+import kuiPreset from '@kui/theme/tailwind';
+
+export default {
+  presets: [kuiPreset],
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/@kui/**/*.{js,jsx,ts,tsx}",
+    './src/**/*.{ts,tsx}',
+    './node_modules/@kui/**/*.{js,mjs}',
   ],
 };
 ```
 
-### CSS Global
+### 2. Importar Estilos Globais
 
 ```css
-/* globals.css */
-@import "@kui/theme/dist/globals.css";
+/* app/globals.css */
+@import '@kui/theme/globals.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 ```
 
-## Tokens
+## 🎨 Design Tokens
 
-```typescript
-import { kuiTokens } from "@kui/theme";
+### Cores
 
-console.log(kuiTokens.colors.primary[500]); // #0ea5e9
+```css
+/* Light mode */
+--background: 0 0% 100%;
+--foreground: 222.2 84% 4.9%;
+--primary: 222.2 47.4% 11.2%;
+--muted: 210 40% 96.1%;
+--destructive: 0 84.2% 60.2%;
+
+/* Dark mode */
+[class~="dark"] {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  /* ... */
+}
 ```
 
-## Cores
+### Espaçamentos
 
-- `primary` - Azul (cor principal)
-- `secondary` - Cinza
-- `success` - Verde
-- `warning` - Amarelo
-- `error` - Vermelho
+Usa escala padrão do Tailwind:
+- `spacing`: 0.25rem increments
+- `borderRadius`: sm, md, lg, xl
 
+### Tipografia
+
+```css
+--font-sans: 'Inter', system-ui, sans-serif;
+```
+
+## 🎯 Features
+
+- ✅ **Design system** completo
+- ✅ **Dark mode** pronto
+- ✅ **Tailwind preset** configurado
+- ✅ **CSS variables** customizáveis
+- ✅ **Animações** incluídas
+
+## 📄 Licença
+
+MIT © Kenny JSA

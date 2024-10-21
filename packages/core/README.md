@@ -1,54 +1,98 @@
 # @kui/core
 
-Core do KUI Framework - Providers, registry e integração com data sources.
+Core KUI Framework - Providers, registry e integração com backends (REST/tRPC).
 
-## Instalação
+## 📦 Instalação
 
 ```bash
-pnpm add @kui/core
+npm install @kui/core @kui/zod-extension
+# or
+pnpm add @kui/core @kui/zod-extension
 ```
 
-## Uso
+## 🚀 Uso Básico
 
-### Configurando Providers
+### Provider REST
 
 ```typescript
-import { KuiDataProvider, createRestProvider } from "@kui/core";
+import { createRestProvider, KuiDataProvider } from '@kui/core';
 
 const userProvider = createRestProvider({
-  name: "userProvider",
-  baseUrl: "/api/users",
+  name: 'userProvider',
+  baseUrl: 'https://api.example.com',
+  endpoints: {
+    list: '/users',
+    get: '/users/:id',
+    create: '/users',
+    update: '/users/:id',
+    delete: '/users/:id',
+  },
 });
 
-function App() {
+export function App() {
   return (
-    <KuiDataProvider providers={[{ name: "userProvider", provider: userProvider }]}>
-      {/* Seus componentes */}
+    <KuiDataProvider providers={[{ name: 'userProvider', provider: userProvider }]}>
+      {/* Seus componentes aqui */}
     </KuiDataProvider>
   );
 }
 ```
 
-### Usando Providers
+### Provider tRPC
 
 ```typescript
-import { useKuiProvider } from "@kui/core";
+import { createTrpcProvider } from '@kui/core';
+import { trpc } from './lib/trpc';
 
-function UserList() {
-  const userProvider = useKuiProvider("userProvider");
-  
-  const loadUsers = async () => {
-    const response = await userProvider.list({
-      page: 1,
-      pageSize: 10,
-    });
-    console.log(response.data);
-  };
+const userTrpcProvider = createTrpcProvider({
+  name: 'userTrpcProvider',
+  router: trpc.user,
+  procedures: {
+    list: 'getAll',
+    get: 'getById',
+    create: 'create',
+    update: 'update',
+    delete: 'delete',
+  },
+});
+```
+
+## 🎯 Features
+
+- ✅ **Interface DataProvider** unificada
+- ✅ **createRestProvider** para APIs REST
+- ✅ **createTrpcProvider** para tRPC
+- ✅ **Registry global** de providers
+- ✅ **React Context** para acesso aos providers
+- ✅ **Type-safe** com TypeScript
+
+## 📖 API
+
+### DataProvider
+
+```typescript
+interface DataProvider<T = any> {
+  name: string;
+  list: (params?: ListParams) => Promise<ListResponse<T>>;
+  get: (id: string | number) => Promise<T>;
+  create: (data: Partial<T>) => Promise<T>;
+  update: (id: string | number, data: Partial<T>) => Promise<T>;
+  delete: (id: string | number) => Promise<void>;
 }
 ```
 
-## Providers Disponíveis
+### Hooks
 
-- `createRestProvider` - Provider para REST APIs
-- Custom providers - Implemente a interface `DataProvider`
+```typescript
+// Obter provider registrado
+const provider = useKuiProvider('userProvider');
 
+// Usar provider
+const users = await provider.list({ page: 1, pageSize: 10 });
+const user = await provider.get(1);
+const newUser = await provider.create({ name: 'João' });
+```
+
+## 📄 Licença
+
+MIT © Kenny JSA

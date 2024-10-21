@@ -1,7 +1,19 @@
 {
   "name": "@kui/core",
-  "version": "0.1.0",
-  "description": "Core KUI - Providers, registry e integração com tRPC",
+  "version": "0.0.1",
+  "description": "Core KUI Framework - Providers, registry e integração com backends (REST/tRPC)",
+  "keywords": ["kui", "core", "provider", "trpc", "rest", "data", "backend"],
+  "homepage": "https://github.com/kennyjsa/kui#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kennyjsa/kui.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/kennyjsa/kui/issues"
+  },
+  "license": "MIT",
+  "author": "Kenny JSA",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

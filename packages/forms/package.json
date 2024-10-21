@@ -1,7 +1,19 @@
 {
   "name": "@kui/forms",
-  "version": "0.1.0",
-  "description": "Form builder e componentes de formulário do KUI",
+  "version": "0.0.1",
+  "description": "Formulários KUI Framework - Geração automática de formulários a partir de schemas Zod",
+  "keywords": ["kui", "forms", "react-hook-form", "zod", "validation", "form-builder", "auto-form"],
+  "homepage": "https://github.com/kennyjsa/kui#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kennyjsa/kui.git",
+    "directory": "packages/forms"
+  },
+  "bugs": {
+    "url": "https://github.com/kennyjsa/kui/issues"
+  },
+  "license": "MIT",
+  "author": "Kenny JSA",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
