@@ -1,38 +1,77 @@
 # 🧩 KUI Framework
 
-**KUI (Kinetic UI Framework)** — Framework de UI declarativa para construção de formulários, grids e layouts administrativos em React.
+> **KUI (Kinetic UI Framework)** — Framework declarativo para construção de formulários, grids e CRUD em React com type-safety completo.
 
-## 🎯 Características
+[![Version](https://img.shields.io/npm/v/@kui/forms?label=version)](https://www.npmjs.com/package/@kui/forms)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/kennyjsa/kui/blob/develop/LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue)](https://www.typescriptlang.org/)
 
-- 🔧 **Declarativo**: Baseado em schemas Zod com metadados
-- 🎨 **Componentes prontos**: Form builder, field renderer, grids
-- 🔗 **Integração**: tRPC, REST APIs
-- 💅 **Design System**: Tailwind CSS + ShadCN
-- 📦 **Monorepo**: Arquitetura modular com Turborepo
-- 🌐 **TypeScript**: Type-safe end-to-end
+---
 
-## 📦 Pacotes
+## ✨ Features
 
-| Pacote | Descrição |
-|--------|-----------|
-| `@kui/zod-extension` | Extensões declarativas do Zod |
-| `@kui/core` | Providers e registry de dados |
-| `@kui/theme` | Tema e design tokens |
-| `@kui/ui` | Componentes visuais base |
-| `@kui/forms` | Form builder e field renderer |
+- 🎯 **Geração automática de UI** a partir de schemas Zod
+- 🎨 **18 tipos de campos** prontos para uso
+- 🔐 **Type-safety** completo end-to-end
+- 🔄 **Integração backend** (REST e tRPC)
+- 📱 **Responsivo** por padrão
+- ♿ **Acessível** com Radix UI
+- ⚡ **Performance** otimizada
+- 🎭 **3 modos** (create, edit, view)
+
+---
+
+## 📦 Instalação
+
+```bash
+npm install @kui/forms @kui/ui @kui/core @kui/zod-extension
+# ou
+pnpm add @kui/forms @kui/ui @kui/core @kui/zod-extension
+# ou
+yarn add @kui/forms @kui/ui @kui/core @kui/zod-extension
+```
+
+### Setup Tailwind
+
+```js
+// tailwind.config.js
+import kuiPreset from '@kui/theme/tailwind';
+
+export default {
+  presets: [kuiPreset],
+  content: [
+    './src/**/*.{ts,tsx}',
+    './node_modules/@kui/**/*.{js,mjs}',
+  ],
+};
+```
+
+```css
+/* globals.css */
+@import '@kui/theme/globals.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+---
 
 ## 🚀 Quick Start
 
-### Instalação
+### Desenvolvimento Local
 
 ```bash
+# Clone o repositório
+git clone https://github.com/kennyjsa/kui.git
+cd kui
+
+# Instalar dependências
 pnpm install
+
+# Build
 pnpm build
-```
 
-### Executar Exemplo
-
-```bash
+# Executar exemplo
 cd examples/person-addresses
 pnpm dev
 ```
@@ -123,27 +162,30 @@ pnpm format
 - **edit**: Edição de registro existente
 - **view**: Visualização (readonly)
 
-### Tipos de Campos
+### 📋 Tipos de Campos (18)
 
-- `identifier()` — ID (sempre readonly)
-- `text()` — Texto
-- `number()` — Número
-- `date()` — Data
-- `email()` — E-mail
-- `password()` — Senha
-- `boolean()` — Boolean
-- `select()` — Seleção
-- `relation()` — Relação/Associação
-- `grid()` — Grid (sublista 1:N)
+**Básicos:**  
+`identifier` • `text` • `number` • `date` • `email` • `password` • `boolean` • `select`
 
-### Comportamentos Declarativos
+**Avançados:**  
+`textarea` • `currency` • `checkbox` • `radio` • `switch` • `rating` • `color` • `file`
 
-- `readOnly` — Campo somente leitura
-- `readOnlyIn` — Readonly em modos específicos
-- `hiddenIn` — Oculto em modos específicos
-- `derived` — Campo calculado
-- `transient` — Não persistido
-- `required` — Campo obrigatório
+**Especiais:**  
+`relation` (relacionamentos) • `grid` (sublistas 1:N)
+
+### ⚙️ Opções Declarativas
+
+**Visibilidade:**  
+`hiddenIn` • `readOnly` • `readOnlyIn` • `showIf` (condicional)
+
+**Validação:**  
+`required` • `mask` • `.refine()` (cross-field)
+
+**Comportamento:**  
+`derived` (calculado) • `compute` (função) • `transient` (não persistido)
+
+**Grid:**  
+`pageSize` • `columns` • `allowCreate` • `allowEdit` • `allowDelete`
 
 ## 📄 Licença
 
