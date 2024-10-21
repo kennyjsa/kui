@@ -15,11 +15,25 @@
 
 ### Passo 1: Configurar NPM Token no GitHub
 
-1. **Gerar token NPM:**
+1. **Gerar token NPM (Granular Access Token - Recomendado):**
    ```
    https://www.npmjs.com/settings/YOUR_USERNAME/tokens
+   → Generate New Token → Granular Access Token
+   → Token name: KUI GitHub Actions
+   → Expiration: No expiration (ou 1 ano)
+   → Packages and scopes:
+     • Permissions: Read and write
+     • Select packages: All packages
+     (ou apenas @kui/* se a org já existir)
+   → Organizations: (selecionar @kui se houver)
+   → Generate token
+   → Copiar token
+   ```
+   
+   **Alternativa (Classic Token):**
+   ```
    → Generate New Token → Classic Token
-   → Automation
+   → Type: Automation
    → Copiar token
    ```
 

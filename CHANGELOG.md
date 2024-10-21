@@ -100,8 +100,10 @@ Release inicial do KUI Framework com funcionalidades core completas.
 ### 🏗️ Infraestrutura
 
 - GitHub Actions para CI/CD
-- Workflow de release automatizado
-- Scripts de bump-version e check-publish
+- Workflow de release automatizado (tags na main)
+- Scripts de automação (bump-version, validate-version, validate-tag, check-publish)
+- Husky hooks (pre-commit, pre-push)
+- Validações automáticas de versão e branch
 - ESLint e Prettier configurados
 - TypeScript strict mode
 

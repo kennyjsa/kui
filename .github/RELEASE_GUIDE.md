@@ -2,12 +2,30 @@
 
 ## 📋 Pré-requisitos
 
-### 1. NPM Token
+### 1. NPM Token (Granular Access Token - Recomendado)
 
 1. Acesse https://www.npmjs.com/settings/YOUR_USERNAME/tokens
-2. Clique em "Generate New Token" → "Classic Token"
-3. Selecione "Automation" (para CI/CD)
-4. Copie o token gerado
+2. Clique em "Generate New Token" → **"Granular Access Token"**
+3. Configure:
+   - **Token name:** KUI GitHub Actions
+   - **Expiration:** No expiration (ou 1 ano, renovar anualmente)
+   - **Packages and scopes:**
+     - Permissions: **Read and write**
+     - Select packages: **All packages** (ou apenas @kui/* se org existir)
+   - **Organizations:** Selecionar @kui (se houver organização)
+4. Clique em "Generate token"
+5. Copie o token gerado (começa com `npm_...`)
+
+**Por que Granular Token?**
+- ✅ Mais seguro (escopo limitado)
+- ✅ Pode restringir a pacotes específicos
+- ✅ Auditoria melhorada
+- ✅ Recomendação oficial NPM desde 2022
+
+**Alternativa (Classic Token):**
+Se preferir usar Classic Token:
+- Generate New Token → Classic Token
+- Type: **Automation**
 
 ### 2. Configurar Secret no GitHub
 
