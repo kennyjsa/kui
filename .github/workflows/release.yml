@@ -130,35 +130,35 @@ jobs:
           name: dist
           path: packages
 
-      - name: Publish @kui/zod-extension
+      - name: Publish @kui-framework/zod-extension
         run: |
           cd packages/zod-extension
           npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @kui/theme
+      - name: Publish @kui-framework/theme
         run: |
           cd packages/theme
           npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @kui/core
+      - name: Publish @kui-framework/core
         run: |
           cd packages/core
           npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @kui/ui
+      - name: Publish @kui-framework/ui
         run: |
           cd packages/ui
           npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @kui/forms
+      - name: Publish @kui-framework/forms
         run: |
           cd packages/forms
           npm publish --access public --provenance
@@ -228,13 +228,13 @@ jobs:
           echo "🎉 KUI Framework v${{ steps.version.outputs.VERSION }} publicado com sucesso!"
           echo ""
           echo "📦 Pacotes NPM:"
-          echo "  - @kui/zod-extension@${{ steps.version.outputs.VERSION }}"
-          echo "  - @kui/theme@${{ steps.version.outputs.VERSION }}"
-          echo "  - @kui/core@${{ steps.version.outputs.VERSION }}"
-          echo "  - @kui/ui@${{ steps.version.outputs.VERSION }}"
-          echo "  - @kui/forms@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui-framework/zod-extension@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui-framework/theme@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui-framework/core@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui-framework/ui@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui-framework/forms@${{ steps.version.outputs.VERSION }}"
           echo ""
           echo "🔗 Links:"
-          echo "  NPM: https://www.npmjs.com/package/@kui/forms"
+          echo "  NPM: https://www.npmjs.com/package/@kui-framework/forms"
           echo "  GitHub: https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.VERSION }}"
 
