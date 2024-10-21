@@ -5,15 +5,13 @@ on:
   push:
     tags:
       - 'v*'
-    branches:
-      - main
 
 jobs:
   # Job 1: Build e validação
   build:
     name: Build e Validação
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,23 +22,35 @@ jobs:
 
       - name: Validate branch is main
         run: |
+          # Fetch todas as branches para garantir que temos a informação completa
+          git fetch --all
+          
+          # Verifica se a tag está na branch main
           BRANCH=$(git branch -r --contains ${{ github.ref }} | grep 'origin/main' || echo "")
+          
           if [ -z "$BRANCH" ]; then
-            echo "❌ Erro: Tag deve estar na branch main!"
-            echo "   Faça merge de develop → main antes de criar a tag"
+            echo "❌ Erro: Tag ${{ github.ref_name }} não está na branch main!"
+            echo "   Esta tag foi criada em outra branch."
+            echo ""
+            echo "📝 Para corrigir:"
+            echo "   1. Delete a tag: git tag -d ${{ github.ref_name }} && git push origin :refs/tags/${{ github.ref_name }}"
+            echo "   2. Faça checkout na main: git checkout main"
+            echo "   3. Recrie a tag: git tag -a ${{ github.ref_name }} -m 'Release ${{ github.ref_name }}'"
+            echo "   4. Push da tag: git push origin ${{ github.ref_name }}"
             exit 1
           fi
-          echo "✅ Tag está na branch main"
+          
+          echo "✅ Tag ${{ github.ref_name }} está na branch main"
 
       - name: Validate package.json versions match tag
         run: |
           TAG_VERSION="${{ steps.version.outputs.VERSION }}"
           ERRORS=0
-          
+
           for pkg in packages/*/package.json; do
             PKG_VERSION=$(grep '"version"' $pkg | head -1 | sed 's/.*": "//;s/".*//')
             PKG_NAME=$(dirname $pkg)
-            
+
             if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
               echo "❌ $PKG_NAME: versão $PKG_VERSION não corresponde à tag v$TAG_VERSION"
               ERRORS=$((ERRORS + 1))
@@ -48,14 +58,14 @@ jobs:
               echo "✅ $PKG_NAME: v$PKG_VERSION"
             fi
           done
-          
+
           if [ $ERRORS -gt 0 ]; then
             echo ""
             echo "❌ Erro: $ERRORS pacote(s) com versão incorreta!"
             echo "   Execute: ./scripts/bump-version.sh $TAG_VERSION"
             exit 1
           fi
-          
+
           echo ""
           echo "✅ Todas as versões estão corretas!"
 
