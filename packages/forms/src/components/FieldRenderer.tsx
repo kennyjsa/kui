@@ -13,8 +13,8 @@ import {
   Rating,
   ColorPicker,
   FileUpload,
-} from "@kui/ui";
-import type { RelationOptions, GridOptions } from "@kui/zod-extension";
+} from "@kui-framework/ui";
+import type { RelationOptions, GridOptions } from "@kui-framework/zod-extension";
 import type { FieldRendererProps } from "../types";
 import { isFieldReadOnly, shouldShowField } from "../utils/shouldShowField";
 import { RelationSelect } from "./RelationSelect";

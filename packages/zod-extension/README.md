@@ -1,21 +1,21 @@
-# @kui/zod-extension
+# @kui-framework/zod-extension
 
 Extensões Zod para KUI Framework - Schemas declarativos para geração automática de UI.
 
 ## 📦 Instalação
 
 ```bash
-npm install @kui/zod-extension zod
+npm install @kui-framework/zod-extension zod
 # or
-pnpm add @kui/zod-extension zod
+pnpm add @kui-framework/zod-extension zod
 # or
-yarn add @kui/zod-extension zod
+yarn add @kui-framework/zod-extension zod
 ```
 
 ## 🚀 Uso
 
 ```typescript
-import { zKUI } from '@kui/zod-extension';
+import { zKUI } from '@kui-framework/zod-extension';
 
 const pessoaSchema = zKUI.object({
   id: zKUI.identifier("ID"),

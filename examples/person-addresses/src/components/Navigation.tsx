@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@kui/ui";
+import { cn } from "@kui-framework/ui";
 
 const routes = [
   { href: "/", label: "Campos Básicos" },

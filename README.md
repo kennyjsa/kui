@@ -2,7 +2,7 @@
 
 > **KUI (Kinetic UI Framework)** — Framework declarativo para construção de formulários, grids e CRUD em React com type-safety completo.
 
-[![Version](https://img.shields.io/npm/v/@kui/forms?label=version)](https://www.npmjs.com/package/@kui/forms)
+[![Version](https://img.shields.io/npm/v/@kui-framework/forms?label=version)](https://www.npmjs.com/package/@kui-framework/forms)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/kennyjsa/kui/blob/develop/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue)](https://www.typescriptlang.org/)
 
@@ -24,31 +24,31 @@
 ## 📦 Instalação
 
 ```bash
-npm install @kui/forms @kui/ui @kui/core @kui/zod-extension
+npm install @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension
 # ou
-pnpm add @kui/forms @kui/ui @kui/core @kui/zod-extension
+pnpm add @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension
 # ou
-yarn add @kui/forms @kui/ui @kui/core @kui/zod-extension
+yarn add @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension
 ```
 
 ### Setup Tailwind
 
 ```js
 // tailwind.config.js
-import kuiPreset from '@kui/theme/tailwind';
+import kuiPreset from '@kui-framework/theme/tailwind';
 
 export default {
   presets: [kuiPreset],
   content: [
     './src/**/*.{ts,tsx}',
-    './node_modules/@kui/**/*.{js,mjs}',
+    './node_modules/@kui-framework/**/*.{js,mjs}',
   ],
 };
 ```
 
 ```css
 /* globals.css */
-@import '@kui/theme/globals.css';
+@import '@kui-framework/theme/globals.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -83,7 +83,7 @@ Acesse: http://localhost:3000
 ### 1. Defina um Schema
 
 ```typescript
-import { zKUI } from "@kui/zod-extension";
+import { zKUI } from "@kui-framework/zod-extension";
 
 const userSchema = zKUI.object({
   id: zKUI.identifier("ID"),
@@ -99,7 +99,7 @@ const userSchema = zKUI.object({
 ### 2. Use o FormBuilder
 
 ```tsx
-import { FormBuilder } from "@kui/forms";
+import { FormBuilder } from "@kui-framework/forms";
 
 function UserForm() {
   return (

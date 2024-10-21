@@ -1,19 +1,19 @@
-# @kui/ui
+# @kui-framework/ui
 
 Componentes UI KUI Framework - Biblioteca React com Radix UI e Tailwind CSS.
 
 ## 📦 Instalação
 
 ```bash
-npm install @kui/ui @kui/theme react react-dom
+npm install @kui-framework/ui @kui-framework/theme react react-dom
 # or
-pnpm add @kui/ui @kui/theme react react-dom
+pnpm add @kui-framework/ui @kui-framework/theme react react-dom
 ```
 
 ## 🚀 Uso
 
 ```typescript
-import { Button, Input, Label, Card } from '@kui/ui';
+import { Button, Input, Label, Card } from '@kui-framework/ui';
 
 function MyForm() {
   return (

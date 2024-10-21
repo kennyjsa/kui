@@ -1,7 +1,7 @@
 "use client";
 
-import { KuiDataProvider } from "@kui/core";
-import { FormBuilder } from "@kui/forms";
+import { KuiDataProvider } from "@kui-framework/core";
+import { FormBuilder } from "@kui-framework/forms";
 import { pessoaComEnderecoSchema } from "@/schemas/pessoaComEndereco.schema";
 import { mockUserProvider } from "@/providers/mockUserProvider";
 

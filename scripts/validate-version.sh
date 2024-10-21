@@ -19,10 +19,10 @@ for pkg in packages/*/package.json; do
   PKG_NAME=$(basename $(dirname $pkg))
   
   if [ "$PKG_VERSION" != "$REFERENCE_VERSION" ]; then
-    echo "❌ @kui/$PKG_NAME: v$PKG_VERSION (esperado: v$REFERENCE_VERSION)"
+    echo "❌ @kui-framework/$PKG_NAME: v$PKG_VERSION (esperado: v$REFERENCE_VERSION)"
     ERRORS=$((ERRORS + 1))
   else
-    echo "✅ @kui/$PKG_NAME: v$PKG_VERSION"
+    echo "✅ @kui-framework/$PKG_NAME: v$PKG_VERSION"
   fi
 done
 

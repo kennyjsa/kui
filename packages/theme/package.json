@@ -1,5 +1,5 @@
 {
-  "name": "@kui/theme",
+  "name": "@kui-framework/theme",
   "version": "0.0.1",
   "description": "Sistema de temas KUI Framework - Design tokens, Tailwind preset e estilos globais",
   "keywords": ["kui", "theme", "tailwind", "design-tokens", "css", "styling"],

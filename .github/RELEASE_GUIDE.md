@@ -11,7 +11,7 @@
    - **Expiration:** No expiration (ou 1 ano, renovar anualmente)
    - **Packages and scopes:**
      - Permissions: **Read and write**
-     - Select packages: **All packages** (ou apenas @kui/* se org existir)
+     - Select packages: **All packages** (ou apenas @kui-framework/* se org existir)
    - **Organizations:** Selecionar @kui (se houver organização)
 4. Clique em "Generate token"
 5. Copie o token gerado (começa com `npm_...`)
@@ -195,7 +195,7 @@ git push origin v0.0.2
 ### 5. Verificar
 ```bash
 # Verificar no NPM
-npm view @kui/forms
+npm view @kui-framework/forms
 
 # Verificar GitHub Release
 # https://github.com/kennyjsa/kui/releases
@@ -245,8 +245,8 @@ packages=("zod-extension" "theme" "core" "ui" "forms")
 
 for pkg in "${packages[@]}"; do
   echo ""
-  echo "Verificando @kui/$pkg..."
-  npm view @kui/$pkg version 2>/dev/null || echo "  ❌ Não publicado"
+  echo "Verificando @kui-framework/$pkg..."
+  npm view @kui-framework/$pkg version 2>/dev/null || echo "  ❌ Não publicado"
 done
 ```
 
@@ -315,7 +315,7 @@ git push origin v0.0.2
 # Acesse: https://github.com/kennyjsa/kui/actions
 
 # 5. Verificar
-npm view @kui/forms
+npm view @kui-framework/forms
 # Sucesso! 🎉
 ```
 
@@ -348,7 +348,7 @@ v1.0.0 - Produção (API estável, testes completos, docs)
    ```bash
    npx create-next-app test-kui
    cd test-kui
-   npm install @kui/forms @kui/ui @kui/core @kui/zod-extension
+   npm install @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension
    ```
 
 2. **Anunciar**

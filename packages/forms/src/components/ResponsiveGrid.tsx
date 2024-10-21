@@ -1,6 +1,6 @@
 "use client";
 
-import type { GridOptions } from "@kui/zod-extension";
+import type { GridOptions } from "@kui-framework/zod-extension";
 import type { FormMode } from "../types";
 import { GridField } from "./GridField";
 import { ListField } from "./ListField";

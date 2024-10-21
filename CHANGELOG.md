@@ -25,7 +25,7 @@ Release inicial do KUI Framework com funcionalidades core completas.
 
 #### Fase 1: Consolidação
 - **Monorepo** com Turborepo + pnpm workspaces
-- **5 pacotes:** `@kui/zod-extension`, `@kui/core`, `@kui/theme`, `@kui/ui`, `@kui/forms`
+- **5 pacotes:** `@kui-framework/zod-extension`, `@kui-framework/core`, `@kui-framework/theme`, `@kui-framework/ui`, `@kui-framework/forms`
 - **FormBuilder** com geração automática de UI
 - **3 modos:** create, edit, view
 - **Campos básicos:** identifier, text, number, date, email, password, boolean, select

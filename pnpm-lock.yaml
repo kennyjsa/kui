@@ -26,19 +26,19 @@ importers:
 
   examples/person-addresses:
     dependencies:
-      '@kui/core':
+      '@kui-framework/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@kui/forms':
+      '@kui-framework/forms':
         specifier: workspace:*
         version: link:../../packages/forms
-      '@kui/theme':
+      '@kui-framework/theme':
         specifier: workspace:*
         version: link:../../packages/theme
-      '@kui/ui':
+      '@kui-framework/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@kui/zod-extension':
+      '@kui-framework/zod-extension':
         specifier: workspace:*
         version: link:../../packages/zod-extension
       '@tanstack/react-query':
@@ -102,7 +102,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@kui/zod-extension':
+      '@kui-framework/zod-extension':
         specifier: workspace:*
         version: link:../zod-extension
     devDependencies:
@@ -127,13 +127,13 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.3.4
         version: 3.10.0(react-hook-form@7.65.0)
-      '@kui/core':
+      '@kui-framework/core':
         specifier: workspace:*
         version: link:../core
-      '@kui/ui':
+      '@kui-framework/ui':
         specifier: workspace:*
         version: link:../ui
-      '@kui/zod-extension':
+      '@kui-framework/zod-extension':
         specifier: workspace:*
         version: link:../zod-extension
       react-hook-form:
@@ -186,7 +186,7 @@ importers:
 
   packages/ui:
     dependencies:
-      '@kui/theme':
+      '@kui-framework/theme':
         specifier: workspace:*
         version: link:../theme
       '@radix-ui/react-checkbox':

@@ -1,13 +1,13 @@
-# @kui/theme
+# @kui-framework/theme
 
 Sistema de temas KUI Framework - Design tokens, Tailwind preset e estilos globais.
 
 ## 📦 Instalação
 
 ```bash
-npm install @kui/theme tailwindcss
+npm install @kui-framework/theme tailwindcss
 # or
-pnpm add @kui/theme tailwindcss
+pnpm add @kui-framework/theme tailwindcss
 ```
 
 ## 🚀 Setup
@@ -16,13 +16,13 @@ pnpm add @kui/theme tailwindcss
 
 ```js
 // tailwind.config.js
-import kuiPreset from '@kui/theme/tailwind';
+import kuiPreset from '@kui-framework/theme/tailwind';
 
 export default {
   presets: [kuiPreset],
   content: [
     './src/**/*.{ts,tsx}',
-    './node_modules/@kui/**/*.{js,mjs}',
+    './node_modules/@kui-framework/**/*.{js,mjs}',
   ],
 };
 ```
@@ -31,7 +31,7 @@ export default {
 
 ```css
 /* app/globals.css */
-@import '@kui/theme/globals.css';
+@import '@kui-framework/theme/globals.css';
 
 @tailwind base;
 @tailwind components;

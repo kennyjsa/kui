@@ -1,4 +1,4 @@
-import { createTrpcProvider } from "@kui/core";
+import { createTrpcProvider } from "@kui-framework/core";
 import { trpc } from "../lib/trpc";
 
 /**

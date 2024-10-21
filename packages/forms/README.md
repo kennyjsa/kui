@@ -1,20 +1,20 @@
-# @kui/forms
+# @kui-framework/forms
 
 Formulários KUI Framework - Geração automática de formulários a partir de schemas Zod.
 
 ## 📦 Instalação
 
 ```bash
-npm install @kui/forms @kui/ui @kui/core @kui/zod-extension react-hook-form zod
+npm install @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension react-hook-form zod
 # or
-pnpm add @kui/forms @kui/ui @kui/core @kui/zod-extension react-hook-form zod
+pnpm add @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension react-hook-form zod
 ```
 
 ## 🚀 Uso
 
 ```typescript
-import { FormBuilder } from '@kui/forms';
-import { zKUI } from '@kui/zod-extension';
+import { FormBuilder } from '@kui-framework/forms';
+import { zKUI } from '@kui-framework/zod-extension';
 
 const schema = zKUI.object({
   nome: zKUI.text("Nome", { required: true }),

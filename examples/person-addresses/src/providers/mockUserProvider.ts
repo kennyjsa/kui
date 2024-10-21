@@ -1,4 +1,4 @@
-import type { DataProvider } from "@kui/core";
+import type { DataProvider } from "@kui-framework/core";
 
 export interface User {
   id: number;

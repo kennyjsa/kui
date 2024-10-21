@@ -1,4 +1,4 @@
-import { zKUI } from "@kui/zod-extension";
+import { zKUI } from "@kui-framework/zod-extension";
 
 /**
  * Schema com validações cross-field e campos condicionais

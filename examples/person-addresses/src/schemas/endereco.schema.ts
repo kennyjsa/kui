@@ -1,4 +1,4 @@
-import { zKUI } from "@kui/zod-extension";
+import { zKUI } from "@kui-framework/zod-extension";
 
 /**
  * Schema de Endereço

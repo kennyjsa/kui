@@ -1,6 +1,6 @@
 "use client";
 
-import { FormBuilder } from "@kui/forms";
+import { FormBuilder } from "@kui-framework/forms";
 import { cadastroSchema } from "@/schemas/cadastro.schema";
 
 export default function WithValidationsPage() {

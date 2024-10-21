@@ -1,5 +1,5 @@
 {
-  "name": "@kui/core",
+  "name": "@kui-framework/core",
   "version": "0.0.1",
   "description": "Core KUI Framework - Providers, registry e integração com backends (REST/tRPC)",
   "keywords": ["kui", "core", "provider", "trpc", "rest", "data", "backend"],
@@ -31,7 +31,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@kui/zod-extension": "workspace:*"
+    "@kui-framework/zod-extension": "workspace:*"
   },
   "peerDependenciesMeta": {
     "@trpc/client": {

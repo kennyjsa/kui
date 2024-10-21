@@ -1,7 +1,7 @@
 "use client";
 
-import { FormBuilder } from "@kui/forms";
-import { KuiDataProvider } from "@kui/core";
+import { FormBuilder } from "@kui-framework/forms";
+import { KuiDataProvider } from "@kui-framework/core";
 import { pessoaSchema } from "@/schemas/pessoa.schema";
 import { pessoaTrpcProvider, usuarioTrpcProvider } from "@/providers/kuiTrpcProviders";
 import { trpc } from "@/lib/trpc";

@@ -24,7 +24,7 @@
    → Packages and scopes:
      • Permissions: Read and write
      • Select packages: All packages
-     (ou apenas @kui/* se a org já existir)
+     (ou apenas @kui-framework/* se a org já existir)
    → Organizations: (selecionar @kui se houver)
    → Generate token
    → Copiar token
@@ -139,7 +139,7 @@ cd ../..
 
 ```bash
 # Verificar no NPM
-npm view @kui/forms
+npm view @kui-framework/forms
 
 # Ou usar script
 ./scripts/check-publish.sh
@@ -148,7 +148,7 @@ npm view @kui/forms
 mkdir test-kui
 cd test-kui
 npm init -y
-npm install @kui/forms @kui/ui @kui/core @kui/zod-extension
+npm install @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension
 ```
 
 ### Verificar GitHub Release
@@ -174,7 +174,7 @@ Framework declarativo para forms e CRUD em React.
 ⚡ Integração tRPC
 📱 Responsivo por padrão
 
-npm install @kui/forms
+npm install @kui-framework/forms
 
 #React #TypeScript #OpenSource
 ```

@@ -1,5 +1,5 @@
 {
-  "name": "@kui/zod-extension",
+  "name": "@kui-framework/zod-extension",
   "version": "0.0.1",
   "description": "Extensões Zod para KUI Framework - Schemas declarativos para geração automática de UI",
   "keywords": ["zod", "schema", "validation", "typescript", "react", "forms", "kui"],

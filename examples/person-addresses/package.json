@@ -10,11 +10,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@kui/core": "workspace:*",
-    "@kui/forms": "workspace:*",
-    "@kui/theme": "workspace:*",
-    "@kui/ui": "workspace:*",
-    "@kui/zod-extension": "workspace:*",
+    "@kui-framework/core": "workspace:*",
+    "@kui-framework/forms": "workspace:*",
+    "@kui-framework/theme": "workspace:*",
+    "@kui-framework/ui": "workspace:*",
+    "@kui-framework/zod-extension": "workspace:*",
     "@tanstack/react-query": "^5.90.5",
     "@trpc/client": "^11.6.0",
     "@trpc/next": "^11.6.0",

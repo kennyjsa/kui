@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getKuiMetadata } from "@kui/zod-extension";
+import { getKuiMetadata } from "@kui-framework/zod-extension";
 import type { FieldConfig, AcceptedSchema } from "../types";
 
 /**

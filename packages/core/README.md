@@ -1,13 +1,13 @@
-# @kui/core
+# @kui-framework/core
 
 Core KUI Framework - Providers, registry e integração com backends (REST/tRPC).
 
 ## 📦 Instalação
 
 ```bash
-npm install @kui/core @kui/zod-extension
+npm install @kui-framework/core @kui-framework/zod-extension
 # or
-pnpm add @kui/core @kui/zod-extension
+pnpm add @kui-framework/core @kui-framework/zod-extension
 ```
 
 ## 🚀 Uso Básico
@@ -15,7 +15,7 @@ pnpm add @kui/core @kui/zod-extension
 ### Provider REST
 
 ```typescript
-import { createRestProvider, KuiDataProvider } from '@kui/core';
+import { createRestProvider, KuiDataProvider } from '@kui-framework/core';
 
 const userProvider = createRestProvider({
   name: 'userProvider',
@@ -41,7 +41,7 @@ export function App() {
 ### Provider tRPC
 
 ```typescript
-import { createTrpcProvider } from '@kui/core';
+import { createTrpcProvider } from '@kui-framework/core';
 import { trpc } from './lib/trpc';
 
 const userTrpcProvider = createTrpcProvider({

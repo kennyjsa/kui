@@ -52,10 +52,10 @@ for pkg in packages/*/package.json; do
   PKG_NAME=$(basename $(dirname $pkg))
   
   if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
-    echo "❌ @kui/$PKG_NAME: v$PKG_VERSION (tag: v$TAG_VERSION)"
+    echo "❌ @kui-framework/$PKG_NAME: v$PKG_VERSION (tag: v$TAG_VERSION)"
     ERRORS=$((ERRORS + 1))
   else
-    echo "✅ @kui/$PKG_NAME: v$PKG_VERSION"
+    echo "✅ @kui-framework/$PKG_NAME: v$PKG_VERSION"
   fi
 done
 
