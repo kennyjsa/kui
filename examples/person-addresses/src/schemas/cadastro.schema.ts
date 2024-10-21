@@ -2,7 +2,7 @@ import { zKUI } from "@kui/zod-extension";
 
 /**
  * Schema com validações cross-field e campos condicionais
- * 
+ *
  * Demonstra:
  * - Campos condicionais (showIf)
  * - Validações cross-field (.refine)

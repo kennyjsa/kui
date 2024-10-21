@@ -16,7 +16,7 @@ export interface ListFieldProps {
   mode: FormMode;
 }
 
-export function ListField({ value = [], onChange, options, mode }: ListFieldProps) {
+function ListFieldComponent({ value = [], onChange, options, mode }: ListFieldProps) {
   const [items, setItems] = React.useState<GridItem[]>([]);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalMode, setModalMode] = React.useState<FormMode>("create");
@@ -24,8 +24,13 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
   const [currentPage, setCurrentPage] = React.useState(1);
 
   const isReadOnly = mode === "view";
-  const fields = extractFields(options.itemSchema);
-  const displayFields = options.displayFields || options.columns.slice(0, 3); // Primeiros 3 campos
+
+  // Memoizar campos e configurações
+  const fields = React.useMemo(() => extractFields(options.itemSchema), [options.itemSchema]);
+  const displayFields = React.useMemo(() =>
+    options.displayFields || options.columns.slice(0, 3),
+    [options.displayFields, options.columns]
+  );
   const pageSize = options.pageSize || 5;
 
   // Inicializa items do value
@@ -40,25 +45,25 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
     }
   }, []);
 
-  // Sincroniza mudanças com formulário pai
-  const syncToParent = (newItems: GridItem[]) => {
+  // Sincroniza mudanças com formulário pai (memoizado)
+  const syncToParent = React.useCallback((newItems: GridItem[]) => {
     const validItems = newItems.filter((item) => item.status !== "deleted" || item.data.id);
     onChange(validItems.map((item) => item.data));
-  };
+  }, [onChange]);
 
-  const handleAdd = () => {
+  const handleAdd = React.useCallback(() => {
     setSelectedIndex(null);
     setModalMode("create");
     setModalOpen(true);
-  };
+  }, []);
 
-  const handleEdit = (index: number) => {
+  const handleEdit = React.useCallback((index: number) => {
     setSelectedIndex(index);
     setModalMode("edit");
     setModalOpen(true);
-  };
+  }, []);
 
-  const handleDelete = (index: number) => {
+  const handleDelete = React.useCallback((index: number) => {
     const item = items[index];
     const newItems = [...items];
 
@@ -70,16 +75,16 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
 
     setItems(newItems);
     syncToParent(newItems);
-  };
+  }, [items, syncToParent]);
 
-  const handleRestore = (index: number) => {
+  const handleRestore = React.useCallback((index: number) => {
     const newItems = [...items];
     newItems[index] = { ...newItems[index], status: "unchanged" };
     setItems(newItems);
     syncToParent(newItems);
-  };
+  }, [items, syncToParent]);
 
-  const handleSave = (data: any) => {
+  const handleSave = React.useCallback((data: any) => {
     const newItems = [...items];
 
     if (modalMode === "create") {
@@ -99,7 +104,7 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
 
     setItems(newItems);
     syncToParent(newItems);
-  };
+  }, [items, modalMode, selectedIndex, syncToParent]);
 
   const getFieldValue = (item: any, fieldName: string) => {
     const value = item[fieldName];
@@ -281,4 +286,7 @@ export function ListField({ value = [], onChange, options, mode }: ListFieldProp
     </div>
   );
 }
+
+// Memoizar componente para evitar re-renders desnecessários
+export const ListField = React.memo(ListFieldComponent);
 

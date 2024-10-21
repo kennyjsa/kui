@@ -1,5 +1,19 @@
+import React from "react";
 import { Controller, useWatch } from "react-hook-form";
-import { Input, Label, MaskedInput, Textarea, CurrencyInput, Checkbox, RadioGroup, RadioGroupItem, Switch, Rating, ColorPicker, FileUpload } from "@kui/ui";
+import {
+  Input,
+  Label,
+  MaskedInput,
+  Textarea,
+  CurrencyInput,
+  Checkbox,
+  RadioGroup,
+  RadioGroupItem,
+  Switch,
+  Rating,
+  ColorPicker,
+  FileUpload,
+} from "@kui/ui";
 import type { RelationOptions, GridOptions } from "@kui/zod-extension";
 import type { FieldRendererProps } from "../types";
 import { isFieldReadOnly, shouldShowField } from "../utils/shouldShowField";
@@ -9,7 +23,7 @@ import { ResponsiveGrid } from "./ResponsiveGrid";
 /**
  * Renderiza um campo baseado na configuração
  */
-export function FieldRenderer({ config, mode, control, errors }: FieldRendererProps) {
+function FieldRendererComponent({ config, mode, control, errors }: FieldRendererProps) {
   // Observa os valores do formulário para campos condicionais
   const formValues = useWatch({ control });
 
@@ -317,3 +331,5 @@ export function FieldRenderer({ config, mode, control, errors }: FieldRendererPr
   );
 }
 
+// Memoizar FieldRenderer para otimizar re-renders
+export const FieldRenderer = React.memo(FieldRendererComponent);

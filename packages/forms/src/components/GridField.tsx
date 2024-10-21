@@ -21,7 +21,7 @@ export interface GridFieldProps {
   mode: FormMode;
 }
 
-export function GridField({ value = [], onChange, options, mode }: GridFieldProps) {
+function GridFieldComponent({ value = [], onChange, options, mode }: GridFieldProps) {
   const [items, setItems] = React.useState<GridItem[]>([]);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalMode, setModalMode] = React.useState<FormMode>("create");
@@ -29,7 +29,9 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
   const [currentPage, setCurrentPage] = React.useState(1);
 
   const isReadOnly = mode === "view";
-  const fields = extractFields(options.itemSchema);
+
+  // Memoizar campos para evitar re-extrair a cada render
+  const fields = React.useMemo(() => extractFields(options.itemSchema), [options.itemSchema]);
   const pageSize = options.pageSize || 5;
 
   // Inicializa items do value
@@ -44,80 +46,92 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
     }
   }, []);
 
-  // Sincroniza mudanças com formulário pai
-  const syncToParent = (newItems: GridItem[]) => {
-    // Filtra itens deletados se for hard delete de 'new'
-    const validItems = newItems.filter((item) => item.status !== "deleted" || item.data.id);
+  // Sincroniza mudanças com formulário pai (memoizado)
+  const syncToParent = React.useCallback(
+    (newItems: GridItem[]) => {
+      // Filtra itens deletados se for hard delete de 'new'
+      const validItems = newItems.filter((item) => item.status !== "deleted" || item.data.id);
 
-    // Retorna apenas os dados (sem tracking)
-    onChange(validItems.map((item) => item.data));
-  };
+      // Retorna apenas os dados (sem tracking)
+      onChange(validItems.map((item) => item.data));
+    },
+    [onChange]
+  );
 
-  const handleAdd = () => {
+  const handleAdd = React.useCallback(() => {
     setSelectedIndex(null);
     setModalMode("create");
     setModalOpen(true);
-  };
+  }, []);
 
-  const handleEdit = (index: number) => {
+  const handleEdit = React.useCallback((index: number) => {
     setSelectedIndex(index);
     setModalMode("edit");
     setModalOpen(true);
-  };
+  }, []);
 
-  const handleView = (index: number) => {
+  const handleView = React.useCallback((index: number) => {
     setSelectedIndex(index);
     setModalMode("view");
     setModalOpen(true);
-  };
+  }, []);
 
-  const handleDelete = (index: number) => {
-    const item = items[index];
+  const handleDelete = React.useCallback(
+    (index: number) => {
+      const item = items[index];
 
-    const newItems = [...items];
+      const newItems = [...items];
 
-    if (item.status === "new") {
-      // Hard delete: remove do array
-      newItems.splice(index, 1);
-    } else {
-      // Soft delete: marca como deleted
-      newItems[index] = { ...item, status: "deleted" };
-    }
+      if (item.status === "new") {
+        // Hard delete: remove do array
+        newItems.splice(index, 1);
+      } else {
+        // Soft delete: marca como deleted
+        newItems[index] = { ...item, status: "deleted" };
+      }
 
-    setItems(newItems);
-    syncToParent(newItems);
-  };
+      setItems(newItems);
+      syncToParent(newItems);
+    },
+    [items, syncToParent]
+  );
 
-  const handleRestore = (index: number) => {
-    const newItems = [...items];
-    newItems[index] = { ...newItems[index], status: "unchanged" };
-    setItems(newItems);
-    syncToParent(newItems);
-  };
+  const handleRestore = React.useCallback(
+    (index: number) => {
+      const newItems = [...items];
+      newItems[index] = { ...newItems[index], status: "unchanged" };
+      setItems(newItems);
+      syncToParent(newItems);
+    },
+    [items, syncToParent]
+  );
 
-  const handleSave = (data: any) => {
-    const newItems = [...items];
+  const handleSave = React.useCallback(
+    (data: any) => {
+      const newItems = [...items];
 
-    if (modalMode === "create") {
-      // Adicionar novo
-      newItems.push({
-        data,
-        status: "new",
-        _tempId: `temp-${Date.now()}`,
-      });
-    } else if (selectedIndex !== null) {
-      // Atualizar existente
-      const currentItem = newItems[selectedIndex];
-      newItems[selectedIndex] = {
-        data,
-        status: currentItem.status === "new" ? "new" : "updated",
-        _tempId: currentItem._tempId,
-      };
-    }
+      if (modalMode === "create") {
+        // Adicionar novo
+        newItems.push({
+          data,
+          status: "new",
+          _tempId: `temp-${Date.now()}`,
+        });
+      } else if (selectedIndex !== null) {
+        // Atualizar existente
+        const currentItem = newItems[selectedIndex];
+        newItems[selectedIndex] = {
+          data,
+          status: currentItem.status === "new" ? "new" : "updated",
+          _tempId: currentItem._tempId,
+        };
+      }
 
-    setItems(newItems);
-    syncToParent(newItems);
-  };
+      setItems(newItems);
+      syncToParent(newItems);
+    },
+    [items, modalMode, selectedIndex, syncToParent]
+  );
 
   const getColumnValue = (item: any, column: string) => {
     const value = item[column];
@@ -208,83 +222,81 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
                     item.status === "deleted" ? "opacity-50 line-through" : ""
                   }`}
                 >
-                {options.columns.map((column) => (
-                  <td key={column} className="p-3">
-                    {getColumnValue(item.data, column)}
-                  </td>
-                ))}
-                <td className="p-3">
-                  {item.status === "new" && (
-                    <Badge variant="default" className="bg-green-500">
-                      Novo
-                    </Badge>
-                  )}
-                  {item.status === "updated" && (
-                    <Badge variant="default" className="bg-yellow-500">
-                      Editado
-                    </Badge>
-                  )}
-                  {item.status === "deleted" && (
-                    <Badge variant="destructive">Excluído</Badge>
-                  )}
-                </td>
-                <td className="p-3">
-                  <div className="flex justify-end gap-1">
-                    {item.status === "deleted" ? (
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleRestore(originalIndex)}
-                        title="Restaurar"
-                      >
-                        <RotateCcw className="h-4 w-4" />
-                      </Button>
-                    ) : (
-                      <>
-                        {mode === "view" ? (
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleView(originalIndex)}
-                            title="Visualizar"
-                          >
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                        ) : (
-                          <>
-                            {options.allowEdit !== false && (
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => handleEdit(originalIndex)}
-                                title="Editar"
-                              >
-                                <Pencil className="h-4 w-4" />
-                              </Button>
-                            )}
-                            {options.allowDelete !== false && (
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => handleDelete(originalIndex)}
-                                title="Excluir"
-                              >
-                                <Trash2 className="h-4 w-4 text-destructive" />
-                              </Button>
-                            )}
-                          </>
-                        )}
-                      </>
+                  {options.columns.map((column) => (
+                    <td key={column} className="p-3">
+                      {getColumnValue(item.data, column)}
+                    </td>
+                  ))}
+                  <td className="p-3">
+                    {item.status === "new" && (
+                      <Badge variant="default" className="bg-green-500">
+                        Novo
+                      </Badge>
                     )}
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
+                    {item.status === "updated" && (
+                      <Badge variant="default" className="bg-yellow-500">
+                        Editado
+                      </Badge>
+                    )}
+                    {item.status === "deleted" && <Badge variant="destructive">Excluído</Badge>}
+                  </td>
+                  <td className="p-3">
+                    <div className="flex justify-end gap-1">
+                      {item.status === "deleted" ? (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleRestore(originalIndex)}
+                          title="Restaurar"
+                        >
+                          <RotateCcw className="h-4 w-4" />
+                        </Button>
+                      ) : (
+                        <>
+                          {mode === "view" ? (
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleView(originalIndex)}
+                              title="Visualizar"
+                            >
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                          ) : (
+                            <>
+                              {options.allowEdit !== false && (
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => handleEdit(originalIndex)}
+                                  title="Editar"
+                                >
+                                  <Pencil className="h-4 w-4" />
+                                </Button>
+                              )}
+                              {options.allowDelete !== false && (
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => handleDelete(originalIndex)}
+                                  title="Excluir"
+                                >
+                                  <Trash2 className="h-4 w-4 text-destructive" />
+                                </Button>
+                              )}
+                            </>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
 
@@ -320,4 +332,7 @@ export function GridField({ value = [], onChange, options, mode }: GridFieldProp
     </div>
   );
 }
+
+// Memoizar componente para evitar re-renders desnecessários
+export const GridField = React.memo(GridFieldComponent);
 

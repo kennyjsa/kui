@@ -22,11 +22,7 @@ export default function WithValidationsPage() {
 
         {/* Formulário */}
         <div className="border rounded-lg p-6 bg-white">
-          <FormBuilder
-            schema={cadastroSchema}
-            mode="create"
-            onSubmit={handleSubmit}
-          />
+          <FormBuilder schema={cadastroSchema} mode="create" onSubmit={handleSubmit} />
         </div>
 
         {/* Explicação */}
@@ -39,7 +35,8 @@ export default function WithValidationsPage() {
                 Selecione <strong>"Pessoa Física"</strong> → exibe <strong>CPF</strong>
               </li>
               <li>
-                Selecione <strong>"Pessoa Jurídica"</strong> → exibe <strong>CNPJ</strong> e <strong>Nome Fantasia</strong>
+                Selecione <strong>"Pessoa Jurídica"</strong> → exibe <strong>CNPJ</strong> e{" "}
+                <strong>Nome Fantasia</strong>
               </li>
               <li>
                 Implementado com <code className="bg-purple-100 px-1 rounded">showIf</code>
@@ -68,15 +65,15 @@ export default function WithValidationsPage() {
         <div className="border rounded-lg p-6 bg-gray-50">
           <p className="text-sm font-semibold mb-3">📄 Código do Schema</p>
           <pre className="text-xs bg-gray-900 text-gray-100 p-4 rounded overflow-x-auto">
-{`const cadastroSchema = zKUI
+            {`const cadastroSchema = zKUI
   .object({
     tipoPessoa: zKUI.select("Tipo", ["fisica", "juridica"]),
-    
+
     // Campo condicional
     cpf: zKUI.text("CPF", {
       showIf: (values) => values.tipoPessoa === "fisica"
     }),
-    
+
     senha: zKUI.password("Senha"),
     confirmarSenha: zKUI.password("Confirmar Senha"),
   })

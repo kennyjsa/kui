@@ -10,7 +10,7 @@ function unwrapSchema(schema: AcceptedSchema): z.ZodObject<any> {
   if (schema instanceof z.ZodEffects) {
     return unwrapSchema(schema.innerType() as AcceptedSchema);
   }
-  
+
   // Se já for ZodObject, retorna diretamente
   return schema as z.ZodObject<any>;
 }

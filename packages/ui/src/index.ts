@@ -73,3 +73,8 @@ export type { BadgeProps } from "./components/Badge";
 export { SimplePagination } from "./components/SimplePagination";
 export type { SimplePaginationProps } from "./components/SimplePagination";
 
+export { ErrorBoundary } from "./components/ErrorBoundary";
+
+export { Skeleton, FormSkeleton, GridSkeleton } from "./components/Skeleton";
+export type { SkeletonProps } from "./components/Skeleton";
+
