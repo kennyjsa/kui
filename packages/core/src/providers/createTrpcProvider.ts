@@ -6,10 +6,10 @@ import type { DataProvider, ListParams } from "../types";
 export interface TrpcProviderOptions<TRouter = any> {
   /** Nome único do provider */
   name: string;
-  
+
   /** Router tRPC (ex: trpc.user) */
   router: TRouter;
-  
+
   /** Mapeamento de procedures do tRPC */
   procedures?: {
     list?: string;
@@ -22,7 +22,7 @@ export interface TrpcProviderOptions<TRouter = any> {
 
 /**
  * Cria um DataProvider a partir de um router tRPC
- * 
+ *
  * @example
  * ```typescript
  * const userProvider = createTrpcProvider({
@@ -60,7 +60,7 @@ export function createTrpcProvider<TRouter = any>(
 
       // @ts-ignore - tRPC typing complexo
       const procedure = router[proc.list];
-      
+
       if (!procedure) {
         throw new Error(`Procedure "${proc.list}" não encontrada no router tRPC`);
       }
@@ -92,7 +92,7 @@ export function createTrpcProvider<TRouter = any>(
     async get(id: any) {
       // @ts-ignore
       const procedure = router[proc.get];
-      
+
       if (!procedure) {
         throw new Error(`Procedure "${proc.get}" não encontrada no router tRPC`);
       }
@@ -107,7 +107,7 @@ export function createTrpcProvider<TRouter = any>(
     async create(data: any) {
       // @ts-ignore
       const procedure = router[proc.create];
-      
+
       if (!procedure) {
         throw new Error(`Procedure "${proc.create}" não encontrada no router tRPC`);
       }
@@ -122,7 +122,7 @@ export function createTrpcProvider<TRouter = any>(
     async update(id: any, data: any) {
       // @ts-ignore
       const procedure = router[proc.update];
-      
+
       if (!procedure) {
         throw new Error(`Procedure "${proc.update}" não encontrada no router tRPC`);
       }
@@ -137,7 +137,7 @@ export function createTrpcProvider<TRouter = any>(
     async delete(id: any) {
       // @ts-ignore
       const procedure = router[proc.delete];
-      
+
       if (!procedure) {
         throw new Error(`Procedure "${proc.delete}" não encontrada no router tRPC`);
       }

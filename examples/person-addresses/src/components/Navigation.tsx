@@ -7,6 +7,7 @@ import { cn } from "@kui/ui";
 const routes = [
   { href: "/", label: "Campos Básicos" },
   { href: "/with-grid", label: "Grid (Endereços)" },
+  { href: "/with-trpc", label: "Integração tRPC" },
 ];
 
 export function Navigation() {
