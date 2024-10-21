@@ -1,20 +1,63 @@
 name: Release & Publish
 
-# Dispara quando uma tag v* é criada (ex: v0.0.1, v1.0.0)
+# Dispara quando uma tag v* é criada NA BRANCH MAIN (ex: v0.0.1, v1.0.0)
 on:
   push:
     tags:
       - 'v*'
+    branches:
+      - main
 
 jobs:
   # Job 1: Build e validação
   build:
     name: Build e Validação
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Validate branch is main
+        run: |
+          BRANCH=$(git branch -r --contains ${{ github.ref }} | grep 'origin/main' || echo "")
+          if [ -z "$BRANCH" ]; then
+            echo "❌ Erro: Tag deve estar na branch main!"
+            echo "   Faça merge de develop → main antes de criar a tag"
+            exit 1
+          fi
+          echo "✅ Tag está na branch main"
+
+      - name: Validate package.json versions match tag
+        run: |
+          TAG_VERSION="${{ steps.version.outputs.VERSION }}"
+          ERRORS=0
+          
+          for pkg in packages/*/package.json; do
+            PKG_VERSION=$(grep '"version"' $pkg | head -1 | sed 's/.*": "//;s/".*//')
+            PKG_NAME=$(dirname $pkg)
+            
+            if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
+              echo "❌ $PKG_NAME: versão $PKG_VERSION não corresponde à tag v$TAG_VERSION"
+              ERRORS=$((ERRORS + 1))
+            else
+              echo "✅ $PKG_NAME: v$PKG_VERSION"
+            fi
+          done
+          
+          if [ $ERRORS -gt 0 ]; then
+            echo ""
+            echo "❌ Erro: $ERRORS pacote(s) com versão incorreta!"
+            echo "   Execute: ./scripts/bump-version.sh $TAG_VERSION"
+            exit 1
+          fi
+          
+          echo ""
+          echo "✅ Todas as versões estão corretas!"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

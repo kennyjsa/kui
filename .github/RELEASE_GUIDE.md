@@ -21,33 +21,63 @@
 
 ## 🎯 Processo de Release
 
-### Método 1: Via GitHub UI (Recomendado)
+### ⚠️ Importante: Tags Apenas na Main!
 
-1. **Atualizar versão nos package.json**
-   ```bash
-   # Editar manualmente ou usar script
-   ./scripts/bump-version.sh 0.0.2
-   ```
+O workflow de release **só dispara em tags na branch `main`**.
 
-2. **Commitar mudanças**
+### Fluxo Completo
+
+1. **Desenvolver na branch `develop`**
    ```bash
+   git checkout develop
+   # ... fazer mudanças ...
    git add .
-   git commit -m "chore(release): bump version to 0.0.2"
+   git commit -m "feat: nova funcionalidade"
    git push origin develop
    ```
 
-3. **Criar Tag**
+2. **Atualizar versões**
    ```bash
-   git tag v0.0.2
+   # Usar script helper
+   ./scripts/bump-version.sh 0.0.2
+   
+   # Husky validará automaticamente ao commit
+   git add .
+   git commit -m "chore(release): preparar v0.0.2"
+   git push origin develop
+   ```
+
+3. **Merge para main**
+   ```bash
+   git checkout main
+   git pull origin main
+   git merge develop
+   git push origin main
+   ```
+
+4. **Criar Tag na main**
+   ```bash
+   # Husky validará branch e versões automaticamente
+   git tag -a v0.0.2 -m "Release v0.0.2"
+   
+   # Push da tag (dispara GitHub Actions!)
    git push origin v0.0.2
    ```
 
-4. **GitHub Actions fará automaticamente:**
+5. **GitHub Actions fará automaticamente:**
+   - ✅ Validar que tag está na main
+   - ✅ Validar versões dos package.json
    - ✅ Build de todos os pacotes
-   - ✅ Testes (quando implementados)
    - ✅ Publicação no NPM em ordem
    - ✅ Criação de GitHub Release
    - ✅ Changelog gerado automaticamente
+
+6. **Voltar para develop**
+   ```bash
+   git checkout develop
+   git merge main
+   git push origin develop
+   ```
 
 ### Método 2: Via Terminal
 

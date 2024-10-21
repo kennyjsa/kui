@@ -16,6 +16,9 @@ out/
 # Misc
 .DS_Store
 *.pem
+
+# Husky
+.husky/_
 .turbo
 
 # Debug

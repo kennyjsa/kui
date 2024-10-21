@@ -32,14 +32,30 @@
    → Add secret
    ```
 
-### Passo 2: Push da Branch e Tag
+### Passo 2: Merge para Main
+
+⚠️ **Tags devem ser criadas apenas na branch `main`!**
 
 ```bash
-# 1. Push da branch develop
+# 1. Push develop
 git push origin develop
 
-# 2. Push da tag (DISPARA GITHUB ACTIONS!)
+# 2. Checkout main e merge
+git checkout main
+git pull origin main
+git merge develop
+git push origin main
+
+# 3. Criar tag na main
+git tag -a v0.0.1 -m "Release v0.0.1 - Alpha inicial"
+
+# 4. Push da tag (DISPARA GITHUB ACTIONS!)
 git push origin v0.0.1
+
+# 5. Voltar para develop
+git checkout develop
+git merge main
+git push origin develop
 ```
 
 ### Passo 3: Acompanhar Workflow

@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Validar versões dos pacotes antes de commit
+# (útil para commits de release)
+if git diff --cached --name-only | grep -q "package.json"; then
+  echo "📦 Validando versões dos pacotes..."
+  pnpm validate:versions
+fi
+
