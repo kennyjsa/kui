@@ -8,7 +8,7 @@ TAG_BEING_PUSHED=$(git rev-parse --verify --quiet "$1" 2>/dev/null || echo "")
 if [ -n "$TAG_BEING_PUSHED" ]; then
   # É um push de tag
   TAG_NAME=$(git describe --tags --exact-match 2>/dev/null || echo "")
-  
+
   if [[ $TAG_NAME =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     echo "🏷️  Push de tag detectado: $TAG_NAME"
     ./scripts/validate-tag.sh "$TAG_NAME"
