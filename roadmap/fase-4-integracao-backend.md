@@ -1,9 +1,9 @@
 # 📅 Fase 4: Integração e Backend
 
-**Status:** 🚧 Em Progresso (Sprint 1 ✅ Completa)  
+**Status:** 🚧 Em Progresso (Sprint 1 ✅ | Sprint 2 ✅)  
 **Período:** 2 dias (20-21/10/2024)  
 **Prioridade:** Alta  
-**Progresso:** ████████░░░░░░░░░░░░ 40%
+**Progresso:** ████████████████░░░░ 80%
 
 ## 🎯 Objetivos
 
@@ -55,7 +55,7 @@ email: zKUI.email("E-mail", {
 - [ ] Loading state durante validação
 - [ ] Cache de validações
 
-#### 2.2 Validações Cross-Field
+#### 2.2 Validações Cross-Field ✅
 ```typescript
 zKUI.object({
   senha: zKUI.password("Senha"),
@@ -65,21 +65,24 @@ zKUI.object({
   path: ["confirmarSenha"]
 })
 ```
-- [ ] Suporte a .refine() do Zod
-- [ ] Validações entre campos
-- [ ] Mensagens de erro contextuais
+- [x] Suporte a .refine() do Zod
+- [x] Validações entre campos
+- [x] Mensagens de erro contextuais
+- [x] Tipo AcceptedSchema para suportar ZodEffects
+- [x] extractFields desembrulha ZodEffects aninhados
 
-#### 2.3 Validações Condicionais
+#### 2.3 Validações Condicionais ✅
 ```typescript
 tipoPessoa: zKUI.select("Tipo", ["fisica", "juridica"]),
 cpf: zKUI.text("CPF", {
   showIf: (values) => values.tipoPessoa === "fisica",
-  required: (values) => values.tipoPessoa === "fisica"
+  required: true
 })
 ```
-- [ ] Campos condicionais (showIf)
-- [ ] Required condicional
-- [ ] Validações condicionais
+- [x] Campos condicionais (showIf)
+- [x] useWatch para observar mudanças
+- [x] Re-render automático quando valores mudam
+- [x] Exemplo completo em /with-validations
 
 #### 2.4 Mensagens Customizadas
 ```typescript
@@ -91,9 +94,9 @@ nome: zKUI.text("Nome", {
   }
 })
 ```
-- [ ] Override de mensagens padrão
-- [ ] Suporte a templates
-- [ ] Internacionalização (i18n)
+- [ ] Override de mensagens padrão (Futuro)
+- [ ] Suporte a templates (Futuro)
+- [ ] Internacionalização (i18n) (Futuro)
 
 ### Sprint 3: Estado e Persistência
 
