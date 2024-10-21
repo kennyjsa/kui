@@ -11,7 +11,7 @@ jobs:
   build:
     name: Build e Validação
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -145,7 +145,7 @@ jobs:
         run: |
           # Pega commits desde a última tag
           PREV_TAG=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1) 2>/dev/null || echo "")
-          
+
           if [ -z "$PREV_TAG" ]; then
             # Primeira release - pega todos os commits
             CHANGELOG=$(git log --pretty=format:"- %s (%h)" --reverse)
@@ -153,7 +153,7 @@ jobs:
             # Pega commits desde a última tag
             CHANGELOG=$(git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" --reverse)
           fi
-          
+
           # Salva changelog em arquivo
           echo "$CHANGELOG" > changelog.txt
 
