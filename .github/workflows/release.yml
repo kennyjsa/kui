@@ -77,7 +77,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -91,7 +91,7 @@ jobs:
         run: pnpm build
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: packages/*/dist
@@ -125,7 +125,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: packages
@@ -201,15 +201,13 @@ jobs:
           echo "$CHANGELOG" > changelog.txt
 
       - name: Create GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref }}
-          release_name: KUI Framework v${{ steps.version.outputs.VERSION }}
+          name: KUI Framework v${{ steps.version.outputs.VERSION }}
           body_path: changelog.txt
           draft: false
           prerelease: true # v0.0.x são pre-releases
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   # Job 4: Notificações (opcional)
   notify:
