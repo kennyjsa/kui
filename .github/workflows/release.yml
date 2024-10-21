@@ -1,0 +1,197 @@
+name: Release & Publish
+
+# Dispara quando uma tag v* é criada (ex: v0.0.1, v1.0.0)
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  # Job 1: Build e validação
+  build:
+    name: Build e Validação
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build all packages
+        run: pnpm build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: packages/*/dist
+          retention-days: 1
+
+  # Job 2: Publicação no NPM
+  publish-npm:
+    name: Publicar no NPM
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      id-token: write # Necessário para provenance
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: packages
+
+      - name: Publish @kui/zod-extension
+        run: |
+          cd packages/zod-extension
+          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @kui/theme
+        run: |
+          cd packages/theme
+          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @kui/core
+        run: |
+          cd packages/core
+          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @kui/ui
+        run: |
+          cd packages/ui
+          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @kui/forms
+        run: |
+          cd packages/forms
+          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  # Job 3: Criar GitHub Release
+  create-release:
+    name: Criar GitHub Release
+    runs-on: ubuntu-latest
+    needs: publish-npm
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necessário para git log
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Pega commits desde a última tag
+          PREV_TAG=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1) 2>/dev/null || echo "")
+          
+          if [ -z "$PREV_TAG" ]; then
+            # Primeira release - pega todos os commits
+            CHANGELOG=$(git log --pretty=format:"- %s (%h)" --reverse)
+          else
+            # Pega commits desde a última tag
+            CHANGELOG=$(git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" --reverse)
+          fi
+          
+          # Salva changelog em arquivo
+          echo "$CHANGELOG" > changelog.txt
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: KUI Framework v${{ steps.version.outputs.VERSION }}
+          body_path: changelog.txt
+          draft: false
+          prerelease: true # v0.0.x são pre-releases
+
+  # Job 4: Notificações (opcional)
+  notify:
+    name: Notificar Sucesso
+    runs-on: ubuntu-latest
+    needs: create-release
+    if: success()
+
+    steps:
+      - name: Extract version
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Success notification
+        run: |
+          echo "🎉 KUI Framework v${{ steps.version.outputs.VERSION }} publicado com sucesso!"
+          echo ""
+          echo "📦 Pacotes NPM:"
+          echo "  - @kui/zod-extension@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui/theme@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui/core@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui/ui@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui/forms@${{ steps.version.outputs.VERSION }}"
+          echo ""
+          echo "🔗 Links:"
+          echo "  NPM: https://www.npmjs.com/package/@kui/forms"
+          echo "  GitHub: https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.VERSION }}"
+
