@@ -15,12 +15,12 @@ function getBaseUrl() {
     // Browser: usar URL relativa
     return '';
   }
-  
+
   if (process.env.VERCEL_URL) {
     // SSR em Vercel
     return `https://${process.env.VERCEL_URL}`;
   }
-  
+
   // SSR local
   return `http://localhost:${process.env.PORT ?? 3000}`;
 }

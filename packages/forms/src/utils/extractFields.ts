@@ -1,12 +1,27 @@
 import { z } from "zod";
 import { getKuiMetadata } from "@kui/zod-extension";
-import type { FieldConfig } from "../types";
+import type { FieldConfig, AcceptedSchema } from "../types";
+
+/**
+ * Desembrulha ZodEffects para pegar o ZodObject interno
+ */
+function unwrapSchema(schema: AcceptedSchema): z.ZodObject<any> {
+  // Se for ZodEffects (criado por .refine()), pega o innerType
+  if (schema instanceof z.ZodEffects) {
+    return unwrapSchema(schema.innerType() as AcceptedSchema);
+  }
+  
+  // Se já for ZodObject, retorna diretamente
+  return schema as z.ZodObject<any>;
+}
 
 /**
  * Extrai configurações de campos de um schema Zod
  */
-export function extractFields(schema: z.ZodObject<any>): FieldConfig[] {
-  const shape = schema.shape;
+export function extractFields(schema: AcceptedSchema): FieldConfig[] {
+  // Desembrulha o schema se necessário
+  const unwrapped = unwrapSchema(schema);
+  const shape = unwrapped.shape;
   const fields: FieldConfig[] = [];
 
   Object.entries(shape).forEach(([name, fieldSchema]) => {

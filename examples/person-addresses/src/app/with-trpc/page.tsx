@@ -46,7 +46,7 @@ export default function WithTrpcPage() {
         {/* Lista de Pessoas */}
         <div className="border rounded-lg p-6 bg-white">
           <h3 className="text-lg font-semibold mb-4">📋 Pessoas Cadastradas</h3>
-          
+
           {isLoading ? (
             <p className="text-muted-foreground">Carregando...</p>
           ) : pessoas?.data && pessoas.data.length > 0 ? (
@@ -60,14 +60,10 @@ export default function WithTrpcPage() {
                     <p className="font-medium">{pessoa.nome}</p>
                     <p className="text-sm text-muted-foreground">{pessoa.email}</p>
                   </div>
-                  <span className="text-xs text-muted-foreground">
-                    ID: {pessoa.id}
-                  </span>
+                  <span className="text-xs text-muted-foreground">ID: {pessoa.id}</span>
                 </div>
               ))}
-              <p className="text-sm text-muted-foreground mt-4">
-                Total: {pessoas.total} pessoa(s)
-              </p>
+              <p className="text-sm text-muted-foreground mt-4">Total: {pessoas.total} pessoa(s)</p>
             </div>
           ) : (
             <p className="text-muted-foreground">Nenhuma pessoa cadastrada</p>
@@ -77,8 +73,8 @@ export default function WithTrpcPage() {
         {/* Formulário */}
         <div className="border rounded-lg p-6 bg-white">
           <h3 className="text-lg font-semibold mb-4">➕ Nova Pessoa</h3>
-          
-          <KuiDataProvider 
+
+          <KuiDataProvider
             providers={[
               { name: pessoaTrpcProvider.name, provider: pessoaTrpcProvider },
               { name: usuarioTrpcProvider.name, provider: usuarioTrpcProvider },
@@ -97,7 +93,9 @@ export default function WithTrpcPage() {
         <div className="border-l-4 border-blue-500 bg-blue-50 p-4 rounded">
           <p className="text-sm font-medium text-blue-900">💡 Como funciona</p>
           <ul className="text-sm text-blue-800 mt-2 space-y-1 list-disc list-inside">
-            <li>Backend tRPC em <code className="bg-blue-100 px-1 rounded">/api/trpc</code></li>
+            <li>
+              Backend tRPC em <code className="bg-blue-100 px-1 rounded">/api/trpc</code>
+            </li>
             <li>React Query para cache e estado</li>
             <li>Type-safety end-to-end com TypeScript</li>
             <li>createTrpcProvider integra tRPC + KUI</li>

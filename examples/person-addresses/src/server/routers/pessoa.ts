@@ -89,7 +89,7 @@ export const pessoaRouter = router({
     .mutation(async ({ input }) => {
       // Calcular idade se dataNascimento foi atualizado
       let updateData: any = { ...input.data };
-      
+
       if (input.data.dataNascimento) {
         const birthDate = new Date(input.data.dataNascimento);
         const today = new Date();

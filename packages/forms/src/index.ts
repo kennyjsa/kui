@@ -22,5 +22,6 @@ export type {
   FieldConfig,
   FormBuilderProps,
   FieldRendererProps,
+  AcceptedSchema,
 } from "./types";
 

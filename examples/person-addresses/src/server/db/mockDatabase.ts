@@ -104,7 +104,7 @@ export const db = {
       await delay(100);
       const index = pessoas.findIndex(p => p.id === params.where.id);
       if (index === -1) throw new Error('Pessoa não encontrada');
-      
+
       pessoas[index] = { ...pessoas[index], ...params.data };
       return pessoas[index];
     },
@@ -113,7 +113,7 @@ export const db = {
       await delay(100);
       const index = pessoas.findIndex(p => p.id === params.where.id);
       if (index === -1) throw new Error('Pessoa não encontrada');
-      
+
       const deleted = pessoas[index];
       pessoas = pessoas.filter(p => p.id !== params.where.id);
       return deleted;

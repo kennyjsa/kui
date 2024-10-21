@@ -1,6 +1,5 @@
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@kui/ui";
-import type { z } from "zod";
-import type { FormBuilderProps } from "../types";
+import type { FormBuilderProps, AcceptedSchema } from "../types";
 import { useKuiForm } from "../hooks/useKuiForm";
 import { useDerivedFields } from "../hooks/useDerivedFields";
 import { extractFields } from "../utils/extractFields";
@@ -9,7 +8,7 @@ import { FieldRenderer } from "./FieldRenderer";
 /**
  * Construtor de formulários baseado em schema Zod
  */
-export function FormBuilder<T extends z.ZodObject<any>>({
+export function FormBuilder<T extends AcceptedSchema>({
   schema,
   mode = "create",
   defaultValues,

@@ -17,9 +17,15 @@ export interface FieldConfig {
 }
 
 /**
+ * Tipo de schema aceito pelo FormBuilder
+ * Suporta ZodObject e ZodEffects (para validações .refine)
+ */
+export type AcceptedSchema = z.ZodObject<any> | z.ZodEffects<any>;
+
+/**
  * Props do FormBuilder
  */
-export interface FormBuilderProps<T extends z.ZodObject<any>> {
+export interface FormBuilderProps<T extends AcceptedSchema> {
   schema: T;
   mode?: FormMode;
   defaultValues?: Partial<z.infer<T>>;

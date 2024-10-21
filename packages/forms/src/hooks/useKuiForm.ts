@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
-import type { FormMode } from "../types";
+import type { FormMode, AcceptedSchema } from "../types";
 
 /**
  * Opções do hook useKuiForm
  */
-export interface UseKuiFormOptions<T extends z.ZodObject<any>> {
+export interface UseKuiFormOptions<T extends AcceptedSchema> {
   schema: T;
   mode?: FormMode;
   defaultValues?: Partial<z.infer<T>>;
@@ -15,7 +15,7 @@ export interface UseKuiFormOptions<T extends z.ZodObject<any>> {
 /**
  * Hook customizado para formulários KUI
  */
-export function useKuiForm<T extends z.ZodObject<any>>({
+export function useKuiForm<T extends AcceptedSchema>({
   schema,
   mode = "create",
   defaultValues,

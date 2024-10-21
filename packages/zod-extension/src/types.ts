@@ -35,6 +35,9 @@ export type KuiOptions = {
   /** Função de computação para campos derivados */
   compute?: (values: any) => any;
 
+  /** Função que determina se o campo deve ser exibido (campos condicionais) */
+  showIf?: (values: any) => boolean;
+
   /** Configuração de layout responsivo */
   layout?: {
     xs?: number;

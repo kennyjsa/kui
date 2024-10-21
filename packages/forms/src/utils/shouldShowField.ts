@@ -3,7 +3,11 @@ import type { FormMode, FieldConfig } from "../types";
 /**
  * Determina se um campo deve ser exibido no modo atual
  */
-export function shouldShowField(config: FieldConfig, mode: FormMode): boolean {
+export function shouldShowField(
+  config: FieldConfig, 
+  mode: FormMode, 
+  formValues?: any
+): boolean {
   const { options } = config;
 
   // Campos ocultos em determinados modos
@@ -14,6 +18,11 @@ export function shouldShowField(config: FieldConfig, mode: FormMode): boolean {
   // Campos com modos específicos
   if (options.modes && !options.modes.includes(mode)) {
     return false;
+  }
+
+  // Campos condicionais (showIf)
+  if (options.showIf && formValues) {
+    return options.showIf(formValues);
   }
 
   return true;
