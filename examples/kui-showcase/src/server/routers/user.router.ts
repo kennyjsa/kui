@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createDataTableRouter } from "@kui-framework/core";
 
 // Mock data para demonstração
 let mockUsers = [
@@ -22,7 +23,7 @@ let mockUsers = [
         cidade: "São Paulo",
         uf: "SP",
         principal: true,
-      }
+      },
     ],
     contatos: [
       {
@@ -31,7 +32,7 @@ let mockUsers = [
         valor: "(11) 98765-4321",
         descricao: "Principal",
         preferencial: true,
-      }
+      },
     ],
     receberNotificacoes: true,
     idioma: "pt-BR",
@@ -64,23 +65,16 @@ let mockUsers = [
     receberNotificacoes: true,
     idioma: "pt-BR",
     observacoes: "",
-  }
+  },
 ];
 
 export const userRouter = createTRPCRouter({
-  // Listar usuários com paginação
-  list: publicProcedure
-    .input(
-      z.object({
-        page: z.number().min(1).default(1),
-        pageSize: z.number().min(1).max(100).default(10),
-        search: z.string().optional(),
-        status: z.enum(["all", "active", "inactive"]).default("all"),
-      })
-    )
-    .query(async ({ input }) => {
+  // Listar usuários com paginação usando o helper do DataTable
+  list: createDataTableRouter({
+    procedure: publicProcedure,
+    handler: async (input) => {
       // Simular delay de API
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       let filteredUsers = mockUsers;
 
@@ -88,17 +82,31 @@ export const userRouter = createTRPCRouter({
       if (input.search) {
         const searchLower = input.search.toLowerCase();
         filteredUsers = filteredUsers.filter(
-          user =>
+          (user) =>
             user.nome.toLowerCase().includes(searchLower) ||
             user.email.toLowerCase().includes(searchLower)
         );
       }
 
-      // Aplicar filtro de status
-      if (input.status === "active") {
-        filteredUsers = filteredUsers.filter(user => user.ativo);
-      } else if (input.status === "inactive") {
-        filteredUsers = filteredUsers.filter(user => !user.ativo);
+      // Aplicar filtros adicionais (futuro: implementar lógica baseada em input.filters)
+      if (input.filters) {
+        for (const filter of input.filters) {
+          if (filter.key === "ativo" && filter.operator === "eq") {
+            filteredUsers = filteredUsers.filter((user) => user.ativo === filter.value);
+          }
+        }
+      }
+
+      // Ordenação
+      if (input.sortBy) {
+        filteredUsers.sort((a, b) => {
+          const aVal = a[input.sortBy as keyof typeof a];
+          const bVal = b[input.sortBy as keyof typeof b];
+
+          if (aVal < bVal) return input.sortOrder === "asc" ? -1 : 1;
+          if (aVal > bVal) return input.sortOrder === "asc" ? 1 : -1;
+          return 0;
+        });
       }
 
       // Paginação
@@ -110,26 +118,22 @@ export const userRouter = createTRPCRouter({
       return {
         data,
         total,
-        page: input.page,
-        pageSize: input.pageSize,
-        totalPages: Math.ceil(total / input.pageSize),
       };
-    }),
+    },
+  }),
 
   // Buscar usuário por ID
-  getById: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ input }) => {
-      // Simular delay de API
-      await new Promise(resolve => setTimeout(resolve, 300));
+  getById: publicProcedure.input(z.object({ id: z.string() })).query(async ({ input }) => {
+    // Simular delay de API
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
-      const user = mockUsers.find(u => u.id === input.id);
-      if (!user) {
-        throw new Error("Usuário não encontrado");
-      }
+    const user = mockUsers.find((u) => u.id === input.id);
+    if (!user) {
+      throw new Error("Usuário não encontrado");
+    }
 
-      return user;
-    }),
+    return user;
+  }),
 
   // Criar novo usuário
   create: publicProcedure
@@ -150,7 +154,7 @@ export const userRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       // Simular delay de API
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const newUser = {
         ...input,
@@ -182,9 +186,9 @@ export const userRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       // Simular delay de API
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const userIndex = mockUsers.findIndex(u => u.id === input.id);
+      const userIndex = mockUsers.findIndex((u) => u.id === input.id);
       if (userIndex === -1) {
         throw new Error("Usuário não encontrado");
       }
@@ -195,20 +199,18 @@ export const userRouter = createTRPCRouter({
     }),
 
   // Excluir usuário
-  delete: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ input }) => {
-      // Simular delay de API
-      await new Promise(resolve => setTimeout(resolve, 800));
+  delete: publicProcedure.input(z.object({ id: z.string() })).mutation(async ({ input }) => {
+    // Simular delay de API
+    await new Promise((resolve) => setTimeout(resolve, 800));
 
-      const userIndex = mockUsers.findIndex(u => u.id === input.id);
-      if (userIndex === -1) {
-        throw new Error("Usuário não encontrado");
-      }
+    const userIndex = mockUsers.findIndex((u) => u.id === input.id);
+    if (userIndex === -1) {
+      throw new Error("Usuário não encontrado");
+    }
 
-      const deletedUser = mockUsers[userIndex];
-      mockUsers.splice(userIndex, 1);
+    const deletedUser = mockUsers[userIndex];
+    mockUsers.splice(userIndex, 1);
 
-      return deletedUser;
-    }),
+    return deletedUser;
+  }),
 });

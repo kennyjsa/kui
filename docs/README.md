@@ -1,114 +1,93 @@
-# 📚 KUI Framework - Documentação
+# 📚 Documentação KUI Framework
 
-> Framework de UI Declarativa para React - Documentação completa e exemplos práticos
+Bem-vindo à documentação completa do KUI Framework! Aqui você encontrará tudo que precisa para construir aplicações modernas com React.
 
-## 🎯 Visão Geral
+## 🚀 Início Rápido
 
-O **KUI Framework** é uma solução moderna para construção de formulários e interfaces CRUD em React, baseada em schemas declarativos com Zod e metadados.
+- **[Guia de Início Rápido](./getting-started.md)** - Configure o KUI em minutos
+- **[Exemplos Práticos](./examples/README.md)** - Casos de uso reais
+- **[Showcase Completo](../examples/kui-showcase/README.md)** - Demonstração interativa
 
-### ✨ Principais Características
+## 📦 Pacotes
 
-- 🚀 **Declarativo**: Defina schemas e gere interfaces automaticamente
-- 🔒 **Type-Safe**: TypeScript completo com validação Zod
-- 🎨 **Customizável**: Temas e componentes personalizáveis
-- 📱 **Responsivo**: Layout adaptativo para todos os dispositivos
-- ♿ **Acessível**: Baseado no Radix UI para máxima acessibilidade
-- 🔌 **Integrável**: Suporte nativo para REST APIs e tRPC
+### Core
+- **[Core Package](../packages/core/README.md)** - Providers, registry e helpers
+- **[DataTable](./datatable.md)** - Sistema de visualização de dados multi-view
 
-## 📖 Documentação
+### Formulários
+- **[Formulários](./forms/README.md)** - FormBuilder e 18 tipos de campos
+- **[Validação](./forms/validation.md)** - Validação com Zod
+- **[Campos Avançados](./forms/advanced-fields.md)** - Campos derivados e condicionais
 
-### 🚀 [Guia de Início Rápido](./getting-started.md)
-Comece aqui para configurar o KUI Framework em seu projeto.
+### UI
+- **[Componentes](./components/README.md)** - Biblioteca completa de componentes
+- **[Design System](./components/design-system.md)** - Tokens, temas e elevação
+- **[Acessibilidade](./components/accessibility.md)** - ARIA e navegação por teclado
 
-### 🧩 [Componentes](./components/)
-Documentação completa de todos os componentes disponíveis.
+### Integrações
+- **[tRPC](./integrations/trpc.md)** - APIs type-safe end-to-end
+- **[REST](./integrations/rest.md)** - Integração com APIs REST
+- **[Backend Helpers](./integrations/backend.md)** - Helpers para backend
 
-### 📝 [Formulários](./forms/)
-Como criar e gerenciar formulários com o KUI Framework.
+## 🎨 Design System
 
-### 🎨 [Temas e Customização](./theming/)
-Personalize a aparência dos componentes.
+- **[Temas](./theming/README.md)** - Personalização de temas
+- **[Tokens](./theming/tokens.md)** - Design tokens
+- **[Elevação](./components/elevation.md)** - Sistema de elevação
+- **[Responsividade](./theming/responsive.md)** - Mobile-first design
 
-### 🔌 [Integrações](./integrations/)
-Conecte com REST APIs, tRPC e outros backends.
+## 🤖 Para Desenvolvedores
 
-### 📚 [Exemplos](./examples/)
-Projetos completos e casos de uso reais.
+- **[Contribuindo](./contributing.md)** - Como contribuir com o projeto
+- **[Arquitetura](./architecture.md)** - Decisões técnicas e padrões
+- **[Performance](./performance.md)** - Otimizações e best practices
+- **[Testes](./testing.md)** - Estratégias de teste
 
-## 🏗️ Arquitetura
+## 📋 Referências
 
-```
-Schema (Zod + Metadados)
-    ↓
-FormBuilder (Gerador de UI)
-    ↓
-Componentes UI (Inputs, Selects, etc)
-```
+- **[API Reference](./api/README.md)** - Documentação completa da API
+- **[Tipos TypeScript](./api/types.md)** - Referência de tipos
+- **[Hooks](./api/hooks.md)** - Documentação de hooks
+- **[Componentes](./api/components.md)** - Props e métodos
 
-## 🚀 Exemplo Rápido
+## 🔧 Ferramentas
 
-```tsx
-import { FormBuilder } from "@kui-framework/forms";
-import { zKUI } from "@kui-framework/zod-extension";
+- **[CLI](./tools/cli.md)** - Ferramentas de linha de comando
+- **[DevTools](./tools/devtools.md)** - Extensões e debugging
+- **[Templates](./tools/templates.md)** - Templates e starters
 
-// 1. Defina o schema
-const userSchema = zKUI.object({
-  id: zKUI.identifier("ID"),
-  name: zKUI.text("Nome", { required: true }),
-  email: zKUI.email("E-mail", { required: true }),
-  age: zKUI.number("Idade"),
-});
+## 📖 Guias Avançados
 
-// 2. Use o FormBuilder
-export function UserForm() {
-  return (
-    <FormBuilder
-      schema={userSchema}
-      mode="create"
-      onSubmit={(data) => console.log(data)}
-    />
-  );
-}
-```
+- **[Padrões de Código](./guides/patterns.md)** - Padrões recomendados
+- **[Migração](./guides/migration.md)** - Guias de migração
+- **[Troubleshooting](./guides/troubleshooting.md)** - Solução de problemas
+- **[FAQ](./guides/faq.md)** - Perguntas frequentes
 
-## 📦 Instalação
+## 🆕 Novidades
 
-```bash
-# Instalar pacotes principais
-pnpm add @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension @kui-framework/theme
-
-# Configurar Tailwind
-# Adicionar ao tailwind.config.js
-import kuiPreset from '@kui-framework/theme/tailwind';
-
-export default {
-  presets: [kuiPreset],
-  content: [
-    './src/**/*.{ts,tsx}',
-    './node_modules/@kui-framework/**/*.{js,mjs}',
-  ],
-};
-
-# Importar CSS global
-@import '@kui-framework/theme/globals.css';
-```
-
-## 🎯 Casos de Uso
-
-- **Formulários de Cadastro**: Criação rápida de formulários complexos
-- **CRUD Completo**: Interfaces de gestão de dados
-- **Dashboards**: Painéis administrativos
-- **APIs de Integração**: Conecte com qualquer backend
-- **Aplicações Empresariais**: Soluções robustas e escaláveis
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Veja nosso [Guia de Contribuição](./contributing.md) para mais detalhes.
-
-## 📄 Licença
-
-MIT License - veja [LICENSE](../LICENSE) para detalhes.
+- **[Changelog](../CHANGELOG.md)** - Histórico de mudanças
+- **[Roadmap](../roadmap/README.md)** - Próximas funcionalidades
+- **[Releases](./releases.md)** - Notas de versão
 
 ---
 
-**Desenvolvido com ❤️ pela equipe KUI Framework**
+## 🎯 Por Onde Começar?
+
+### Para Iniciantes
+1. [Guia de Início Rápido](./getting-started.md)
+2. [Exemplos Básicos](./examples/README.md)
+3. [Showcase Interativo](../examples/kui-showcase/)
+
+### Para Desenvolvedores
+1. [Arquitetura](./architecture.md)
+2. [API Reference](./api/README.md)
+3. [Contribuindo](./contributing.md)
+
+### Para Designers
+1. [Design System](./components/design-system.md)
+2. [Temas](./theming/README.md)
+3. [Componentes](./components/README.md)
+
+---
+
+**💡 Dica:** Use o [Showcase](../examples/kui-showcase/) para ver todos os componentes em ação!

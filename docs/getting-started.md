@@ -1,32 +1,25 @@
 # 🚀 Guia de Início Rápido
 
-> Configure o KUI Framework em seu projeto em poucos minutos
+Configure o KUI Framework em minutos e comece a construir aplicações modernas com React.
 
-## 📋 Pré-requisitos
-
-- Node.js 18+ 
-- React 18+
-- TypeScript 4.9+
-- Tailwind CSS 3.0+
-
-## ⚡ Instalação Rápida
+## 📦 Instalação
 
 ### 1. Instalar Pacotes
 
 ```bash
-# Usando pnpm (recomendado)
-pnpm add @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension @kui-framework/theme
-
-# Ou usando npm
+# NPM
 npm install @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension @kui-framework/theme
 
-# Ou usando yarn
+# PNPM
+pnpm add @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension @kui-framework/theme
+
+# Yarn
 yarn add @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension @kui-framework/theme
 ```
 
 ### 2. Configurar Tailwind CSS
 
-```javascript
+```js
 // tailwind.config.js
 import kuiPreset from '@kui-framework/theme/tailwind';
 
@@ -39,150 +32,270 @@ export default {
 };
 ```
 
-### 3. Importar CSS Global
-
 ```css
-/* src/app/globals.css ou src/index.css */
+/* globals.css */
 @import '@kui-framework/theme/globals.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 ```
 
-## 🎯 Primeiro Formulário
-
-### 1. Criar Schema
-
-```typescript
-// src/schemas/user.schema.ts
-import { zKUI } from "@kui-framework/zod-extension";
-
-export const userSchema = zKUI.object({
-  id: zKUI.identifier("ID"),
-  name: zKUI.text("Nome", { required: true }),
-  email: zKUI.email("E-mail", { required: true }),
-  age: zKUI.number("Idade"),
-  active: zKUI.switch("Ativo"),
-});
-
-export type User = typeof userSchema._type;
-```
-
-### 2. Criar Componente
+### 3. Configurar Providers
 
 ```tsx
-// src/components/UserForm.tsx
-import { FormBuilder } from "@kui-framework/forms";
-import { userSchema, type User } from "../schemas/user.schema";
+// app/providers.tsx
+import { KuiDataProvider } from '@kui-framework/core';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { TrpcProvider } from './trpc-provider';
+
+const queryClient = new QueryClient();
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TrpcProvider>
+        <KuiDataProvider
+          providers={[
+            // Seus providers aqui
+          ]}
+        >
+          {children}
+        </KuiDataProvider>
+      </TrpcProvider>
+    </QueryClientProvider>
+  );
+}
+```
+
+## 🎯 Primeiro Formulário
+
+### 1. Definir Schema
+
+```typescript
+// schemas/user.schema.ts
+import { zKUI } from '@kui-framework/zod-extension';
+
+export const userSchema = zKUI.object({
+  id: zKUI.identifier('ID'),
+  nome: zKUI.text('Nome Completo', { required: true }),
+  email: zKUI.email('E-mail', { required: true }),
+  idade: zKUI.number('Idade', {
+    derived: true,
+    compute: (values) => calculateAge(values.dataNascimento)
+  }),
+  dataNascimento: zKUI.date('Data de Nascimento'),
+  ativo: zKUI.boolean('Ativo', { default: true }),
+  telefone: zKUI.text('Telefone').optional(),
+});
+```
+
+### 2. Criar Formulário
+
+```tsx
+// components/UserForm.tsx
+import { FormBuilder } from '@kui-framework/forms';
+import { userSchema } from '../schemas/user.schema';
 
 export function UserForm() {
-  const handleSubmit = async (data: User) => {
-    console.log("Dados enviados:", data);
-    // Aqui você faria a chamada para o backend
-  };
-
   return (
     <FormBuilder
       schema={userSchema}
       mode="create"
-      onSubmit={handleSubmit}
+      onSubmit={async (data) => {
+        console.log('Dados do usuário:', data);
+        // Implementar salvamento
+      }}
     />
   );
 }
 ```
 
-### 3. Usar na Página
+### 3. Usar o Formulário
 
 ```tsx
-// src/app/page.tsx
-import { UserForm } from "@/components/UserForm";
+// app/users/page.tsx
+import { UserForm } from '../components/UserForm';
 
-export default function Home() {
+export default function UsersPage() {
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Criar Usuário</h1>
+    <div className="container mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-6">Cadastro de Usuário</h1>
       <UserForm />
     </div>
   );
 }
 ```
 
-## 🎨 Personalização Básica
+## 📊 Primeira Lista de Dados
 
-### Modos de Formulário
-
-```tsx
-// Modo Create - Formulário vazio
-<FormBuilder
-  schema={userSchema}
-  mode="create"
-  onSubmit={handleSubmit}
-/>
-
-// Modo Edit - Formulário preenchido
-<FormBuilder
-  schema={userSchema}
-  mode="edit"
-  defaultValues={existingUser}
-  onSubmit={handleSubmit}
-/>
-
-// Modo View - Somente leitura
-<FormBuilder
-  schema={userSchema}
-  mode="view"
-  defaultValues={existingUser}
-  onSubmit={() => {}}
-/>
-```
-
-### Campos Personalizados
+### 1. Configurar Backend (tRPC)
 
 ```typescript
-const customSchema = zKUI.object({
-  id: zKUI.identifier("ID"),
-  
-  // Campo obrigatório com placeholder
-  name: zKUI.text("Nome Completo", {
-    required: true,
-    placeholder: "Digite seu nome completo"
-  }),
-  
-  // Campo com validação
-  email: zKUI.email("E-mail", {
-    required: true,
-    helperText: "Usaremos este e-mail para contato"
-  }),
-  
-  // Campo condicional
-  phone: zKUI.text("Telefone", {
-    mask: "(99) 99999-9999",
-    showIf: (values) => values.email // só aparece se email preenchido
-  }),
-  
-  // Campo calculado
-  age: zKUI.number("Idade", {
-    derived: true,
-    readOnly: true,
-    compute: (values) => {
-      if (!values.birthDate) return null;
-      const today = new Date();
-      const birth = new Date(values.birthDate);
-      return Math.floor((today - birth) / (365.25 * 24 * 60 * 60 * 1000));
+// server/routers/user.router.ts
+import { createDataTableRouter } from '@kui-framework/core';
+import { userSchema } from '../schemas/user.schema';
+
+export const userRouter = createTRPCRouter({
+  list: createDataTableRouter({
+    procedure: publicProcedure,
+    handler: async (input) => {
+      // Sua lógica de query
+      const users = await db.user.findMany({
+        skip: (input.page - 1) * input.pageSize,
+        take: input.pageSize,
+        where: buildWhereClause(input.filters, input.search),
+        orderBy: input.sortBy ? {
+          [input.sortBy]: input.sortOrder
+        } : undefined,
+      });
+      
+      const total = await db.user.count();
+      
+      return { data: users, total };
     }
-  })
+  }),
 });
 ```
 
-## 🔌 Integração com Backend
+### 2. Criar DataTable
 
-### REST API
+```tsx
+// app/users-list/page.tsx
+import { DataTable, extractColumns } from '@kui-framework/forms';
+import { extractFiltersFromSchema } from '@kui-framework/core';
+import { userSchema } from '../schemas/user.schema';
+
+export default function UsersListPage() {
+  // Gerar colunas automaticamente
+  const columns = extractColumns(userSchema, {
+    include: ['nome', 'email', 'ativo', 'dataNascimento'],
+    overrides: {
+      ativo: {
+        render: (value) => (
+          <Badge variant={value ? 'default' : 'secondary'}>
+            {value ? 'Ativo' : 'Inativo'}
+          </Badge>
+        )
+      }
+    }
+  });
+
+  // Gerar filtros automaticamente
+  const filters = extractFiltersFromSchema(userSchema, {
+    include: ['nome', 'email', 'ativo'],
+    overrides: {
+      ativo: {
+        type: 'select',
+        options: [
+          { label: 'Ativo', value: true },
+          { label: 'Inativo', value: false },
+        ]
+      }
+    }
+  });
+
+  return (
+    <div className="container mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-6">Lista de Usuários</h1>
+      
+      <DataTable
+        providerName="userProvider"
+        columns={columns}
+        filters={filters}
+        enableSearch
+        enableViews
+        initialView="table"
+        pageSize={10}
+        enableUrlState
+        actions={(user, context) => (
+          <>
+            <Button size="sm" onClick={() => editUser(user)}>
+              Editar
+            </Button>
+            <Button 
+              size="sm" 
+              variant="destructive"
+              onClick={() => context.optimisticRemove(user.id)}
+            >
+              Excluir
+            </Button>
+          </>
+        )}
+      />
+    </div>
+  );
+}
+```
+
+## 🎨 Primeiros Componentes
+
+### 1. Usar Componentes Básicos
+
+```tsx
+import { Button, Input, Card, Badge } from '@kui-framework/ui';
+
+export function ExampleComponents() {
+  return (
+    <Card className="p-6">
+      <h2 className="text-xl font-semibold mb-4">Componentes Básicos</h2>
+      
+      <div className="space-y-4">
+        <Input placeholder="Digite algo..." />
+        
+        <div className="flex gap-2">
+          <Button>Primário</Button>
+          <Button variant="secondary">Secundário</Button>
+          <Button variant="outline">Outline</Button>
+        </div>
+        
+        <div className="flex gap-2">
+          <Badge>Sucesso</Badge>
+          <Badge variant="secondary">Info</Badge>
+          <Badge variant="destructive">Erro</Badge>
+        </div>
+      </div>
+    </Card>
+  );
+}
+```
+
+### 2. Usar Sistema de Elevação
+
+```tsx
+import { Card } from '@kui-framework/ui';
+
+export function ElevationExample() {
+  return (
+    <div className="space-y-4">
+      <Card elevation="none" className="p-4">
+        Sem elevação
+      </Card>
+      
+      <Card elevation="sm" className="p-4">
+        Elevação pequena
+      </Card>
+      
+      <Card elevation="md" className="p-4">
+        Elevação média
+      </Card>
+      
+      <Card elevation="lg" className="p-4">
+        Elevação grande
+      </Card>
+    </div>
+  );
+}
+```
+
+## 🔧 Configurações Avançadas
+
+### 1. Provider REST
 
 ```typescript
-// src/providers/userProvider.ts
-import { createRestProvider, KuiDataProvider } from '@kui-framework/core';
+// providers/rest-provider.ts
+import { createRestProvider } from '@kui-framework/core';
 
-const userProvider = createRestProvider({
+export const userProvider = createRestProvider({
   name: 'userProvider',
   baseUrl: 'https://api.example.com',
   endpoints: {
@@ -193,25 +306,14 @@ const userProvider = createRestProvider({
     delete: '/users/:id',
   },
 });
-
-// Envolver app
-export function App() {
-  return (
-    <KuiDataProvider providers={[
-      { name: 'userProvider', provider: userProvider }
-    ]}>
-      <UserForm />
-    </KuiDataProvider>
-  );
-}
 ```
 
-### tRPC
+### 2. Provider tRPC
 
 ```typescript
-// src/providers/userTrpcProvider.ts
+// providers/trpc-provider.ts
 import { createTrpcProvider } from '@kui-framework/core';
-import { trpc } from '@/lib/trpc';
+import { trpc } from '../lib/trpc';
 
 export const userTrpcProvider = createTrpcProvider({
   name: 'userProvider',
@@ -226,54 +328,43 @@ export const userTrpcProvider = createTrpcProvider({
 });
 ```
 
-## 📱 Layout Responsivo
+### 3. Registrar Providers
 
-```typescript
-const responsiveSchema = zKUI.object({
-  id: zKUI.identifier("ID"),
-  
-  // Campo ocupa largura total em mobile, metade em desktop
-  fullName: zKUI.text("Nome Completo", {
-    required: true,
-    layout: { xs: 12, md: 6 }
-  }),
-  
-  email: zKUI.email("E-mail", {
-    required: true,
-    layout: { xs: 12, md: 6 }
-  }),
-  
-  // Campos de 1/3 em desktop
-  city: zKUI.text("Cidade", {
-    layout: { xs: 12, md: 4 }
-  }),
-  
-  state: zKUI.text("Estado", {
-    layout: { xs: 12, md: 4 }
-  }),
-  
-  zipCode: zKUI.text("CEP", {
-    mask: "99999-999",
-    layout: { xs: 12, md: 4 }
-  })
-});
+```tsx
+// app/providers.tsx
+import { KuiDataProvider } from '@kui-framework/core';
+import { userProvider } from './providers/rest-provider';
+import { userTrpcProvider } from './providers/trpc-provider';
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <KuiDataProvider
+      providers={[
+        userProvider,
+        userTrpcProvider,
+      ]}
+    >
+      {children}
+    </KuiDataProvider>
+  );
+}
 ```
 
 ## 🎯 Próximos Passos
 
-1. **Explore os Componentes**: Veja [Componentes](./components/) para todos os tipos de campos
-2. **Aprenda Formulários**: Consulte [Formulários](./forms/) para casos avançados
-3. **Customize Temas**: Veja [Temas](./theming/) para personalização
-4. **Integre Backend**: Consulte [Integrações](./integrations/) para APIs
-5. **Veja Exemplos**: Explore [Exemplos](./examples/) para casos reais
+1. **[Exemplos Práticos](./examples/README.md)** - Veja casos de uso reais
+2. **[Componentes](./components/README.md)** - Explore todos os componentes
+3. **[Formulários](./forms/README.md)** - Aprenda sobre os 18 tipos de campos
+4. **[DataTable](./datatable.md)** - Sistema de visualização de dados
+5. **[Showcase](../examples/kui-showcase/)** - Demonstração interativa
 
 ## 🆘 Precisa de Ajuda?
 
-- 📖 **Documentação**: Explore os guias detalhados
-- 💬 **Discord**: Junte-se à nossa comunidade
-- 🐛 **Issues**: Reporte bugs no GitHub
-- 💡 **Discussões**: Partilhe ideias e sugestões
+- **[FAQ](./guides/faq.md)** - Perguntas frequentes
+- **[Troubleshooting](./guides/troubleshooting.md)** - Solução de problemas
+- **[Contribuindo](./contributing.md)** - Como contribuir
+- **[GitHub Issues](https://github.com/kennyjsa/kui/issues)** - Reportar bugs
 
 ---
 
-**Pronto para começar?** 🚀 Explore os [exemplos completos](../examples/) para ver o KUI Framework em ação!
+**🎉 Parabéns!** Você configurou o KUI Framework com sucesso. Agora explore os [exemplos](./examples/README.md) e o [showcase](../examples/kui-showcase/) para ver tudo em ação!

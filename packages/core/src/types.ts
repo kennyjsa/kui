@@ -60,3 +60,51 @@ export interface ProviderRegistry {
   getAll: () => Map<string, DataProvider>;
 }
 
+/**
+ * Tipos de filtro suportados pelo DataTable
+ */
+export type FilterType =
+  | "text"        // Input texto
+  | "select"      // Select single
+  | "multiselect" // Checkboxes
+  | "date"        // Single date
+  | "daterange"   // Range de datas
+  | "number"      // Input number
+  | "numberrange" // Min-max
+  | "boolean";    // Switch/Checkbox
+
+/**
+ * Operadores por tipo de filtro
+ */
+export type FilterOperator =
+  | "eq"       // equals
+  | "ne"       // not equals
+  | "contains" // contém
+  | "gt"       // greater than
+  | "gte"      // greater or equal
+  | "lt"       // less than
+  | "lte"      // less or equal
+  | "in"       // in array
+  | "between"; // entre valores
+
+/**
+ * Definição de um filtro para o DataTable
+ */
+export interface FilterDefinition {
+  key: string;
+  label: string;
+  type: FilterType;
+  operator?: FilterOperator;
+  options?: { label: string; value: any }[]; // Para select/multiselect
+  placeholder?: string;
+}
+
+/**
+ * Valor de filtro aplicado
+ */
+export interface FilterValue {
+  key: string;
+  operator: FilterOperator;
+  value: any;
+}
+

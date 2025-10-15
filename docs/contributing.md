@@ -1,22 +1,22 @@
-# 🤝 Contribuindo
+# 🤝 Contribuindo com o KUI Framework
 
-> Guia completo para contribuir com o KUI Framework
+Obrigado por considerar contribuir com o KUI Framework! Sua contribuição é muito importante para o crescimento e melhoria do projeto.
 
-## 🎯 Como Contribuir
+## 🚀 Como Contribuir
 
-Obrigado por considerar contribuir com o KUI Framework! Sua ajuda é fundamental para tornar o framework ainda melhor.
-
-## 🚀 Primeiros Passos
-
-### 1. Fork o Repositório
+### 1. Fork e Clone
 
 ```bash
-# Fork no GitHub, depois clone
+# Fork o repositório no GitHub
+# Clone seu fork
 git clone https://github.com/SEU_USUARIO/kui.git
 cd kui
+
+# Adicionar upstream
+git remote add upstream https://github.com/kennyjsa/kui.git
 ```
 
-### 2. Instale Dependências
+### 2. Instalar Dependências
 
 ```bash
 # Instalar dependências
@@ -24,154 +24,247 @@ pnpm install
 
 # Build dos pacotes
 pnpm build
+
+# Executar showcase
+cd examples/kui-showcase
+pnpm dev
 ```
 
-### 3. Execute os Testes
+### 3. Criar Branch
 
 ```bash
-# Testes unitários
+# Criar branch para sua feature
+git checkout -b feature/nova-funcionalidade
+
+# Ou para bugfix
+git checkout -b fix/corrigir-bug
+```
+
+### 4. Desenvolver
+
+```bash
+# Modo desenvolvimento com watch
+pnpm dev
+
+# Lint
+pnpm lint
+
+# Testes
 pnpm test
 
-# Testes de integração
-pnpm test:integration
-
-# Lint e type-check
-pnpm lint
-pnpm type-check
+# Format
+pnpm format
 ```
+
+### 5. Commit e Push
+
+```bash
+# Adicionar mudanças
+git add .
+
+# Commit com mensagem descritiva
+git commit -m "feat: adicionar novo componente Button"
+
+# Push para seu fork
+git push origin feature/nova-funcionalidade
+```
+
+### 6. Pull Request
+
+1. Abra um Pull Request no GitHub
+2. Descreva as mudanças
+3. Referencie issues relacionadas
+4. Aguarde review
 
 ## 📋 Tipos de Contribuição
 
-### 🐛 Reportar Bugs
+### 🐛 Bug Reports
 
-1. **Verifique** se o bug já foi reportado
-2. **Use o template** de bug report
-3. **Inclua** informações detalhadas:
-   - Versão do Node.js
-   - Versão do React
-   - Passos para reproduzir
-   - Comportamento esperado vs atual
-   - Screenshots/vídeos se aplicável
+**Antes de reportar um bug:**
 
-### 💡 Sugerir Melhorias
+1. Verifique se já existe uma issue
+2. Teste na versão mais recente
+3. Verifique a documentação
 
-1. **Verifique** se a sugestão já existe
-2. **Use o template** de feature request
-3. **Descreva** claramente:
-   - Problema que resolve
-   - Solução proposta
-   - Alternativas consideradas
-   - Impacto na API existente
+**Ao reportar um bug, inclua:**
 
-### 🔧 Corrigir Bugs
+- Descrição clara do problema
+- Passos para reproduzir
+- Comportamento esperado vs atual
+- Screenshots/vídeos se aplicável
+- Informações do ambiente
 
-1. **Crie uma branch** para o fix
-2. **Escreva testes** que reproduzem o bug
-3. **Implemente** a correção
-4. **Execute testes** para garantir que funciona
-5. **Atualize documentação** se necessário
+### ✨ Feature Requests
 
-### ✨ Adicionar Features
+**Antes de sugerir uma feature:**
 
-1. **Discuta** a feature em uma issue primeiro
-2. **Crie uma branch** para a feature
-3. **Implemente** seguindo os padrões
-4. **Adicione testes** completos
-5. **Atualize documentação**
-6. **Crie exemplos** se aplicável
+1. Verifique se já foi sugerida
+2. Considere se é realmente necessária
+3. Pense na implementação
 
-## 🏗️ Estrutura do Projeto
+**Ao sugerir uma feature, inclua:**
 
-```
-kui/
-├── packages/           # Pacotes principais
-│   ├── core/          # Core do framework
-│   ├── forms/         # FormBuilder e componentes
-│   ├── ui/            # Componentes de UI
-│   ├── theme/         # Sistema de temas
-│   └── zod-extension/ # Extensões do Zod
-├── examples/          # Exemplos e demos
-├── docs/             # Documentação
-└── scripts/          # Scripts de build
-```
+- Descrição clara da funcionalidade
+- Casos de uso
+- Exemplos de implementação
+- Impacto na API existente
 
-## 📝 Padrões de Código
+### 🔧 Pull Requests
+
+**Antes de abrir um PR:**
+
+1. Siga as convenções de código
+2. Adicione testes se necessário
+3. Atualize documentação
+4. Teste localmente
+
+**Ao abrir um PR, inclua:**
+
+- Descrição clara das mudanças
+- Referência a issues
+- Screenshots se aplicável
+- Checklist de verificação
+
+## 🎯 Áreas de Contribuição
+
+### 🧩 Componentes UI
+
+- Novos componentes
+- Melhorias em componentes existentes
+- Acessibilidade
+- Responsividade
+- Performance
+
+### 📝 Formulários
+
+- Novos tipos de campos
+- Validações
+- Integrações
+- Performance
+
+### 📊 DataTable
+
+- Novas funcionalidades
+- Melhorias de performance
+- Integrações
+- Responsividade
+
+### 🎨 Design System
+
+- Tokens
+- Temas
+- Elevação
+- Tipografia
+
+### 📚 Documentação
+
+- Exemplos
+- Guias
+- API reference
+- Tutorials
+
+### 🔧 Ferramentas
+
+- CLI
+- DevTools
+- Templates
+- Scripts
+
+## 📝 Convenções de Código
 
 ### TypeScript
 
 ```typescript
-// ✅ Bom
-interface UserFormProps {
-  mode: "create" | "edit" | "view";
-  onSubmit: (data: User) => Promise<void>;
-  defaultValues?: User;
+// Use interfaces para props
+interface ButtonProps {
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
+  children: React.ReactNode;
 }
 
-// ❌ Evitar
-interface UserFormProps {
-  mode: any;
-  onSubmit: Function;
-  defaultValues?: any;
-}
+// Use types para unions
+type ButtonVariant = 'primary' | 'secondary' | 'destructive';
+
+// Use const assertions
+const BUTTON_VARIANTS = ['primary', 'secondary'] as const;
 ```
 
 ### React
 
 ```tsx
-// ✅ Bom
-export const UserForm = React.forwardRef<HTMLFormElement, UserFormProps>(
-  ({ mode, onSubmit, defaultValues, ...props }, ref) => {
+// Use function components
+export function Button({ variant = 'primary', ...props }: ButtonProps) {
+  return (
+    <button
+      className={cn('btn', `btn-${variant}`)}
+      {...props}
+    />
+  );
+}
+
+// Use forwardRef para refs
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ variant = 'primary', ...props }, ref) => {
     return (
-      <form ref={ref} {...props}>
-        {/* conteúdo */}
-      </form>
+      <button
+        ref={ref}
+        className={cn('btn', `btn-${variant}`)}
+        {...props}
+      />
     );
   }
 );
-
-UserForm.displayName = "UserForm";
-
-// ❌ Evitar
-export function UserForm(props: any) {
-  return <form>{/* conteúdo */}</form>;
-}
 ```
 
-### Styling
+### CSS/Tailwind
 
 ```tsx
-// ✅ Bom - Use class-variance-authority
-const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium",
+// Use cn() para classes condicionais
+const buttonClass = cn(
+  'btn',
   {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
+    'btn-primary': variant === 'primary',
+    'btn-secondary': variant === 'secondary',
+  },
+  className
 );
 
-// ❌ Evitar - Classes hardcoded
-<button className="bg-blue-500 text-white px-4 py-2 rounded">
+// Use design tokens
+<div className="bg-primary text-primary-foreground p-4 rounded-lg">
+  <h2 className="text-2xl font-bold">Título</h2>
+</div>
+```
+
+### Commits
+
+```bash
+# Use conventional commits
+feat: adicionar novo componente Button
+fix: corrigir bug no DataTable
+docs: atualizar documentação
+style: formatar código
+refactor: refatorar componente
+test: adicionar testes
+chore: atualizar dependências
 ```
 
 ## 🧪 Testes
 
-### Testes Unitários
+### Estrutura de Testes
 
-```typescript
-// src/components/Button.test.tsx
+```
+src/
+├── components/
+│   ├── Button/
+│   │   ├── Button.tsx
+│   │   ├── Button.test.tsx
+│   │   └── index.ts
+```
+
+### Exemplo de Teste
+
+```tsx
+// Button.test.tsx
 import { render, screen } from '@testing-library/react';
 import { Button } from './Button';
 
@@ -181,203 +274,165 @@ describe('Button', () => {
     expect(screen.getByText('Click me')).toBeInTheDocument();
   });
 
-  it('applies variant classes', () => {
-    render(<Button variant="destructive">Delete</Button>);
-    expect(screen.getByRole('button')).toHaveClass('bg-destructive');
+  it('applies correct variant class', () => {
+    render(<Button variant="secondary">Click me</Button>);
+    expect(screen.getByRole('button')).toHaveClass('btn-secondary');
   });
 });
 ```
 
-### Testes de Integração
+### Executar Testes
 
-```typescript
-// src/forms/FormBuilder.test.tsx
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { FormBuilder } from './FormBuilder';
-import { userSchema } from '../schemas/user.schema';
+```bash
+# Todos os testes
+pnpm test
 
-describe('FormBuilder', () => {
-  it('submits form with valid data', async () => {
-    const onSubmit = jest.fn();
-    
-    render(
-      <FormBuilder
-        schema={userSchema}
-        mode="create"
-        onSubmit={onSubmit}
-      />
-    );
+# Testes com watch
+pnpm test:watch
 
-    fireEvent.change(screen.getByLabelText('Nome'), {
-      target: { value: 'João Silva' }
-    });
-    
-    fireEvent.change(screen.getByLabelText('E-mail'), {
-      target: { value: 'joao@example.com' }
-    });
-
-    fireEvent.click(screen.getByRole('button', { name: 'Salvar' }));
-
-    await waitFor(() => {
-      expect(onSubmit).toHaveBeenCalledWith({
-        name: 'João Silva',
-        email: 'joao@example.com'
-      });
-    });
-  });
-});
+# Testes com coverage
+pnpm test:coverage
 ```
 
 ## 📚 Documentação
 
-### Componentes
+### Estrutura
 
-```tsx
-/**
- * Button component for user interactions
- * 
- * @example
- * ```tsx
- * <Button variant="primary" size="lg">
- *   Click me
- * </Button>
- * ```
- */
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Visual variant of the button */
-  variant?: "default" | "primary" | "secondary" | "destructive";
-  /** Size of the button */
-  size?: "sm" | "md" | "lg";
-  /** Whether the button is loading */
-  loading?: boolean;
-}
+```
+docs/
+├── components/
+│   ├── README.md
+│   └── button.md
+├── forms/
+│   └── README.md
+├── datatable.md
+└── getting-started.md
 ```
 
-### Exemplos
-
-```tsx
-// Sempre inclua exemplos completos
-/**
- * EXEMPLO: Formulário com Validação
- * 
- * Demonstra validações cross-field usando .refine()
- * 
- * Features:
- * - Validação de senha e confirmação
- * - Validação de idade mínima
- * - Campo transiente (confirmPassword não persiste)
- * 
- * Para usar:
- * 1. Copie o schema
- * 2. Adapte as validações conforme sua necessidade
- * 3. Use .refine() para validações customizadas
- */
-```
-
-## 🔄 Processo de Pull Request
-
-### 1. Prepare sua Branch
-
-```bash
-# Criar branch
-git checkout -b feature/nova-feature
-
-# Fazer commits
-git add .
-git commit -m "feat: adiciona nova feature"
-```
-
-### 2. Teste Localmente
-
-```bash
-# Execute todos os testes
-pnpm test
-pnpm lint
-pnpm type-check
-pnpm build
-```
-
-### 3. Crie o Pull Request
-
-1. **Título claro**: `feat: adiciona componente X`
-2. **Descrição detalhada**: O que foi feito e por quê
-3. **Referencie issues**: `Fixes #123`
-4. **Screenshots**: Se aplicável
-5. **Checklist**: Marque itens concluídos
-
-### 4. Template de PR
+### Exemplo de Documentação
 
 ```markdown
-## 📝 Descrição
+# Button
 
-Breve descrição das mudanças.
+Componente de botão com múltiplas variantes e tamanhos.
 
-## 🔗 Issues Relacionadas
+## Uso
 
-- Fixes #123
-- Closes #456
-
-## 🧪 Testes
-
-- [ ] Testes unitários passando
-- [ ] Testes de integração passando
-- [ ] Lint passando
-- [ ] Type-check passando
-
-## 📸 Screenshots
-
-Se aplicável, adicione screenshots.
-
-## ✅ Checklist
-
-- [ ] Código segue padrões do projeto
-- [ ] Documentação atualizada
-- [ ] Exemplos atualizados
-- [ ] Testes adicionados
-- [ ] Breaking changes documentados
+```tsx
+<Button variant="primary" size="md">
+  Clique aqui
+</Button>
 ```
 
-## 🎯 Diretrizes Específicas
+## Props
 
-### Componentes
+| Prop | Tipo | Padrão | Descrição |
+|------|------|--------|-----------|
+| variant | 'primary' \| 'secondary' | 'primary' | Variante do botão |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Tamanho do botão |
+```
 
-- ✅ Use `React.forwardRef`
-- ✅ Suporte a `className` customizada
-- ✅ Variantes com `class-variance-authority`
-- ✅ Acessibilidade completa (ARIA)
-- ✅ TypeScript strict
-- ✅ Testes unitários
+## 🚀 Release Process
 
-### Formulários
+### Versioning
 
-- ✅ Schemas com Zod
-- ✅ Validação robusta
-- ✅ Modos (create/edit/view)
-- ✅ Layout responsivo
-- ✅ Integração com providers
+- **Major**: Breaking changes
+- **Minor**: New features
+- **Patch**: Bug fixes
 
-### Documentação
+### Changelog
 
-- ✅ Exemplos funcionais
-- ✅ Casos de uso reais
-- ✅ Boas práticas
-- ✅ Troubleshooting
+```markdown
+## [1.2.0] - 2024-01-15
+
+### Added
+- Novo componente Button
+- Suporte a dark mode
+
+### Changed
+- Melhorada performance do DataTable
+
+### Fixed
+- Bug no FormBuilder
+```
+
+### Release
+
+```bash
+# Bump version
+pnpm version patch
+
+# Build
+pnpm build
+
+# Publish
+pnpm publish
+```
+
+## 🎯 Roadmap
+
+### Fase 1 - Consolidação
+- [x] Componentes básicos
+- [x] FormBuilder
+- [x] DataTable
+- [x] Documentação
+
+### Fase 2 - Campos Avançados
+- [ ] Campos derivados
+- [ ] Campos condicionais
+- [ ] Validação cross-field
+- [ ] Máscaras avançadas
+
+### Fase 3 - CRUD e Grid
+- [ ] CRUD automático
+- [ ] Grid inline
+- [ ] Bulk actions
+- [ ] Export/Import
+
+### Fase 4 - Integração Backend
+- [ ] tRPC helpers
+- [ ] REST helpers
+- [ ] GraphQL support
+- [ ] Real-time updates
+
+### Fase 5 - UX Refinamentos
+- [ ] Drag & drop
+- [ ] Keyboard shortcuts
+- [ ] Accessibility
+- [ ] Performance
+
+### Fase 6 - Qualidade e Testes
+- [ ] Testes unitários
+- [ ] Testes de integração
+- [ ] E2E tests
+- [ ] Performance tests
+
+### Fase 7 - Distribuição
+- [ ] NPM packages
+- [ ] CDN
+- [ ] Templates
+- [ ] CLI tools
 
 ## 🆘 Precisa de Ajuda?
 
-- 💬 **Discord**: Comunidade ativa
-- 📖 **Documentação**: Guias detalhados
-- 🐛 **Issues**: Reporte problemas
-- 💡 **Discussões**: Ideias e sugestões
+### Comunidade
 
-## 🏆 Reconhecimento
+- **[GitHub Discussions](https://github.com/kennyjsa/kui/discussions)** - Discussões gerais
+- **[GitHub Issues](https://github.com/kennyjsa/kui/issues)** - Bugs e features
+- **[Discord](https://discord.gg/kui)** - Chat da comunidade
 
-Contribuidores são reconhecidos em:
-- README do projeto
-- Release notes
-- Documentação
-- Comunidade
+### Recursos
+
+- **[Documentação](../README.md)** - Documentação completa
+- **[Exemplos](../examples/README.md)** - Exemplos práticos
+- **[Showcase](../examples/kui-showcase/)** - Demonstração interativa
+
+### Contato
+
+- **Email**: kui@example.com
+- **Twitter**: @kui_framework
+- **LinkedIn**: KUI Framework
 
 ---
 
-**Obrigado por contribuir com o KUI Framework!** 🚀
+**🎉 Obrigado por contribuir com o KUI Framework! Juntos construímos algo incrível!**

@@ -73,16 +73,16 @@ pnpm install
 # Build
 pnpm build
 
-# Executar exemplo
-cd examples/person-addresses
+# Executar showcase
+cd examples/kui-showcase
 pnpm dev
 ```
 
 Acesse: http://localhost:3000
 
-## 📖 Exemplo de Uso
+## 📖 Exemplos de Uso
 
-### 1. Defina um Schema
+### 1. Formulário com FormBuilder
 
 ```typescript
 import { zKUI } from "@kui-framework/zod-extension";
@@ -97,8 +97,6 @@ const userSchema = zKUI.object({
   }),
 });
 ```
-
-### 2. Use o FormBuilder
 
 ```tsx
 import { FormBuilder } from "@kui-framework/forms";
@@ -116,6 +114,42 @@ function UserForm() {
 }
 ```
 
+### 2. DataTable Multi-View
+
+```tsx
+import { DataTable, extractColumns } from "@kui-framework/forms";
+import { extractFiltersFromSchema } from "@kui-framework/core";
+
+function UsersPage() {
+  // Gerar colunas e filtros automaticamente
+  const columns = extractColumns(userSchema);
+  const filters = extractFiltersFromSchema(userSchema);
+
+  return (
+    <DataTable
+      providerName="userProvider"
+      columns={columns}
+      filters={filters}
+      enableSearch
+      enableViews
+      initialView="table"
+      enableUrlState
+      actions={(user, context) => (
+        <>
+          <Button onClick={() => edit(user)}>Editar</Button>
+          <Button 
+            variant="destructive"
+            onClick={() => context.optimisticRemove(user.id)}
+          >
+            Excluir
+          </Button>
+        </>
+      )}
+    />
+  );
+}
+```
+
 ## 🎨 Componentes Disponíveis
 
 ### 📝 Formulários
@@ -123,6 +157,15 @@ function UserForm() {
 - **18 Tipos de Campos**: Text, email, number, date, select, etc.
 - **Validação**: Zod validation integrada
 - **Modos**: Create, Edit, View automáticos
+
+### 📊 DataTable Multi-View
+- **3 Modos de Visualização**: Table, Grid, List
+- **Filtros Progressivos**: Busca global + filtros avançados com pills
+- **URL State**: Compartilhar filtros e paginação
+- **TanStack Table**: Integração com tabela profissional
+- **Responsivo**: Mobile-first design
+- **Performance**: Virtualização para listas grandes
+- **Cache**: Optimistic updates e invalidation
 
 ### 🧩 UI Components
 - **Inputs**: Text, email, password, number, currency
@@ -187,14 +230,14 @@ kui/
 │   ├── core/           → Providers e registry
 │   ├── theme/          → Design tokens
 │   ├── ui/             → Componentes base
-│   └── forms/          → Form builder
+│   └── forms/          → Form builder + DataTable
 ├── examples/
-│   ├── person-addresses/ → Exemplo completo
-│   └── ai-examples/      → Exemplos para agentes de IA
+│   └── kui-showcase/    → Showcase completo com todos os exemplos
 └── docs/
     ├── ai-agents/        → Documentação para agentes de IA
     ├── components/       → Documentação de componentes
     ├── forms/           → Documentação de formulários
+    ├── datatable.md     → Documentação do DataTable
     └── examples/        → Exemplos e casos de uso
 ```
 
@@ -210,7 +253,7 @@ Este framework possui **documentação otimizada para agentes de IA**!
 - [🌐 Integração REST](./docs/ai-agents/REST_INTEGRATION.md) - APIs REST
 - [⚡ Integração tRPC](./docs/ai-agents/TRPC_INTEGRATION.md) - tRPC type-safe
 
-**Exemplos prontos:** [`/examples/ai-examples/`](./examples/ai-examples/)
+**Showcase completo:** [`/examples/kui-showcase/`](./examples/kui-showcase/)
 
 ## 🌿 Branches
 

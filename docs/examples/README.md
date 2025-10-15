@@ -1,126 +1,254 @@
-# 📚 Exemplos
+# 📚 Exemplos Práticos - Casos de Uso Reais
 
-> Projetos completos e casos de uso reais com o KUI Framework
+Explore exemplos práticos do KUI Framework com casos de uso reais e implementações completas.
 
-## 🎯 Visão Geral
+## 🚀 Showcase Interativo
 
-Esta seção contém exemplos práticos e projetos completos que demonstram o poder e flexibilidade do KUI Framework em cenários reais.
-
-## 📁 Estrutura dos Exemplos
-
-### 🚀 [Exemplos Básicos](./basic/)
-- **01-minimal-form**: Formulário mínimo funcional
-- **02-crud-basic**: CRUD completo (create, edit, view)
-- **03-with-validation**: Validações avançadas
-- **04-with-derived-fields**: Campos calculados
-- **05-with-conditional-fields**: Campos condicionais
-- **06-with-grid**: Sublistas e relacionamentos
-- **07-with-rest-provider**: Integração REST completa
-
-### 🏢 [Casos de Uso Empresariais](./enterprise/)
-- **CRM System**: Sistema de gestão de clientes
-- **E-commerce**: Loja online completa
-- **Admin Dashboard**: Painel administrativo
-- **HR Management**: Sistema de recursos humanos
-- **Inventory System**: Controle de estoque
-
-### 🎨 [Temas e Customização](./theming/)
-- **Dark Mode**: Tema escuro completo
-- **Brand Colors**: Cores corporativas
-- **Custom Components**: Componentes personalizados
-- **Responsive Design**: Layout adaptativo
-
-### 🔌 [Integrações](./integrations/)
-- **REST API**: Integração com APIs REST
-- **tRPC**: Type-safe APIs
-- **GraphQL**: Integração GraphQL
-- **Real-time**: WebSockets e SSE
-- **Authentication**: Sistemas de autenticação
-
-## 🚀 Como Usar os Exemplos
-
-### 1. Clone o Repositório
+O [Showcase Completo](../examples/kui-showcase/) é a melhor forma de ver todos os componentes e funcionalidades em ação:
 
 ```bash
-git clone https://github.com/kennyjsa/kui.git
-cd kui
-```
-
-### 2. Instale Dependências
-
-```bash
-pnpm install
-```
-
-### 3. Execute um Exemplo
-
-```bash
-# Exemplo básico
-cd examples/person-addresses
+cd examples/kui-showcase
 pnpm dev
-
-# Ou navegue para /examples/ai-examples/
-cd examples/ai-examples
 ```
 
-### 4. Explore o Código
+Acesse: http://localhost:3000
 
-Cada exemplo inclui:
-- ✅ **Código completo** e funcional
-- ✅ **Comentários detalhados**
-- ✅ **Explicações passo a passo**
-- ✅ **Casos de uso reais**
-- ✅ **Boas práticas**
+## 📊 DataTable - Visualização de Dados
 
-## 📖 Exemplos Detalhados
-
-### 🎯 Formulário Mínimo
+### Lista Básica de Usuários
+- **Arquivo**: `src/app/users-datatable/page.tsx`
+- **Funcionalidades**: DataTable básico com geração automática de colunas e filtros
+- **Recursos**: Busca, paginação, ordenação, URL state
 
 ```tsx
-// Exemplo mais simples possível
-import { FormBuilder } from "@kui-framework/forms";
-import { zKUI } from "@kui-framework/zod-extension";
+<DataTable
+  providerName="userProvider"
+  columns={columns}
+  filters={filters}
+  enableSearch
+  enableViews
+  initialView="table"
+  pageSize={10}
+  enableUrlState
+/>
+```
 
+### Lista Avançada de Usuários
+- **Arquivo**: `src/app/users-datatable-advanced/page.tsx`
+- **Funcionalidades**: DataTable com TanStack Table e virtualização
+- **Recursos**: 3 modos de visualização, filtros avançados, actions com optimistic updates
+
+```tsx
+<DataTable
+  providerName="userProvider"
+  columns={columns}
+  filters={filters}
+  useTanStackTable
+  actions={(user, context) => (
+    <>
+      <Button onClick={() => editUser(user)}>Editar</Button>
+      <Button 
+        variant="destructive"
+        onClick={() => context.optimisticRemove(user.id)}
+      >
+        Excluir
+      </Button>
+    </>
+  )}
+/>
+```
+
+## 📝 Formulários - 18 Tipos de Campos
+
+### Formulários Simples
+- **Arquivo**: `src/app/forms/simple-forms/page.tsx`
+- **Funcionalidades**: Formulários básicos com campos simples
+- **Recursos**: Validação, máscaras, campos obrigatórios
+
+```tsx
+<FormBuilder
+  schema={userSchema}
+  mode="create"
+  onSubmit={async (data) => {
+    console.log('Dados do usuário:', data);
+  }}
+/>
+```
+
+### Formulários com Validação
+- **Arquivo**: `src/app/forms/with-validations/page.tsx`
+- **Funcionalidades**: Validação avançada com Zod
+- **Recursos**: Validação cross-field, mensagens customizadas
+
+```tsx
 const userSchema = zKUI.object({
-  id: zKUI.identifier("ID"),
-  name: zKUI.text("Nome", { required: true }),
-  email: zKUI.email("E-mail", { required: true }),
+  email: zKUI.email('E-mail', { required: true }),
+  confirmEmail: zKUI.email('Confirmar E-mail', { required: true })
+}).refine(
+  (data) => data.email === data.confirmEmail,
+  {
+    message: "E-mails não coincidem",
+    path: ["confirmEmail"],
+  }
+);
+```
+
+### Formulários com Grid
+- **Arquivo**: `src/app/forms/with-grid/page.tsx`
+- **Funcionalidades**: Layout responsivo com grid
+- **Recursos**: Seções, campos condicionais, layout adaptativo
+
+```tsx
+const userSchema = zKUI.object({
+  nome: zKUI.text('Nome', { 
+    grid: { xs: 12, md: 6 },
+    section: 'Dados Pessoais'
+  }),
+  email: zKUI.email('E-mail', { 
+    grid: { xs: 12, md: 6 },
+    section: 'Dados Pessoais'
+  })
+});
+```
+
+### Formulários com tRPC
+- **Arquivo**: `src/app/forms/with-trpc/page.tsx`
+- **Funcionalidades**: Integração completa com tRPC
+- **Recursos**: CRUD automático, validação server-side, cache
+
+```tsx
+<FormBuilder
+  schema={userSchema}
+  mode="create"
+  provider="userProvider"
+  onSubmit={async (data) => {
+    // Salvamento automático via tRPC
+    await trpc.user.create.mutate(data);
+  }}
+/>
+```
+
+## 🧩 Componentes UI - Biblioteca Completa
+
+### Componentes Básicos
+- **Arquivo**: `src/app/with-basic-components/page.tsx`
+- **Funcionalidades**: Todos os componentes básicos
+- **Recursos**: Inputs, botões, cards, badges, etc.
+
+```tsx
+<div className="space-y-4">
+  <Input placeholder="Digite algo..." />
+  <Button>Primário</Button>
+  <Badge>Sucesso</Badge>
+  <Card>
+    <CardContent>
+      <p>Conteúdo do card</p>
+    </CardContent>
+  </Card>
+</div>
+```
+
+### Sistema de Elevação
+- **Arquivo**: `src/app/with-elevation/page.tsx`
+- **Funcionalidades**: Sistema de elevação completo
+- **Recursos**: 5 níveis de elevação, sombras, profundidade
+
+```tsx
+<div className="space-y-4">
+  <Card elevation="none">Sem elevação</Card>
+  <Card elevation="sm">Elevação pequena</Card>
+  <Card elevation="md">Elevação média</Card>
+  <Card elevation="lg">Elevação grande</Card>
+  <Card elevation="xl">Elevação extra grande</Card>
+</div>
+```
+
+### Acessibilidade
+- **Arquivo**: `src/app/with-aria/page.tsx`
+- **Funcionalidades**: Componentes com ARIA labels
+- **Recursos**: Navegação por teclado, screen readers, foco
+
+```tsx
+<Button 
+  aria-label="Fechar modal"
+  onClick={closeModal}
+>
+  ×
+</Button>
+```
+
+### Modais e Dialogs
+- **Arquivo**: `src/app/with-dialogs/page.tsx`
+- **Funcionalidades**: Sistema completo de modais
+- **Recursos**: Confirmação, formulários, overlays
+
+```tsx
+<Dialog>
+  <DialogTrigger asChild>
+    <Button>Abrir Modal</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Confirmar Ação</DialogTitle>
+      <DialogDescription>
+        Tem certeza que deseja continuar?
+      </DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <Button variant="outline">Cancelar</Button>
+      <Button>Confirmar</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+### Toast e Notificações
+- **Arquivo**: `src/app/with-toast/page.tsx`
+- **Funcionalidades**: Sistema de notificações
+- **Recursos**: Toast, alertas, feedback visual
+
+```tsx
+const { toast } = useToast();
+
+<Button onClick={() => {
+  toast({
+    title: "Sucesso",
+    description: "Operação realizada com sucesso!",
+  });
+}}>
+  Mostrar Toast
+</Button>
+```
+
+## 🔧 Integrações - Backend
+
+### tRPC Integration
+- **Arquivo**: `src/app/with-trpc/page.tsx`
+- **Funcionalidades**: Integração completa com tRPC
+- **Recursos**: Type-safety, cache, mutations, queries
+
+```tsx
+// Provider tRPC
+const userTrpcProvider = createTrpcProvider({
+  name: 'userProvider',
+  router: trpc.user,
+  procedures: {
+    list: 'getAll',
+    get: 'getById',
+    create: 'create',
+    update: 'update',
+    delete: 'delete',
+  },
 });
 
-export function UserForm() {
-  return (
-    <FormBuilder
-      schema={userSchema}
-      mode="create"
-      onSubmit={(data) => console.log(data)}
-    />
-  );
-}
+// Uso no componente
+const { data, isLoading } = trpc.user.getAll.useQuery();
 ```
 
-### 🔄 CRUD Completo
-
-```tsx
-// Create, Edit, View em um componente
-interface ProductFormProps {
-  mode: "create" | "edit" | "view";
-  productId?: number;
-  initialData?: Product;
-}
-
-export function ProductForm({ mode, productId, initialData }: ProductFormProps) {
-  return (
-    <FormBuilder
-      schema={productSchema}
-      mode={mode}
-      defaultValues={initialData}
-      onSubmit={handleSubmit}
-    />
-  );
-}
-```
-
-### 🔗 Integração REST
+### REST Integration
+- **Arquivo**: `src/app/with-rest/page.tsx`
+- **Funcionalidades**: Integração com APIs REST
+- **Recursos**: HTTP methods, headers, error handling
 
 ```tsx
 // Provider REST
@@ -135,128 +263,141 @@ const userProvider = createRestProvider({
     delete: '/users/:id',
   },
 });
+```
 
-// Uso no formulário
-<FormBuilder
-  schema={userSchema}
-  mode="create"
-  onSubmit={async (data) => {
-    await userProvider.create(data);
-  }}
+## 📱 Responsividade - Mobile-First
+
+### Grid Layout
+- **Arquivo**: `src/app/with-grid-layout/page.tsx`
+- **Funcionalidades**: Layout responsivo
+- **Recursos**: Breakpoints, grid adaptativo, mobile-first
+
+```tsx
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <Card>Item 1</Card>
+  <Card>Item 2</Card>
+  <Card>Item 3</Card>
+</div>
+```
+
+### Sidebar
+- **Arquivo**: `src/app/with-sidebar/page.tsx`
+- **Funcionalidades**: Sidebar responsiva
+- **Recursos**: Collapse, overlay, mobile menu
+
+```tsx
+<Sidebar>
+  <SidebarContent>
+    <SidebarItem>
+      <SidebarLink href="/">Home</SidebarLink>
+    </SidebarItem>
+    <SidebarItem>
+      <SidebarLink href="/users">Usuários</SidebarLink>
+    </SidebarItem>
+  </SidebarContent>
+</Sidebar>
+```
+
+## 🎨 Temas - Design System
+
+### Tokens
+- **Arquivo**: `src/app/with-tokens/page.tsx`
+- **Funcionalidades**: Design tokens
+- **Recursos**: Cores, espaçamento, tipografia, elevação
+
+```tsx
+<div className="bg-primary text-primary-foreground p-4 rounded-lg">
+  <h2 className="text-2xl font-bold">Título</h2>
+  <p className="text-sm opacity-90">Descrição</p>
+</div>
+```
+
+### Dark Mode
+- **Arquivo**: `src/app/with-dark-mode/page.tsx`
+- **Funcionalidades**: Tema escuro
+- **Recursos**: Toggle, persistência, transições
+
+```tsx
+const { theme, setTheme } = useTheme();
+
+<Button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+  {theme === 'dark' ? '☀️' : '🌙'}
+</Button>
+```
+
+## 🚀 Performance - Otimizações
+
+### Virtualização
+- **Arquivo**: `src/app/with-virtualization/page.tsx`
+- **Funcionalidades**: Listas virtuais
+- **Recursos**: Renderização otimizada, scroll infinito
+
+```tsx
+<DataTableVirtualized
+  data={data}
+  columns={columns}
+  height={600}
+  itemHeight={60}
 />
 ```
 
-## 🎨 Personalização
-
-### Temas Customizados
-
-```typescript
-// tailwind.config.js
-export default {
-  presets: [kuiPreset],
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          50: '#eff6ff',
-          500: '#3b82f6',
-          900: '#1e3a8a',
-        }
-      }
-    }
-  }
-};
-```
-
-### Componentes Personalizados
+### Lazy Loading
+- **Arquivo**: `src/app/with-lazy-loading/page.tsx`
+- **Funcionalidades**: Carregamento sob demanda
+- **Recursos**: Code splitting, suspense, fallbacks
 
 ```tsx
-// Componente customizado
-export function CustomButton({ children, ...props }) {
-  return (
-    <Button
-      className="bg-gradient-to-r from-blue-500 to-purple-600"
-      {...props}
-    >
-      {children}
-    </Button>
-  );
-}
+const LazyComponent = lazy(() => import('./HeavyComponent'));
+
+<Suspense fallback={<Loading />}>
+  <LazyComponent />
+</Suspense>
 ```
 
-## 🔧 Configuração Avançada
+## 📚 Como Usar os Exemplos
 
-### Múltiplos Providers
+### 1. Clonar o Repositório
 
-```tsx
-// Múltiplos providers
-<KuiDataProvider providers={[
-  { name: 'userProvider', provider: userProvider },
-  { name: 'productProvider', provider: productProvider },
-  { name: 'categoryProvider', provider: categoryProvider },
-]}>
-  <App />
-</KuiDataProvider>
+```bash
+git clone https://github.com/kennyjsa/kui.git
+cd kui
 ```
 
-### Validação Customizada
+### 2. Instalar Dependências
 
-```typescript
-// Validação cross-field
-const schema = zKUI
-  .object({
-    password: zKUI.password("Senha", { required: true }),
-    confirmPassword: zKUI.password("Confirmar Senha", { 
-      required: true,
-      transient: true
-    })
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "As senhas não conferem",
-    path: ["confirmPassword"]
-  });
+```bash
+pnpm install
 ```
 
-## 📱 Responsividade
+### 3. Executar Showcase
 
-### Layout Adaptativo
-
-```typescript
-// Campos responsivos
-const schema = zKUI.object({
-  // Largura total em mobile, metade em desktop
-  fullName: zKUI.text("Nome Completo", {
-    layout: { xs: 12, md: 6 }
-  }),
-  
-  email: zKUI.email("E-mail", {
-    layout: { xs: 12, md: 6 }
-  }),
-  
-  // Campos de 1/3 em desktop
-  city: zKUI.text("Cidade", {
-    layout: { xs: 12, md: 4 }
-  })
-});
+```bash
+cd examples/kui-showcase
+pnpm dev
 ```
+
+### 4. Explorar Exemplos
+
+- Navegue pelos exemplos no menu lateral
+- Veja o código fonte de cada exemplo
+- Teste as funcionalidades interativamente
+- Copie e adapte para seu projeto
 
 ## 🎯 Próximos Passos
 
-1. **Explore os Exemplos**: Comece com os básicos
-2. **Adapte para Seu Caso**: Modifique conforme necessário
-3. **Contribua**: Adicione seus próprios exemplos
-4. **Compartilhe**: Ajude outros desenvolvedores
+1. **[Guia de Início Rápido](../getting-started.md)** - Configure o KUI
+2. **[Documentação de Formulários](../forms/README.md)** - Aprenda sobre os 18 tipos de campos
+3. **[Documentação do DataTable](../datatable.md)** - Sistema de visualização de dados
+4. **[Documentação de Componentes](../components/README.md)** - Biblioteca completa de componentes
+5. **[Contribuindo](../contributing.md)** - Como contribuir com o projeto
 
-## 🤝 Contribuindo
+## 🆘 Precisa de Ajuda?
 
-Quer adicionar um exemplo? Siga estes passos:
-
-1. **Crie uma pasta** com nome descritivo
-2. **Adicione README.md** explicando o exemplo
-3. **Inclua código completo** e funcional
-4. **Documente casos de uso** e boas práticas
-5. **Teste tudo** antes de enviar
+- **[FAQ](../guides/faq.md)** - Perguntas frequentes
+- **[Troubleshooting](../guides/troubleshooting.md)** - Solução de problemas
+- **[GitHub Issues](https://github.com/kennyjsa/kui/issues)** - Reportar bugs
+- **[Discord](https://discord.gg/kui)** - Comunidade
 
 ---
 
-**Explore os exemplos e descubra o poder do KUI Framework!** 🚀
+**🎉 Explore os exemplos e construa aplicações incríveis com o KUI Framework!**
