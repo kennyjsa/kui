@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import { TrpcProvider } from "@/providers/TrpcProvider";
+// Providers locais - funcionando
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,9 +25,7 @@ export default function RootLayout({
             <header className="border-b bg-white shadow-sm">
               <div className="max-w-6xl mx-auto px-8 py-6">
                 <h1 className="text-3xl font-bold">🧩 KUI Framework</h1>
-                <p className="text-muted-foreground mt-1">
-                  Framework de UI Declarativa para React
-                </p>
+                <p className="text-muted-foreground mt-1">Framework de UI Declarativa para React</p>
               </div>
             </header>
             <Navigation />
