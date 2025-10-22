@@ -28,12 +28,50 @@ Refinar a experiência do usuário com feedback visual, navegação intuitiva e 
 
 ### Sprint 1: Feedback Visual
 
-#### 1.1 Loading States
-- [ ] Skeleton loaders para formulários
-- [ ] Skeleton para grids
-- [ ] Spinners contextuais
+#### 1.1 Loading States Automáticos
+
+**FormBuilder com Skeleton Automático:**
+```tsx
+<FormBuilder
+  schema={userSchema}
+  mode="edit"
+  loading={isLoading}  // ← Skeleton gerado automaticamente do schema
+  defaultValues={user}
+  onSubmit={handleSubmit}
+/>
+```
+
+**Como funciona:**
+- Quando `loading={true}`, FormBuilder renderiza skeleton
+- Skeleton é gerado automaticamente baseado no schema
+- Cada tipo de campo tem seu skeleton correspondente
+- Layout (grid, spacing) é mantido idêntico ao form real
+- Responsivo e schema-aware
+
+**Implementação:**
+- [ ] Prop `loading` no FormBuilder
+- [ ] Component `FieldSkeleton` genérico
+- [ ] Skeleton específico para cada tipo de campo:
+  - [ ] text, email, password (input simples)
+  - [ ] textarea (input maior)
+  - [ ] select, relation (dropdown)
+  - [ ] checkbox, switch, radio (mini)
+  - [ ] number, currency, date (input com ícone)
+  - [ ] grid (tabela com linhas)
+  - [ ] file (upload area)
+  - [ ] rating, color (customizados)
+- [ ] Skeleton para Card/CardHeader
+- [ ] Skeleton para botões de ação
+- [ ] Respeitar layout responsivo do schema
+- [ ] Animação de pulsação (shimmer effect)
+
+**Outros Loading States:**
+- [ ] Skeleton para GridField/ListField (tabelas/listas)
+- [ ] Spinners contextuais (dentro de botões)
 - [ ] Progress bars para uploads
 - [ ] Loading overlay para ações longas
+- [ ] Skeleton para Sidebar widgets
+- [ ] Component `Skeleton` base reutilizável
 
 #### 1.2 Toast Notifications
 ```typescript
