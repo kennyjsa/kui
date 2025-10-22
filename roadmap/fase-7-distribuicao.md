@@ -54,33 +54,60 @@ Preparar o KUI Framework para distribuição pública, documentação completa e
 
 ### Sprint 2: Documentação Completa
 
-#### 2.1 Site de Documentação
+#### 2.1 Site de Documentação (GitHub Pages + VitePress)
 ```
 docs/
+├── .vitepress/
+│   ├── config.ts
+│   └── theme/
 ├── getting-started/
 │   ├── installation.md
 │   ├── quick-start.md
 │   └── concepts.md
-├── components/
+├── guide/
 │   ├── form-builder.md
-│   ├── field-renderer.md
-│   └── crud-grid.md
+│   ├── field-types.md
+│   ├── validation.md
+│   ├── grid-sublists.md
+│   └── providers.md
 ├── api/
 │   ├── zod-extension.md
 │   ├── core.md
-│   └── forms.md
-└── examples/
-    ├── basic-form.md
-    ├── crud.md
-    └── advanced.md
+│   ├── forms.md
+│   └── ui.md
+├── examples/
+│   ├── basic-form.md
+│   ├── crud.md
+│   ├── advanced-patterns.md
+│   └── integrations.md
+└── ai-agents/
+    ├── getting-started.md
+    ├── patterns.md
+    └── field-reference.md
 ```
 
-- [ ] Setup Docusaurus ou VitePress
-- [ ] Estrutura de navegação
-- [ ] Guias de instalação
-- [ ] Tutoriais passo a passo
-- [ ] API Reference completa
-- [ ] Exemplos interativos
+**Ferramenta Escolhida: VitePress** ⭐
+- [ ] Setup VitePress no repositório
+- [ ] Configurar tema customizado
+- [ ] Estrutura de navegação sidebar
+- [ ] Importar documentação existente de `/docs/ai-agents`
+- [ ] Guias de instalação passo a passo
+- [ ] Tutoriais interativos
+- [ ] API Reference completa (auto-gerada via TypeDoc)
+- [ ] Playground com CodeSandbox integrado
+- [ ] Search (Algolia DocSearch)
+- [ ] Dark/Light mode
+- [ ] Responsivo mobile-first
+- [ ] Deploy automático GitHub Pages via GitHub Actions
+- [ ] Custom domain (opcional): `kui-framework.dev` ou `kennyjsa.github.io/kui`
+
+**Features Especiais:**
+- [ ] Live code editor para testar schemas
+- [ ] Exemplos copy-paste prontos
+- [ ] Galeria de templates
+- [ ] Versionamento de docs (v1.0, v2.0, etc)
+- [ ] Contributing guide
+- [ ] Showcase de projetos usando KUI
 
 #### 2.2 Storybook
 ```typescript
@@ -261,9 +288,11 @@ npx create-kui-app my-app --template dashboard
 ## 🔗 Ferramentas
 
 ### Docs
-- Docusaurus ou VitePress
-- Algolia DocSearch
-- Vercel ou Netlify
+- **VitePress** (escolhido)
+- Algolia DocSearch (search integrado)
+- GitHub Pages (deploy gratuito)
+- GitHub Actions (CI/CD automático)
+- TypeDoc (geração de API docs)
 
 ### Storybook
 - @storybook/react
