@@ -72,7 +72,135 @@ Refinar a experiência do usuário com feedback visual, navegação intuitiva e 
 
 ### Sprint 2: Layouts Avançados
 
-#### 2.1 Tabs para Organização
+#### 2.1 Sections Básicas (Container/Group)
+```typescript
+<FormBuilder schema={schema}>
+  <Section title="Dados Pessoais" description="Informações básicas">
+    {/* Campos renderizados automaticamente */}
+  </Section>
+  <Section title="Endereço" divider>
+    {/* ... */}
+  </Section>
+</FormBuilder>
+
+// Ou via schema
+export const formSchema = zKUI.object({
+  // Section: Dados Pessoais
+  nome: zKUI.text("Nome", { section: "Dados Pessoais" }),
+  email: zKUI.email("E-mail", { section: "Dados Pessoais" }),
+  
+  // Section: Endereço
+  rua: zKUI.text("Rua", { section: "Endereço" }),
+  cidade: zKUI.text("Cidade", { section: "Endereço" }),
+});
+```
+- [ ] Component `Section` básico (visual grouping)
+- [ ] Title e description opcionais
+- [ ] Dividers entre sections
+- [ ] Variantes de estilo (bordered, card, flat)
+- [ ] Suporte via metadata do schema
+- [ ] Spacing configurável
+
+#### 2.2 Sidebar Layouts
+```typescript
+<FormLayout 
+  sidebar="right"  // left, right, none
+  sidebarWidth="300px"
+  sidebarCollapsible
+>
+  {/* Main content: FormBuilder */}
+  <FormBuilder schema={schema} />
+  
+  {/* Sidebar content */}
+  <Sidebar>
+    {/* Status widget */}
+    <SidebarSection title="Status">
+      <StatusBadge status={status} />
+      <Timeline items={history} />
+    </SidebarSection>
+    
+    {/* Categorias/Tags */}
+    <SidebarSection title="Categorias">
+      <CategoryList 
+        selected={categories}
+        onChange={handleCategoryChange}
+      />
+    </SidebarSection>
+    
+    {/* Attachments */}
+    <SidebarSection title="Anexos">
+      <AttachmentList files={attachments} />
+      <UploadButton onUpload={handleUpload} />
+    </SidebarSection>
+    
+    {/* Abas no sidebar */}
+    <SidebarTabs>
+      <Tab label="Histórico">...</Tab>
+      <Tab label="Comentários">...</Tab>
+      <Tab label="Atividades">...</Tab>
+    </SidebarTabs>
+  </Sidebar>
+</FormLayout>
+```
+
+**Componentes:**
+- [ ] `FormLayout` com suporte a sidebar
+- [ ] Sidebar posicionável (left, right)
+- [ ] Sidebar collapsible/expandible
+- [ ] Largura configurável
+- [ ] Responsivo (colapsa em mobile)
+
+**Widgets para Sidebar:**
+- [ ] `SidebarSection` - Container com título
+- [ ] `StatusWidget` - Badge + informações
+- [ ] `Timeline` - Histórico de mudanças
+- [ ] `CategoryList` - Seleção de categorias/tags
+- [ ] `AttachmentList` - Lista de arquivos anexados
+- [ ] `SidebarTabs` - Abas dentro do sidebar
+- [ ] `MetadataPanel` - Infos técnicas (criado em, por quem, etc)
+- [ ] `RelatedItems` - Itens relacionados
+- [ ] `QuickActions` - Ações rápidas (botões)
+
+**Casos de Uso:**
+```typescript
+// Caso 1: Form com status e anexos
+<FormLayout sidebar="right">
+  <FormBuilder schema={pessoaSchema} />
+  <Sidebar>
+    <StatusWidget status="draft" />
+    <AttachmentPanel />
+  </Sidebar>
+</FormLayout>
+
+// Caso 2: Form com categorização
+<FormLayout sidebar="left">
+  <Sidebar>
+    <CategorySelector categories={allCategories} />
+    <TagCloud tags={popularTags} />
+  </Sidebar>
+  <FormBuilder schema={produtoSchema} />
+</FormLayout>
+
+// Caso 3: Form com histórico completo
+<FormLayout sidebar="right">
+  <FormBuilder schema={pedidoSchema} />
+  <Sidebar>
+    <SidebarTabs>
+      <Tab label="Status">
+        <Timeline items={statusHistory} />
+      </Tab>
+      <Tab label="Anexos">
+        <AttachmentList files={files} />
+      </Tab>
+      <Tab label="Comentários">
+        <CommentThread comments={comments} />
+      </Tab>
+    </SidebarTabs>
+  </Sidebar>
+</FormLayout>
+```
+
+#### 2.3 Tabs para Organização
 ```typescript
 <TabbedForm schema={schema}>
   <Tab label="Dados Pessoais" fields={["nome", "cpf", "email"]} />
@@ -84,8 +212,10 @@ Refinar a experiência do usuário com feedback visual, navegação intuitiva e 
 - [ ] Navegação entre tabs
 - [ ] Validação por tab
 - [ ] Indicador de erros por tab
+- [ ] Tabs verticais (sidebar)
+- [ ] Tabs responsivas (overflow)
 
-#### 2.2 Accordion/Collapse
+#### 2.4 Accordion/Collapse
 ```typescript
 <AccordionForm schema={schema}>
   <Section title="Dados Básicos" fields={["nome", "email"]} />
@@ -96,8 +226,9 @@ Refinar a experiência do usuário com feedback visual, navegação intuitiva e 
 - [ ] Seções colapsáveis
 - [ ] Expand/collapse all
 - [ ] Persist state
+- [ ] Indicador de erros por seção
 
-#### 2.3 Grid Layout Responsivo
+#### 2.5 Grid Layout Responsivo
 ```typescript
 nome: zKUI.text("Nome", {
   layout: {
@@ -112,12 +243,13 @@ nome: zKUI.text("Nome", {
 - [ ] Gap e spacing configurável
 - [ ] Alinhamento e justificação
 
-#### 2.4 Layouts Predefinidos
-- [ ] Layout "Single Column"
-- [ ] Layout "Two Columns"
-- [ ] Layout "Sidebar"
-- [ ] Layout "Cards"
-- [ ] Layout customizável
+#### 2.6 Layouts Predefinidos (Templates)
+- [ ] Layout "Single Column" (simples)
+- [ ] Layout "Two Columns" (form 8 cols + sidebar 4 cols)
+- [ ] Layout "Master-Detail" (lista + detail sidebar)
+- [ ] Layout "Wizard" (multi-step)
+- [ ] Layout "Dashboard" (cards + widgets)
+- [ ] Layout customizável via props
 
 ### Sprint 3: Componentes de Navegação
 
