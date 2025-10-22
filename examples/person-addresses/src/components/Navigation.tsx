@@ -12,7 +12,6 @@ const routes = [
   { href: "/with-loading", label: "Loading State" },
   { href: "/with-toast", label: "Toast Notifications" },
   { href: "/with-dialogs", label: "Dialogs" },
-  { href: "/with-global-providers", label: "🎯 Providers Globais" },
 ];
 
 export function Navigation() {

@@ -28,3 +28,4 @@ export function GlobalProviders({ children }: GlobalProvidersProps) {
     </DialogProvider>
   );
 }
+

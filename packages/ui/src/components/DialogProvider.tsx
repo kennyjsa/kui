@@ -22,7 +22,7 @@ interface DialogContextType {
     onCancel?: () => void;
     confirmVariant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
     loading?: boolean;
-  }) => void;
+  }) => Promise<boolean>;
 
   // Alert Dialog
   alert: (options: {
@@ -31,7 +31,7 @@ interface DialogContextType {
     okLabel?: string;
     onOk?: () => void;
     variant?: "default" | "warning" | "error" | "info";
-  }) => void;
+  }) => Promise<void>;
 
   // Form Dialog
   form: (options: {
@@ -39,14 +39,15 @@ interface DialogContextType {
     description?: string;
     form: React.ReactNode;
     size?: "sm" | "md" | "lg" | "xl" | "full";
-  }) => void;
+    onClose?: () => void;
+  }) => Promise<any>;
 
   // Close current dialog
   close: () => void;
 
   // Dialog state
   isOpen: boolean;
-  type: 'confirm' | 'alert' | 'form' | null;
+  type: "confirm" | "alert" | "form" | null;
 }
 
 const DialogContext = createContext<DialogContextType | null>(null);
@@ -58,49 +59,87 @@ export function DialogProvider({ children }: { children: ReactNode }) {
     props: null,
   });
 
-  const confirm = useCallback((options: {
-    title: string;
-    description?: string;
-    confirmLabel?: string;
-    cancelLabel?: string;
-    onConfirm: () => void | Promise<void>;
-    onCancel?: () => void;
-    confirmVariant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
-    loading?: boolean;
-  }) => {
-    setDialogState({
-      isOpen: true,
-      type: 'confirm',
-      props: options,
-    });
-  }, []);
+  const confirm = useCallback(
+    (options: {
+      title: string;
+      description?: string;
+      confirmLabel?: string;
+      cancelLabel?: string;
+      onConfirm: () => void | Promise<void>;
+      onCancel?: () => void;
+      confirmVariant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+      loading?: boolean;
+    }): Promise<boolean> => {
+      return new Promise((resolve) => {
+        setDialogState({
+          isOpen: true,
+          type: "confirm",
+          props: {
+            ...options,
+            onConfirm: async () => {
+              await options.onConfirm();
+              resolve(true);
+            },
+            onCancel: () => {
+              options.onCancel?.();
+              resolve(false);
+            },
+          },
+        });
+      });
+    },
+    []
+  );
 
-  const alert = useCallback((options: {
-    title: string;
-    description?: string;
-    okLabel?: string;
-    onOk?: () => void;
-    variant?: "default" | "warning" | "error" | "info";
-  }) => {
-    setDialogState({
-      isOpen: true,
-      type: 'alert',
-      props: options,
-    });
-  }, []);
+  const alert = useCallback(
+    (options: {
+      title: string;
+      description?: string;
+      okLabel?: string;
+      onOk?: () => void;
+      variant?: "default" | "warning" | "error" | "info";
+    }): Promise<void> => {
+      return new Promise((resolve) => {
+        setDialogState({
+          isOpen: true,
+          type: "alert",
+          props: {
+            ...options,
+            onOk: () => {
+              options.onOk?.();
+              resolve();
+            },
+          },
+        });
+      });
+    },
+    []
+  );
 
-  const form = useCallback((options: {
-    title: string;
-    description?: string;
-    form: React.ReactNode;
-    size?: "sm" | "md" | "lg" | "xl" | "full";
-  }) => {
-    setDialogState({
-      isOpen: true,
-      type: 'form',
-      props: options,
-    });
-  }, []);
+  const form = useCallback(
+    (options: {
+      title: string;
+      description?: string;
+      form: React.ReactNode;
+      size?: "sm" | "md" | "lg" | "xl" | "full";
+      onClose?: () => void;
+    }): Promise<any> => {
+      return new Promise((resolve) => {
+        setDialogState({
+          isOpen: true,
+          type: "form",
+          props: {
+            ...options,
+            onClose: () => {
+              options.onClose?.();
+              resolve(null);
+            },
+          },
+        });
+      });
+    },
+    []
+  );
 
   const close = useCallback(() => {
     setDialogState({
@@ -120,7 +159,7 @@ export function DialogProvider({ children }: { children: ReactNode }) {
     }
 
     switch (dialogState.type) {
-      case 'confirm':
+      case "confirm":
         return (
           <ConfirmDialog
             open={dialogState.isOpen}
@@ -136,7 +175,7 @@ export function DialogProvider({ children }: { children: ReactNode }) {
           />
         );
 
-      case 'alert':
+      case "alert":
         return (
           <AlertDialog
             open={dialogState.isOpen}
@@ -149,7 +188,7 @@ export function DialogProvider({ children }: { children: ReactNode }) {
           />
         );
 
-      case 'form':
+      case "form":
         return (
           <FormDialog
             open={dialogState.isOpen}
@@ -168,14 +207,16 @@ export function DialogProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <DialogContext.Provider value={{
-      confirm,
-      alert,
-      form,
-      close,
-      isOpen: dialogState.isOpen,
-      type: dialogState.type,
-    }}>
+    <DialogContext.Provider
+      value={{
+        confirm,
+        alert,
+        form,
+        close,
+        isOpen: dialogState.isOpen,
+        type: dialogState.type,
+      }}
+    >
       {children}
       {renderDialog()}
     </DialogContext.Provider>
@@ -185,7 +226,7 @@ export function DialogProvider({ children }: { children: ReactNode }) {
 export function useDialogContext() {
   const context = useContext(DialogContext);
   if (!context) {
-    throw new Error('useDialogContext must be used within a DialogProvider');
+    throw new Error("useDialogContext must be used within a DialogProvider");
   }
   return context;
 }
