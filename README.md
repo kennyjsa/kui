@@ -124,9 +124,26 @@ kui/
 │   ├── theme/          → Design tokens
 │   ├── ui/             → Componentes base
 │   └── forms/          → Form builder
-└── examples/
-    └── person-addresses/ → Exemplo completo
+├── examples/
+│   ├── person-addresses/ → Exemplo completo
+│   └── ai-examples/      → Exemplos para agentes de IA
+└── docs/
+    └── ai-agents/        → Documentação para agentes de IA
 ```
+
+## 🤖 Para Agentes de IA
+
+Este framework possui **documentação otimizada para agentes de IA**!
+
+📚 **[Acesse a documentação completa para IA →](./docs/ai-agents/)**
+
+- [🚀 Guia Rápido](./docs/ai-agents/AGENT_GUIDE.md) - Comece aqui
+- [📖 Padrões e Receitas](./docs/ai-agents/PATTERNS.md) - Exemplos completos
+- [📋 Referência de Campos](./docs/ai-agents/FIELD_REFERENCE.md) - Todos os 18 campos
+- [🌐 Integração REST](./docs/ai-agents/REST_INTEGRATION.md) - APIs REST
+- [⚡ Integração tRPC](./docs/ai-agents/TRPC_INTEGRATION.md) - tRPC type-safe
+
+**Exemplos prontos:** [`/examples/ai-examples/`](./examples/ai-examples/)
 
 ## 🌿 Branches
 
