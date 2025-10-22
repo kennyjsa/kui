@@ -9,7 +9,14 @@ export const pessoaComEnderecoSchema = zKUI.object({
   ...pessoaSchema.shape,
   enderecos: zKUI.grid("Endereços", {
     itemSchema: enderecoSchema,
-    columns: ["cep", "rua", "numero", "cidade", "uf", "principal"],
+    columns: [
+      { key: "cep", label: "CEP" },
+      { key: "rua", label: "Rua" },
+      { key: "numero", label: "Número" },
+      { key: "cidade", label: "Cidade" },
+      { key: "uf", label: "UF" },
+      { key: "principal", label: "Principal" },
+    ],
     displayFields: ["rua", "numero", "cidade", "uf"], // Para cards mobile
     allowCreate: true,
     allowEdit: true,

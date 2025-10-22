@@ -9,6 +9,7 @@ const routes = [
   { href: "/with-grid", label: "Grid (Endereços)" },
   { href: "/with-trpc", label: "Integração tRPC" },
   { href: "/with-validations", label: "Validações Avançadas" },
+  { href: "/with-loading", label: "Loading State" },
 ];
 
 export function Navigation() {

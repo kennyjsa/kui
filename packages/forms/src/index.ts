@@ -1,6 +1,7 @@
 // Components
 export { FormBuilder } from "./components/FormBuilder";
 export { FieldRenderer } from "./components/FieldRenderer";
+export { FieldSkeleton } from "./components/FieldSkeleton";
 export { RelationSelect } from "./components/RelationSelect";
 export { GridItemModal } from "./components/GridItemModal";
 export { GridField } from "./components/GridField";

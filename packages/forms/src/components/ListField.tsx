@@ -27,10 +27,13 @@ function ListFieldComponent({ value = [], onChange, options, mode }: ListFieldPr
 
   // Memoizar campos e configurações
   const fields = React.useMemo(() => extractFields(options.itemSchema), [options.itemSchema]);
-  const displayFields = React.useMemo(() =>
-    options.displayFields || options.columns.slice(0, 3),
-    [options.displayFields, options.columns]
-  );
+  const displayFields = React.useMemo(() => {
+    if (options.displayFields) {
+      return options.displayFields;
+    }
+    // Extrair keys das columns (agora são objetos { key, label })
+    return options.columns.slice(0, 3).map((col) => col.key);
+  }, [options.displayFields, options.columns]);
   const pageSize = options.pageSize || 5;
 
   // Inicializa items do value

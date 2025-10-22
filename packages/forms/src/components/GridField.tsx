@@ -5,7 +5,6 @@ import { Plus, Pencil, Trash2, RotateCcw } from "lucide-react";
 import { Button, Badge, SimplePagination } from "@kui-framework/ui";
 import type { GridOptions } from "@kui-framework/zod-extension";
 import type { FormMode } from "../types";
-import { extractFields } from "../utils/extractFields";
 import { GridItemModal } from "./GridItemModal";
 
 export interface GridItem<T = any> {
@@ -30,8 +29,7 @@ function GridFieldComponent({ value = [], onChange, options, mode }: GridFieldPr
 
   const isReadOnly = mode === "view";
 
-  // Memoizar campos para evitar re-extrair a cada render
-  const fields = React.useMemo(() => extractFields(options.itemSchema), [options.itemSchema]);
+  // Memoizar configurações
   const pageSize = options.pageSize || 5;
 
   // Inicializa items do value
@@ -149,11 +147,6 @@ function GridFieldComponent({ value = [], onChange, options, mode }: GridFieldPr
     return value ?? "-";
   };
 
-  const getColumnLabel = (column: string) => {
-    const field = fields.find((f) => f.name === column);
-    return field?.label || column;
-  };
-
   const visibleItems = items.filter((item) => item.status !== "deleted" || true); // Mostrar todos, inclusive deleted
 
   // Paginação
@@ -202,8 +195,8 @@ function GridFieldComponent({ value = [], onChange, options, mode }: GridFieldPr
           <thead className="bg-muted">
             <tr>
               {options.columns.map((column) => (
-                <th key={column} className="text-left p-3 font-medium">
-                  {getColumnLabel(column)}
+                <th key={column.key} className="text-left p-3 font-medium">
+                  {column.label}
                 </th>
               ))}
               <th className="text-left p-3 font-medium w-10">Status</th>
@@ -223,8 +216,8 @@ function GridFieldComponent({ value = [], onChange, options, mode }: GridFieldPr
                   }`}
                 >
                   {options.columns.map((column) => (
-                    <td key={column} className="p-3">
-                      {getColumnValue(item.data, column)}
+                    <td key={column.key} className="p-3">
+                      {getColumnValue(item.data, column.key)}
                     </td>
                   ))}
                   <td className="p-3">

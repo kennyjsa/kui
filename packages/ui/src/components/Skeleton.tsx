@@ -1,52 +1,54 @@
 import { cn } from "../lib/utils";
 
-export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {}
-
 /**
- * Skeleton loading component
+ * Componente Skeleton base para loading states
+ * 
+ * @example
+ * ```tsx
+ * <Skeleton className="h-10 w-full" />
+ * <Skeleton className="h-4 w-32" />
+ * ```
  */
-export function Skeleton({ className, ...props }: SkeletonProps) {
+export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Largura fixa (opcional) */
+  width?: string | number;
+  /** Altura fixa (opcional) */
+  height?: string | number;
+  /** Variante do skeleton */
+  variant?: "default" | "circular" | "rectangular";
+  /** Desabilitar animação */
+  noAnimation?: boolean;
+}
+
+export function Skeleton({
+  className,
+  width,
+  height,
+  variant = "default",
+  noAnimation = false,
+  style,
+  ...props
+}: SkeletonProps) {
+  const variantStyles = {
+    default: "rounded-md",
+    circular: "rounded-full",
+    rectangular: "rounded-none",
+  };
+
   return (
     <div
-      className={cn("animate-pulse rounded-md bg-muted", className)}
+      className={cn(
+        "bg-muted",
+        !noAnimation && "animate-pulse",
+        variantStyles[variant],
+        className
+      )}
+      style={{
+        width: width ? (typeof width === "number" ? `${width}px` : width) : undefined,
+        height: height ? (typeof height === "number" ? `${height}px` : height) : undefined,
+        ...style,
+      }}
       {...props}
     />
   );
 }
-
-/**
- * Skeleton para formulário
- */
-export function FormSkeleton() {
-  return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="space-y-2">
-            <Skeleton className="h-4 w-24" />
-            <Skeleton className="h-10 w-full" />
-          </div>
-        ))}
-      </div>
-      <div className="flex justify-end gap-2">
-        <Skeleton className="h-10 w-24" />
-        <Skeleton className="h-10 w-24" />
-      </div>
-    </div>
-  );
-}
-
-/**
- * Skeleton para grid/tabela
- */
-export function GridSkeleton({ rows = 5 }: { rows?: number }) {
-  return (
-    <div className="space-y-2">
-      <Skeleton className="h-10 w-full" />
-      {Array.from({ length: rows }).map((_, i) => (
-        <Skeleton key={i} className="h-12 w-full" />
-      ))}
-    </div>
-  );
-}
-
