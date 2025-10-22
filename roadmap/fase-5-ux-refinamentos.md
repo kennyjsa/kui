@@ -4,11 +4,11 @@
 **Início:** 22 Outubro 2024  
 **Período:** Estimado 2-3 semanas  
 **Prioridade:** Média-Alta  
-**Progresso:** ██░░░░░░░░░░░░░░░░░░  10%
+**Progresso:** ████░░░░░░░░░░░░░░░░  20%
 
 ## 📝 Log de Progresso
 
-### Sprint 0: Preparação (22/10/2024)
+### Sprint 0: Preparação (22/10/2024) ✅
 - ✅ Documentação AI-friendly completa
   - ✅ AGENT_GUIDE.md
   - ✅ PATTERNS.md
@@ -18,7 +18,19 @@
   - ✅ 7 exemplos práticos em /examples/ai-examples/
   - ✅ JSDoc melhorado em tipos
 - ✅ Planejamento de site de documentação (VitePress)
-- 📋 **Próximo:** Iniciar Sprint 1 - Feedback Visual
+
+### Sprint 1: Feedback Visual - INICIADO (22/10/2024)
+#### 1.1 Loading States Automáticos ✅ COMPLETO
+- ✅ Component Skeleton base (@kui/ui)
+- ✅ Component FieldSkeleton (@kui/forms)
+- ✅ Prop `loading` no FormBuilder
+- ✅ Skeleton automático para todos os 18 tipos de campos
+- ✅ Layout idêntico ao form real
+- ✅ Animação pulse
+- ✅ Exemplo /with-loading funcionando
+- ✅ **BREAKING:** GridOptions.columns agora é Array<{key, label}>
+
+📋 **Próximo:** Toast Notifications (Sprint 1.2)
 
 ## 🎯 Objetivos
 
@@ -49,29 +61,28 @@ Refinar a experiência do usuário com feedback visual, navegação intuitiva e 
 - Responsivo e schema-aware
 
 **Implementação:**
-- [ ] Prop `loading` no FormBuilder
-- [ ] Component `FieldSkeleton` genérico
-- [ ] Skeleton específico para cada tipo de campo:
-  - [ ] text, email, password (input simples)
-  - [ ] textarea (input maior)
-  - [ ] select, relation (dropdown)
-  - [ ] checkbox, switch, radio (mini)
-  - [ ] number, currency, date (input com ícone)
-  - [ ] grid (tabela com linhas)
-  - [ ] file (upload area)
-  - [ ] rating, color (customizados)
-- [ ] Skeleton para Card/CardHeader
-- [ ] Skeleton para botões de ação
-- [ ] Respeitar layout responsivo do schema
-- [ ] Animação de pulsação (shimmer effect)
+- [x] Prop `loading` no FormBuilder
+- [x] Component `FieldSkeleton` genérico
+- [x] Skeleton específico para cada tipo de campo:
+  - [x] text, email, password (input simples)
+  - [x] textarea (input maior)
+  - [x] select, relation (dropdown)
+  - [x] checkbox, switch, radio (mini)
+  - [x] number, currency, date (input com ícone)
+  - [x] grid (tabela com linhas)
+  - [x] file (upload area)
+  - [x] rating, color (customizados)
+- [x] Skeleton para Card/CardHeader
+- [x] Skeleton para botões de ação
+- [x] Respeitar layout responsivo do schema
+- [x] Animação de pulsação (shimmer effect)
 
 **Outros Loading States:**
-- [ ] Skeleton para GridField/ListField (tabelas/listas)
+- [ ] Skeleton para GridField/ListField quando em loading (futuro)
 - [ ] Spinners contextuais (dentro de botões)
 - [ ] Progress bars para uploads
 - [ ] Loading overlay para ações longas
-- [ ] Skeleton para Sidebar widgets
-- [ ] Component `Skeleton` base reutilizável
+- [ ] Skeleton para Sidebar widgets (quando implementar sidebar)
 
 #### 1.2 Toast Notifications
 ```typescript
