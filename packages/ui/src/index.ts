@@ -77,32 +77,37 @@ export { Skeleton, type SkeletonProps } from "./components/Skeleton";
 
 export { ErrorBoundary } from "./components/ErrorBoundary";
 
+// Toast System
 export {
-  Toast,
   ToastProvider,
   ToastViewport,
+  Toast,
   ToastTitle,
   ToastDescription,
   ToastClose,
   ToastAction,
   type ToastProps,
-} from "./components/Toast";
+} from "./components/toast/Toaster";
 
-export { Toaster } from "./components/Toaster";
-export {
-  useToast,
-  toast,
-  toastSuccess,
-  toastError,
-  toastWarning,
-  toastInfo,
-} from "./components/useToast";
+export { useToast } from "./components/toast/ToastProvider";
+export type { ToastAPI, ToastOptions, ToastVariant } from "./components/toast/types";
 
-// Dialog Components
-export { ConfirmDialog, type ConfirmDialogProps } from "./components/ConfirmDialog";
-export { AlertDialog, type AlertDialogProps } from "./components/AlertDialog";
+// Dialog System
+export { DialogProvider, useDialog } from "./components/dialog/DialogProvider";
+export { AlertDialog } from "./components/dialog/AlertDialog";
+export { ConfirmDialog } from "./components/dialog/ConfirmDialog";
+export { OptionsDialog } from "./components/dialog/OptionsDialog";
+export type {
+  DialogAPI,
+  AlertOptions,
+  ConfirmOptions,
+  OptionsOptions,
+  DialogVariant,
+  DialogChoice,
+} from "./components/dialog/types";
+
+// Legacy Dialog Components (mantidos para compatibilidade)
 export { FormDialog, type FormDialogProps } from "./components/FormDialog";
-export { DialogProvider, useDialogContext } from "./components/DialogProvider";
 
 // Global Providers (SSR Safe)
 export { GlobalProviders } from "./components/GlobalProviders";

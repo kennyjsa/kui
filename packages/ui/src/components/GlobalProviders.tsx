@@ -1,8 +1,8 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from 'react';
-import { DialogProvider } from './DialogProvider';
-import { Toaster } from './Toaster';
+import { DialogProvider } from "./dialog/DialogProvider";
+import { ToastProvider } from "./toast/ToastProvider";
 
 interface GlobalProvidersProps {
   children: ReactNode;
@@ -22,10 +22,9 @@ export function GlobalProviders({ children }: GlobalProvidersProps) {
 
   // No cliente, renderiza com todos os providers
   return (
-    <DialogProvider>
-      {children}
-      <Toaster />
-    </DialogProvider>
+    <ToastProvider>
+      <DialogProvider>{children}</DialogProvider>
+    </ToastProvider>
   );
 }
 

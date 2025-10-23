@@ -40,6 +40,23 @@ Demonstra campo `grid()` para sublistas 1:N:
 - ✅ Persistência única no submit
 - ✅ Responsivo (tabela ↔ cards)
 
+### 3. **/with-toast** - Toast Notifications
+Demonstra sistema de notificações não bloqueantes:
+- ✅ API fluida: `toast.info()`, `toast.success()`, `toast.error()`, `toast.warning()`
+- ✅ Toast customizados com variantes
+- ✅ Cenários reais de uso
+- ✅ Múltiplos toasts simultâneos
+- ✅ Compatível com SSR
+
+### 4. **/with-dialogs** - Dialog System
+Demonstra sistema de interações bloqueantes:
+- ✅ API fluida: `dialog.alert()`, `dialog.confirm()`, `dialog.options()`
+- ✅ Alert dialogs (simples e detalhados)
+- ✅ Confirm dialogs (confirmações binárias)
+- ✅ Options dialogs (múltiplas escolhas)
+- ✅ Variantes visuais (success, warning, error, info)
+- ✅ Compatível com SSR
+
 ## 🎯 Modos de Formulário
 
 | Modo | Comportamento |
@@ -90,12 +107,30 @@ src/
 - Loading/error states
 - Mock provider de exemplo
 
+### Toast System (Notificações)
+- API fluida: `toast.info()`, `toast.success()`, `toast.error()`, `toast.warning()`
+- Toast customizados com variantes
+- Múltiplos toasts simultâneos
+- Compatível com SSR (Server-Side Rendering)
+- Baseado no Radix UI
+
+### Dialog System (Interações)
+- API fluida: `dialog.alert()`, `dialog.confirm()`, `dialog.options()`
+- Alert dialogs (simples e detalhados)
+- Confirm dialogs (confirmações binárias)
+- Options dialogs (múltiplas escolhas)
+- Variantes visuais (success, warning, error, info)
+- Compatível com SSR (Server-Side Rendering)
+- Baseado no Radix UI
+
 ## 🧪 Como Testar
 
 1. **Página Principal** - Teste todos os tipos de campos
 2. **Página Grid** - Adicione, edite e exclua endereços
-3. **Console** - Veja os dados JSON ao submeter
-4. **Responsive** - Redimensione a janela para ver grid ↔ cards
+3. **Página Toast** - Teste notificações não bloqueantes
+4. **Página Dialogs** - Teste interações bloqueantes
+5. **Console** - Veja os dados JSON ao submeter
+6. **Responsive** - Redimensione a janela para ver grid ↔ cards
 
 ## 📦 Tecnologias
 
