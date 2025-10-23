@@ -109,6 +109,140 @@ export type {
 // Legacy Dialog Components (mantidos para compatibilidade)
 export { FormDialog, type FormDialogProps } from "./components/FormDialog";
 
+// Empty States
+export { EmptyState, EmptyStateIcons } from "./components/EmptyState";
+
+// Sections
+export { Section, SectionGroup, useSection } from "./components/Section";
+
+// Form Layout
+export { FormLayout } from "./components/FormLayout";
+
+// Sidebar Components
+export {
+  SidebarSection,
+  StatusWidget,
+  Timeline,
+  CategoryList,
+  AttachmentList,
+  SidebarTabs,
+  SidebarTab,
+  MetadataPanel,
+  QuickActions,
+} from "./components/SidebarComponents";
+
+// Tabs
+export {
+  Tabs,
+  TabContent,
+  TabList,
+  TabTrigger,
+  ScrollableTabs,
+  tabsVariants,
+  tabVariants,
+} from "./components/Tabs";
+
+// Form Tabs
+export {
+  FormTabs,
+  WizardTabs,
+  SettingsTabs,
+  ProfileTabs,
+  DataTabs,
+  TabIcons,
+  CommonTabConfigs,
+} from "./components/FormTabs";
+
+// Accordion
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+  Collapsible,
+  accordionVariants,
+  accordionItemVariants,
+  accordionTriggerVariants,
+  accordionContentVariants,
+} from "./components/Accordion";
+
+// Accordion Components
+export {
+  FAQAccordion,
+  SettingsAccordion,
+  ProfileAccordion,
+  DataAccordion,
+  TimelineAccordion,
+  FormAccordion,
+  NavigationAccordion,
+  AccordionIcons,
+  CommonAccordionConfigs,
+} from "./components/AccordionComponents";
+
+// Grid
+export {
+  Grid,
+  GridItem,
+  GridContainer,
+  ResponsiveGrid,
+  MasonryGrid,
+  gridVariants,
+  gridItemVariants,
+  GridBreakpoints,
+  GridPresets,
+} from "./components/Grid";
+
+// Grid Components
+export {
+  CardGrid,
+  StatsGrid,
+  FeatureGrid,
+  ProductGrid,
+  TeamGrid,
+  DashboardGrid,
+  GridIcons,
+} from "./components/GridComponents";
+
+// Breadcrumbs
+export {
+  Breadcrumbs,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+  breadcrumbsVariants,
+} from "./components/Breadcrumbs";
+
+// Pagination
+export {
+  Pagination,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+  PaginationInfo,
+  paginationVariants,
+  paginationItemVariants,
+} from "./components/Pagination";
+
+// ARIA Components
+export {
+  ARIALiveRegion,
+  ARIASkipLink,
+  ARIAFocusTrap,
+  ARIAScreenReaderOnly,
+  ARIAHidden,
+  ARIADescribedBy,
+  ARIAErrorMessage,
+  ARIALoading,
+  ARIAStatus,
+  ARIAAssertionsProvider,
+  ARIAContextProvider,
+  useARIAAnnouncements,
+  useARIAContext,
+  ARIAUtils,
+} from "./components/ARIA";
+
 // Global Providers (SSR Safe)
 export { GlobalProviders } from "./components/GlobalProviders";
 

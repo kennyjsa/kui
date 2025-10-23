@@ -57,6 +57,16 @@ Demonstra sistema de interações bloqueantes:
 - ✅ Variantes visuais (success, warning, error, info)
 - ✅ Compatível com SSR
 
+### 5. **/with-empty-states** - Empty States
+Demonstra componentes para estados vazios:
+- ✅ Empty State básico com ações contextuais
+- ✅ Grid Empty States para listas vazias
+- ✅ Search Empty States para busca sem resultados
+- ✅ Empty States específicos por domínio (Documentos, Usuários, Produtos, etc.)
+- ✅ Error Empty States para tratamento de erros
+- ✅ Customização completa (título, descrição, ações, ícones)
+- ✅ Melhores práticas de UX
+
 ## 🎯 Modos de Formulário
 
 | Modo | Comportamento |
@@ -123,14 +133,24 @@ src/
 - Compatível com SSR (Server-Side Rendering)
 - Baseado no Radix UI
 
+### Empty States (Estados Vazios)
+- Empty State básico com ações contextuais
+- Grid Empty States para listas vazias
+- Search Empty States para busca sem resultados
+- Empty States específicos por domínio
+- Error Empty States para tratamento de erros
+- Customização completa (título, descrição, ações, ícones)
+- Melhores práticas de UX
+
 ## 🧪 Como Testar
 
 1. **Página Principal** - Teste todos os tipos de campos
 2. **Página Grid** - Adicione, edite e exclua endereços
 3. **Página Toast** - Teste notificações não bloqueantes
 4. **Página Dialogs** - Teste interações bloqueantes
-5. **Console** - Veja os dados JSON ao submeter
-6. **Responsive** - Redimensione a janela para ver grid ↔ cards
+5. **Página Empty States** - Teste estados vazios e suas ações
+6. **Console** - Veja os dados JSON ao submeter
+7. **Responsive** - Redimensione a janela para ver grid ↔ cards
 
 ## 📦 Tecnologias
 

@@ -12,6 +12,15 @@ const routes = [
   { href: "/with-loading", label: "Loading State" },
   { href: "/with-toast", label: "Toast Notifications" },
   { href: "/with-dialogs", label: "Dialogs" },
+  { href: "/with-empty-states", label: "Empty States" },
+  { href: "/with-sections", label: "Sections" },
+  { href: "/with-sidebar", label: "Sidebar Layouts" },
+  { href: "/with-tabs", label: "Tabs Organization" },
+  { href: "/with-accordion", label: "Accordion/Collapse" },
+  { href: "/with-grid-layout", label: "Grid Layout" },
+  { href: "/with-breadcrumbs", label: "Breadcrumbs" },
+  { href: "/with-pagination", label: "Pagination" },
+  { href: "/with-aria", label: "ARIA Components" },
 ];
 
 export function Navigation() {

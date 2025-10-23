@@ -3,6 +3,7 @@
 import { Button } from "@kui-framework/ui";
 import { useToast } from "@kui-framework/ui";
 import { useEffect, useState } from "react";
+import { PageWrapper } from "@/components/PageWrapper";
 
 export default function ToastExample() {
   const [mounted, setMounted] = useState(false);
@@ -22,21 +23,19 @@ function ToastExampleContent() {
   const { toast } = useToast();
 
   return (
-    <div className="max-w-4xl mx-auto p-8 space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-3xl font-bold">Toast Notifications</h1>
-        <p className="text-muted-foreground">
-          Sistema de notificações não bloqueantes com API fluida
-        </p>
-      </div>
-
+    <PageWrapper
+      title="Toast Notifications"
+      description="Sistema de notificações não bloqueantes com API fluida"
+    >
       <div className="grid gap-6">
         {/* Toast Básicos */}
         <div className="space-y-4">
           <h2 className="text-xl font-semibold">Toast Básicos</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Button
-              onClick={() => toast.info("Informação importante", "Esta é uma notificação informativa")}
+              onClick={() =>
+                toast.info("Informação importante", "Esta é uma notificação informativa")
+              }
               variant="outline"
             >
               Info
@@ -48,7 +47,9 @@ function ToastExampleContent() {
               Success
             </Button>
             <Button
-              onClick={() => toast.warning("Atenção necessária", "Verifique os dados antes de continuar")}
+              onClick={() =>
+                toast.warning("Atenção necessária", "Verifique os dados antes de continuar")
+              }
               className="bg-yellow-600 hover:bg-yellow-700"
             >
               Warning
@@ -67,21 +68,25 @@ function ToastExampleContent() {
           <h2 className="text-xl font-semibold">Toast Customizados</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Button
-              onClick={() => toast.custom({
-                title: "Upload em Progresso",
-                description: "Enviando arquivo... 50%",
-                variant: "info"
-              })}
+              onClick={() =>
+                toast.custom({
+                  title: "Upload em Progresso",
+                  description: "Enviando arquivo... 50%",
+                  variant: "info",
+                })
+              }
               variant="outline"
             >
               Toast com Variante Customizada
             </Button>
             <Button
-              onClick={() => toast.custom({
-                title: "Notificação Persistente",
-                description: "Esta notificação não desaparece automaticamente",
-                variant: "warning"
-              })}
+              onClick={() =>
+                toast.custom({
+                  title: "Notificação Persistente",
+                  description: "Esta notificação não desaparece automaticamente",
+                  variant: "warning",
+                })
+              }
               className="bg-yellow-600 hover:bg-yellow-700"
             >
               Toast Persistente
@@ -126,9 +131,18 @@ function ToastExampleContent() {
           <Button
             onClick={() => {
               toast.info("Processo iniciado", "Iniciando operação...");
-              setTimeout(() => toast.success("Etapa 1 concluída", "Primeira etapa finalizada"), 1000);
-              setTimeout(() => toast.success("Etapa 2 concluída", "Segunda etapa finalizada"), 2000);
-              setTimeout(() => toast.success("Processo finalizado", "Todas as etapas foram concluídas"), 3000);
+              setTimeout(
+                () => toast.success("Etapa 1 concluída", "Primeira etapa finalizada"),
+                1000
+              );
+              setTimeout(
+                () => toast.success("Etapa 2 concluída", "Segunda etapa finalizada"),
+                2000
+              );
+              setTimeout(
+                () => toast.success("Processo finalizado", "Todas as etapas foram concluídas"),
+                3000
+              );
             }}
             className="w-full bg-blue-600 hover:bg-blue-700"
           >
@@ -141,7 +155,7 @@ function ToastExampleContent() {
           <h2 className="text-xl font-semibold">Como Usar</h2>
           <div className="bg-gray-100 p-4 rounded-lg">
             <pre className="text-sm">
-{`import { useToast } from "@kui-framework/ui";
+              {`import { useToast } from "@kui-framework/ui";
 
 const { toast } = useToast();
 
@@ -161,6 +175,6 @@ toast.custom({
           </div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }

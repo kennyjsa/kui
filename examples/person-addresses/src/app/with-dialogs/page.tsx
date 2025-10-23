@@ -3,6 +3,7 @@
 import { Button } from "@kui-framework/ui";
 import { useDialog } from "@kui-framework/ui";
 import { useState, useEffect } from "react";
+import { PageWrapper } from "@/components/PageWrapper";
 
 export default function DialogExample() {
   const [mounted, setMounted] = useState(false);
@@ -90,29 +91,19 @@ function DialogExampleContent() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-8 space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-3xl font-bold">Dialog System</h1>
-        <p className="text-muted-foreground">
-          Sistema de interações bloqueantes com API fluida
-        </p>
-      </div>
-
+    <PageWrapper
+      title="Dialog System"
+      description="Sistema de interações bloqueantes com API fluida"
+    >
       <div className="grid gap-6">
         {/* Alert Dialogs */}
         <div className="space-y-4">
           <h2 className="text-xl font-semibold">Alert Dialogs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Button
-              onClick={handleAlert}
-              variant="outline"
-            >
+            <Button onClick={handleAlert} variant="outline">
               Alert Simples
             </Button>
-            <Button
-              onClick={handleAlertDetailed}
-              variant="destructive"
-            >
+            <Button onClick={handleAlertDetailed} variant="destructive">
               Alert Detalhado
             </Button>
           </div>
@@ -122,16 +113,10 @@ function DialogExampleContent() {
         <div className="space-y-4">
           <h2 className="text-xl font-semibold">Confirm Dialogs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Button
-              onClick={handleConfirm}
-              className="bg-red-600 hover:bg-red-700"
-            >
+            <Button onClick={handleConfirm} className="bg-red-600 hover:bg-red-700">
               Confirmar Exclusão
             </Button>
-            <Button
-              onClick={handleConfirmSuccess}
-              className="bg-green-600 hover:bg-green-700"
-            >
+            <Button onClick={handleConfirmSuccess} className="bg-green-600 hover:bg-green-700">
               Confirmar Salvamento
             </Button>
           </div>
@@ -141,16 +126,10 @@ function DialogExampleContent() {
         <div className="space-y-4">
           <h2 className="text-xl font-semibold">Options Dialogs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Button
-              onClick={handleOptions}
-              className="bg-green-600 hover:bg-green-700"
-            >
+            <Button onClick={handleOptions} className="bg-green-600 hover:bg-green-700">
               Opções de Sucesso
             </Button>
-            <Button
-              onClick={handleOptionsError}
-              variant="destructive"
-            >
+            <Button onClick={handleOptionsError} variant="destructive">
               Opções de Erro
             </Button>
           </div>
@@ -171,7 +150,7 @@ function DialogExampleContent() {
           <h2 className="text-xl font-semibold">Como Usar</h2>
           <div className="bg-gray-100 p-4 rounded-lg">
             <pre className="text-sm">
-{`import { useDialog } from "@kui-framework/ui";
+              {`import { useDialog } from "@kui-framework/ui";
 
 const { dialog } = useDialog();
 
@@ -230,6 +209,6 @@ const choice = await dialog.options({
           </div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }

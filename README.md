@@ -18,17 +18,19 @@
 - ♿ **Acessível** com Radix UI
 - ⚡ **Performance** otimizada
 - 🎭 **3 modos** (create, edit, view)
+- 🎨 **Design System** completo
+- 🔧 **Customizável** e extensível
 
 ---
 
 ## 📦 Instalação
 
 ```bash
-npm install @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension
+npm install @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension @kui-framework/theme
 # ou
-pnpm add @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension
+pnpm add @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension @kui-framework/theme
 # ou
-yarn add @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension
+yarn add @kui-framework/forms @kui-framework/ui @kui-framework/core @kui-framework/zod-extension @kui-framework/theme
 ```
 
 ### Setup Tailwind
@@ -114,6 +116,68 @@ function UserForm() {
 }
 ```
 
+## 🎨 Componentes Disponíveis
+
+### 📝 Formulários
+- **FormBuilder**: Gerador automático de formulários
+- **18 Tipos de Campos**: Text, email, number, date, select, etc.
+- **Validação**: Zod validation integrada
+- **Modos**: Create, Edit, View automáticos
+
+### 🧩 UI Components
+- **Inputs**: Text, email, password, number, currency
+- **Seleção**: Select, radio, checkbox, switch
+- **Layout**: Grid, sections, tabs, accordion
+- **Feedback**: Toast, dialogs, loading states
+- **Navegação**: Breadcrumbs, pagination
+
+### 🎨 Design System
+- **Temas**: Light, dark, custom
+- **Variantes**: Primary, secondary, destructive
+- **Tamanhos**: Small, medium, large
+- **Responsivo**: Mobile-first design
+
+## 🔌 Integrações
+
+### REST API
+```typescript
+const userProvider = createRestProvider({
+  name: 'userProvider',
+  baseUrl: 'https://api.example.com',
+  endpoints: {
+    list: '/users',
+    get: '/users/:id',
+    create: '/users',
+    update: '/users/:id',
+    delete: '/users/:id',
+  },
+});
+```
+
+### tRPC
+```typescript
+const userTrpcProvider = createTrpcProvider({
+  name: 'userProvider',
+  router: trpc.user,
+  procedures: {
+    list: 'getAll',
+    get: 'getById',
+    create: 'create',
+    update: 'update',
+    delete: 'delete',
+  },
+});
+```
+
+## 📚 Documentação
+
+- 📖 **[Guia de Início Rápido](./docs/getting-started.md)** - Configure em minutos
+- 🧩 **[Componentes](./docs/components/)** - Documentação completa
+- 📝 **[Formulários](./docs/forms/)** - Criação de formulários
+- 🎨 **[Temas](./docs/theming/)** - Personalização
+- 🔌 **[Integrações](./docs/integrations/)** - Backend e APIs
+- 📚 **[Exemplos](./docs/examples/)** - Casos de uso reais
+
 ## 🏗️ Estrutura
 
 ```
@@ -128,7 +192,10 @@ kui/
 │   ├── person-addresses/ → Exemplo completo
 │   └── ai-examples/      → Exemplos para agentes de IA
 └── docs/
-    └── ai-agents/        → Documentação para agentes de IA
+    ├── ai-agents/        → Documentação para agentes de IA
+    ├── components/       → Documentação de componentes
+    ├── forms/           → Documentação de formulários
+    └── examples/        → Exemplos e casos de uso
 ```
 
 ## 🤖 Para Agentes de IA
