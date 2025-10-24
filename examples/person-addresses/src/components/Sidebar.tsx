@@ -27,18 +27,17 @@ import { useState } from "react";
 const navigation = [
   {
     title: "Getting Started",
-    items: [
-      { href: "/", label: "Campos Básicos", icon: Home },
-    ]
+    items: [{ href: "/", label: "Campos Básicos", icon: Home }],
   },
   {
     title: "Core Features",
     items: [
       { href: "/with-grid", label: "Grid (Endereços)", icon: Grid3X3 },
+      { href: "/with-basic-components", label: "Basic Components", icon: Layout },
       { href: "/with-trpc", label: "Integração tRPC", icon: Database },
       { href: "/with-validations", label: "Validações Avançadas", icon: CheckCircle },
       { href: "/with-loading", label: "Loading State", icon: Loader2 },
-    ]
+    ],
   },
   {
     title: "Notifications & Feedback",
@@ -46,7 +45,7 @@ const navigation = [
       { href: "/with-toast", label: "Toast Notifications", icon: Bell },
       { href: "/with-dialogs", label: "Dialogs", icon: MessageSquare },
       { href: "/with-empty-states", label: "Empty States", icon: FileX },
-    ]
+    ],
   },
   {
     title: "Layout & Organization",
@@ -56,7 +55,7 @@ const navigation = [
       { href: "/with-tabs", label: "Tabs Organization", icon: PanelLeft },
       { href: "/with-accordion", label: "Accordion/Collapse", icon: ChevronDown },
       { href: "/with-grid-layout", label: "Grid Layout", icon: Grid },
-    ]
+    ],
   },
   {
     title: "Navigation & UX",
@@ -64,8 +63,8 @@ const navigation = [
       { href: "/with-breadcrumbs", label: "Breadcrumbs", icon: Navigation },
       { href: "/with-pagination", label: "Pagination", icon: Hash },
       { href: "/with-aria", label: "ARIA Components", icon: Accessibility },
-    ]
-  }
+    ],
+  },
 ];
 
 export function Sidebar() {

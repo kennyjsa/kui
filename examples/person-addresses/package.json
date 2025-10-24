@@ -1,8 +1,8 @@
 {
-  "name": "person-addresses-example",
+  "name": "kui-showcase",
   "version": "0.1.0",
   "private": true,
-  "description": "Exemplo KUI: Pessoa + Endereços + Relação com Usuário",
+  "description": "KUI Framework Showcase - Demonstração completa de todos os componentes e recursos",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

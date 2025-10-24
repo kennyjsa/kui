@@ -1,6 +1,6 @@
-# Person & Addresses Example
+# KUI Framework Showcase
 
-Exemplo completo de uso do KUI Framework com demonstração de todos os recursos.
+Demonstração completa de todos os componentes e recursos do KUI Framework.
 
 ## 🚀 Executar
 
@@ -13,7 +13,7 @@ Acesse: **http://localhost:3000**
 
 ## 📖 Páginas
 
-### 1. **/** - Campos Básicos
+### 1. **/** - Campos Básicos (Formulário Pessoa)
 Demonstra todos os tipos de campos disponíveis:
 - ✅ **identifier** - ID (oculto no create)
 - ✅ **text** - Texto simples (Nome)
@@ -31,7 +31,16 @@ Demonstra todos os tipos de campos disponíveis:
 - ✅ **color** - Cor Favorita
 - ✅ **file** - Foto de Perfil (upload)
 
-### 2. **/with-grid** - Grid de Endereços
+### 2. **/with-basic-components** - Componentes Básicos
+Demonstra todos os componentes básicos do KUI Framework:
+- ✅ **Botões** - Todas as variações e tamanhos
+- ✅ **Inputs** - Text, email, password, currency, masked
+- ✅ **Seleção** - Select, checkboxes, radio, switch
+- ✅ **Interativos** - Rating, color picker, file upload
+- ✅ **Status** - Badges, skeletons, loading states
+- ✅ **Formulário Completo** - Exemplo prático
+
+### 3. **/with-grid** - Grid de Endereços
 Demonstra campo `grid()` para sublistas 1:N:
 - ✅ Pessoa + Endereços (relação 1:N)
 - ✅ CRUD de endereços via modal
@@ -40,7 +49,7 @@ Demonstra campo `grid()` para sublistas 1:N:
 - ✅ Persistência única no submit
 - ✅ Responsivo (tabela ↔ cards)
 
-### 3. **/with-toast** - Toast Notifications
+### 4. **/with-toast** - Toast Notifications
 Demonstra sistema de notificações não bloqueantes:
 - ✅ API fluida: `toast.info()`, `toast.success()`, `toast.error()`, `toast.warning()`
 - ✅ Toast customizados com variantes
@@ -48,7 +57,7 @@ Demonstra sistema de notificações não bloqueantes:
 - ✅ Múltiplos toasts simultâneos
 - ✅ Compatível com SSR
 
-### 4. **/with-dialogs** - Dialog System
+### 5. **/with-dialogs** - Dialog System
 Demonstra sistema de interações bloqueantes:
 - ✅ API fluida: `dialog.alert()`, `dialog.confirm()`, `dialog.options()`
 - ✅ Alert dialogs (simples e detalhados)
@@ -57,7 +66,7 @@ Demonstra sistema de interações bloqueantes:
 - ✅ Variantes visuais (success, warning, error, info)
 - ✅ Compatível com SSR
 
-### 5. **/with-empty-states** - Empty States
+### 6. **/with-empty-states** - Empty States
 Demonstra componentes para estados vazios:
 - ✅ Empty State básico com ações contextuais
 - ✅ Grid Empty States para listas vazias
@@ -86,7 +95,9 @@ src/
 │   ├── layout.tsx            → Layout com navegação
 │   └── globals.css           → Estilos globais
 ├── components/
-│   └── Navigation.tsx        → Menu de navegação
+│   ├── Sidebar.tsx           → Menu lateral de navegação
+│   ├── Header.tsx            → Cabeçalho da aplicação
+│   └── AppLayout.tsx         → Layout principal
 ├── schemas/
 │   ├── pessoa.schema.ts            → Schema de pessoa
 │   ├── endereco.schema.ts          → Schema de endereço
