@@ -2,6 +2,7 @@
 
 import { Menu, X, Github, ExternalLink } from "lucide-react";
 import { Button } from "@kui-framework/ui";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface HeaderProps {
   onToggleSidebar: () => void;
@@ -33,6 +34,8 @@ export function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
       </div>
 
       <div className="flex items-center space-x-2">
+        <ThemeToggle />
+        
         <Button
           variant="ghost"
           size="sm"
