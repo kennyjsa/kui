@@ -1,6 +1,6 @@
 {
   "name": "@kui-framework/ui",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Componentes UI KUI Framework - Biblioteca React com Radix UI e Tailwind CSS",
   "keywords": [
     "kui",

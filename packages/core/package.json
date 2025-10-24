@@ -1,6 +1,6 @@
 {
   "name": "@kui-framework/core",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Core KUI Framework - Providers, registry e integração com backends (REST/tRPC)",
   "keywords": ["kui", "core", "provider", "trpc", "rest", "data", "backend"],
   "homepage": "https://github.com/kennyjsa/kui#readme",

@@ -1,6 +1,6 @@
 {
   "name": "@kui-framework/forms",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Formulários KUI Framework - Geração automática de formulários a partir de schemas Zod",
   "keywords": ["kui", "forms", "react-hook-form", "zod", "validation", "form-builder", "auto-form"],
   "homepage": "https://github.com/kennyjsa/kui#readme",
