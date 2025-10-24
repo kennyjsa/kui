@@ -243,6 +243,9 @@ export {
   ARIAUtils,
 } from "./components/ARIA";
 
+// Theme Components
+export { ThemeToggle } from "./components/ThemeToggle";
+
 // Global Providers (SSR Safe)
 export { GlobalProviders } from "./components/GlobalProviders";
 

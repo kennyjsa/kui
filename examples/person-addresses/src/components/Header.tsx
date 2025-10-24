@@ -1,8 +1,7 @@
 "use client";
 
 import { Menu, X, Github, ExternalLink } from "lucide-react";
-import { Button } from "@kui-framework/ui";
-import { ThemeToggle } from "./ThemeToggle";
+import { Button, ThemeToggle } from "@kui-framework/ui";
 
 interface HeaderProps {
   onToggleSidebar: () => void;
@@ -35,7 +34,7 @@ export function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
 
       <div className="flex items-center space-x-2">
         <ThemeToggle />
-        
+
         <Button
           variant="ghost"
           size="sm"

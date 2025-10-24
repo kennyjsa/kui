@@ -3,6 +3,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { DialogProvider } from "./dialog/DialogProvider";
 import { ToastProvider } from "./toast/ToastProvider";
+import { ThemeProvider } from "@kui-framework/theme";
 
 interface GlobalProvidersProps {
   children: ReactNode;
@@ -22,9 +23,11 @@ export function GlobalProviders({ children }: GlobalProvidersProps) {
 
   // No cliente, renderiza com todos os providers
   return (
-    <ToastProvider>
-      <DialogProvider>{children}</DialogProvider>
-    </ToastProvider>
+    <ThemeProvider>
+      <ToastProvider>
+        <DialogProvider>{children}</DialogProvider>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
 

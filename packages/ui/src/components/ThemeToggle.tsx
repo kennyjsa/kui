@@ -1,8 +1,8 @@
 "use client";
 
 import { Sun, Moon } from "lucide-react";
-import { Button } from "@kui-framework/ui";
-import { useTheme } from "@/contexts/ThemeContext";
+import { Button } from "./Button";
+import { useTheme } from "@kui-framework/theme";
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
