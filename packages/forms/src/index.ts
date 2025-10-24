@@ -16,6 +16,8 @@ export { useMediaQuery } from "./hooks/useMediaQuery";
 // Utils
 export { extractFields } from "./utils/extractFields";
 export { shouldShowField, isFieldReadOnly } from "./utils/shouldShowField";
+export { getGridClasses, isValidGridConfig } from "./utils/gridUtils";
+export type { GridConfig } from "./utils/gridUtils";
 
 // Types
 export type {

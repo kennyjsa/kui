@@ -1,11 +1,20 @@
 import * as React from "react";
 import { cn } from "../lib/utils";
+import { getElevationTailwindClasses, type ElevationLevel } from "../lib/elevation";
 
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  elevation?: ElevationLevel;
+}
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, elevation = 2, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)}
+      className={cn(
+        "rounded-lg border bg-card text-card-foreground",
+        getElevationTailwindClasses(elevation),
+        className
+      )}
       {...props}
     />
   )

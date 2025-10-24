@@ -1,5 +1,13 @@
 // Utilities
 export { cn } from "./lib/utils";
+export {
+  getElevationClasses,
+  applyElevation,
+  getElevationTailwindClasses,
+  useElevation,
+  type ElevationLevel,
+  type ElevationProps,
+} from "./lib/elevation";
 
 // Components
 export { Button, buttonVariants } from "./components/Button";

@@ -20,22 +20,32 @@ import {
   Grid,
   Navigation,
   Hash,
-  Accessibility
+  Accessibility,
+  Type,
+  FileText,
 } from "lucide-react";
 import { useState } from "react";
 
 const navigation = [
   {
     title: "Getting Started",
-    items: [{ href: "/", label: "Campos Básicos", icon: Home }],
+    items: [{ href: "/", label: "Home", icon: Home }],
+  },
+  {
+    title: "Forms",
+    items: [
+      { href: "/forms/input-types", label: "Input Types", icon: Type },
+      { href: "/forms/simple-forms", label: "Simple Forms", icon: FileText },
+      { href: "/forms/with-validations", label: "With Validations", icon: CheckCircle },
+      { href: "/forms/with-grid", label: "With Grid (1:N)", icon: Grid3X3 },
+      { href: "/forms/full-crud", label: "Full CRUD", icon: Database },
+    ],
   },
   {
     title: "Core Features",
     items: [
-      { href: "/with-grid", label: "Grid (Endereços)", icon: Grid3X3 },
       { href: "/with-basic-components", label: "Basic Components", icon: Layout },
       { href: "/with-trpc", label: "Integração tRPC", icon: Database },
-      { href: "/with-validations", label: "Validações Avançadas", icon: CheckCircle },
       { href: "/with-loading", label: "Loading State", icon: Loader2 },
     ],
   },
@@ -71,10 +81,11 @@ export function Sidebar() {
   const pathname = usePathname();
   const [expandedSections, setExpandedSections] = useState<string[]>([
     "Getting Started",
+    "Forms",
     "Core Features",
     "Notifications & Feedback",
     "Layout & Organization",
-    "Navigation & UX"
+    "Navigation & UX",
   ]);
 
   const toggleSection = (title: string) => {

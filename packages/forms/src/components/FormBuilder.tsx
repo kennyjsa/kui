@@ -4,17 +4,18 @@ import { useKuiForm } from "../hooks/useKuiForm";
 import { useDerivedFields } from "../hooks/useDerivedFields";
 import { extractFields } from "../utils/extractFields";
 import { shouldShowField } from "../utils/shouldShowField";
+import { getGridClasses } from "../utils/gridUtils";
 import { FieldRenderer } from "./FieldRenderer";
 import { FieldSkeleton } from "./FieldSkeleton";
 
 /**
  * Construtor de formulários baseado em schema Zod
- * 
+ *
  * @example
  * ```tsx
  * // Com loading state automático
  * const { data, isLoading } = useQuery(...);
- * 
+ *
  * <FormBuilder
  *   schema={userSchema}
  *   mode="edit"
@@ -31,6 +32,7 @@ export function FormBuilder<T extends AcceptedSchema>({
   onSubmit,
   loading = false,
   className,
+  grid,
 }: FormBuilderProps<T>) {
   const fields = extractFields(schema);
 
@@ -43,7 +45,7 @@ export function FormBuilder<T extends AcceptedSchema>({
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Grid responsivo de campos (skeleton) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className={getGridClasses(grid)}>
             {fields
               .filter((field) => shouldShowField(field, mode, {}))
               .map((field) => (
@@ -91,7 +93,7 @@ export function FormBuilder<T extends AcceptedSchema>({
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Grid responsivo de campos */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className={getGridClasses(grid)}>
             {fields.map((field) => (
               <FieldRenderer
                 key={field.name}

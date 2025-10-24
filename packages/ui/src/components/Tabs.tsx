@@ -5,50 +5,46 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 import { Button } from "./Button";
 import { Badge } from "./Badge";
-import {
-  ChevronLeft,
-  ChevronRight,
-  X,
-  Plus
-} from "lucide-react";
+import { getElevationTailwindClasses, type ElevationLevel } from "../lib/elevation";
+import { ChevronLeft, ChevronRight, X, Plus } from "lucide-react";
 
-const tabsVariants = cva(
-  "flex",
-  {
-    variants: {
-      variant: {
-        default: "border-b border-border",
-        card: "bg-muted/30 rounded-lg p-1",
-        underline: "border-b-2 border-primary",
-        pills: "bg-muted/30 rounded-lg p-1",
-      },
-      orientation: {
-        horizontal: "flex-row",
-        vertical: "flex-col",
-      },
-      size: {
-        sm: "text-sm",
-        md: "text-base",
-        lg: "text-lg",
-      },
+const tabsVariants = cva("flex", {
+  variants: {
+    variant: {
+      default: "border-b border-border",
+      card: "bg-muted/30 rounded-lg p-1",
+      underline: "border-b-2 border-primary",
+      pills: "bg-muted/30 rounded-lg p-1",
     },
-    defaultVariants: {
-      variant: "default",
-      orientation: "horizontal",
-      size: "md",
+    orientation: {
+      horizontal: "flex-row",
+      vertical: "flex-col",
     },
-  }
-);
+    size: {
+      sm: "text-sm",
+      md: "text-base",
+      lg: "text-lg",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+    orientation: "horizontal",
+    size: "md",
+  },
+});
 
 const tabVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "border-b-2 border-transparent hover:border-muted-foreground/50 data-[state=active]:border-primary data-[state=active]:text-primary",
+        default:
+          "border-b-2 border-transparent hover:border-muted-foreground/50 data-[state=active]:border-primary data-[state=active]:text-primary",
         card: "hover:bg-background data-[state=active]:bg-background data-[state=active]:shadow-sm",
-        underline: "border-b-2 border-transparent hover:border-muted-foreground/50 data-[state=active]:border-primary data-[state=active]:text-primary",
-        pills: "hover:bg-background data-[state=active]:bg-background data-[state=active]:shadow-sm",
+        underline:
+          "border-b-2 border-transparent hover:border-muted-foreground/50 data-[state=active]:border-primary data-[state=active]:text-primary",
+        pills:
+          "hover:bg-background data-[state=active]:bg-background data-[state=active]:shadow-sm",
       },
       size: {
         sm: "h-8 px-3 text-sm",
@@ -86,25 +82,30 @@ export interface TabsProps
   showAddButton?: boolean;
   showCloseButtons?: boolean;
   className?: string;
+  elevation?: ElevationLevel;
 }
 
 const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
-  ({
-    className,
-    variant = "default",
-    orientation = "horizontal",
-    size = "md",
-    items,
-    defaultActiveTab,
-    activeTab,
-    onTabChange,
-    onTabClose,
-    onTabAdd,
-    scrollable = false,
-    showAddButton = false,
-    showCloseButtons = false,
-    ...props
-  }, ref) => {
+  (
+    {
+      className,
+      variant = "default",
+      orientation = "horizontal",
+      size = "md",
+      items,
+      defaultActiveTab,
+      activeTab,
+      onTabChange,
+      onTabClose,
+      onTabAdd,
+      scrollable = false,
+      showAddButton = false,
+      showCloseButtons = false,
+      elevation,
+      ...props
+    },
+    ref
+  ) => {
     const [internalActiveTab, setInternalActiveTab] = React.useState(
       defaultActiveTab || items[0]?.id || ""
     );
@@ -123,7 +124,7 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
       onTabClose?.(tabId);
     };
 
-    const activeTabContent = items.find(item => item.id === currentActiveTab)?.content;
+    const activeTabContent = items.find((item) => item.id === currentActiveTab)?.content;
 
     return (
       <div ref={ref} className={cn("w-full", className)} {...props}>
@@ -131,14 +132,19 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
         <div
           className={cn(
             tabsVariants({ variant, orientation, size }),
-            scrollable && "overflow-x-auto scrollbar-hide"
+            scrollable && "overflow-x-auto scrollbar-hide",
+            elevation !== undefined &&
+              (variant === "card" || variant === "pills") &&
+              getElevationTailwindClasses(elevation)
           )}
         >
-          <div className={cn(
-            "flex",
-            orientation === "vertical" ? "flex-col" : "flex-row",
-            scrollable && "min-w-max"
-          )}>
+          <div
+            className={cn(
+              "flex",
+              orientation === "vertical" ? "flex-col" : "flex-row",
+              scrollable && "min-w-max"
+            )}
+          >
             {items.map((item) => (
               <button
                 key={item.id}
@@ -189,11 +195,7 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
         </div>
 
         {/* Tab Content */}
-        {activeTabContent && (
-          <div className="mt-4">
-            {activeTabContent}
-          </div>
-        )}
+        {activeTabContent && <div className="mt-4">{activeTabContent}</div>}
       </div>
     );
   }

@@ -90,32 +90,32 @@ export type AcceptedSchema = z.ZodObject<any> | z.ZodEffects<any>;
  * ```
  */
 export interface FormBuilderProps<T extends AcceptedSchema> {
-  /** 
+  /**
    * Schema Zod com metadados KUI
    * Criado com zKUI.object()
    */
   schema: T;
-  
-  /** 
+
+  /**
    * Modo de operação do formulário
    * @default "create"
    */
   mode?: FormMode;
-  
-  /** 
+
+  /**
    * Valores iniciais do formulário
    * Usado em modo edit para preencher campos
    */
   defaultValues?: Partial<z.infer<T>>;
-  
-  /** 
+
+  /**
    * Callback executado ao submeter o formulário
    * Recebe os dados validados
    * @param data - Dados do formulário (tipados conforme schema)
    */
   onSubmit: (data: z.infer<T>) => void | Promise<void>;
-  
-  /** 
+
+  /**
    * Estado de loading - exibe skeleton automático baseado no schema
    * @default false
    * @example
@@ -125,11 +125,26 @@ export interface FormBuilderProps<T extends AcceptedSchema> {
    * ```
    */
   loading?: boolean;
-  
-  /** 
+
+  /**
    * Classes CSS adicionais para o formulário
    */
   className?: string;
+
+  /**
+   * Configuração de grid para o formulário
+   * Número simples (aplicado a todos os breakpoints) ou objeto com media queries
+   * @example grid={2} // 2 colunas em todos os tamanhos
+   * @example grid={{ xs: 1, md: 2, lg: 3 }} // responsivo
+   */
+  grid?:
+    | number
+    | {
+        xs?: number;
+        sm?: number;
+        md?: number;
+        lg?: number;
+      };
 }
 
 /**

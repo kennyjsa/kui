@@ -10,6 +10,7 @@
 - [Feedback](./feedback.md) - Toast, dialogs, loading states
 - [Navegação](./navigation.md) - Breadcrumbs, pagination
 - [Acessibilidade](./accessibility.md) - ARIA, focus management
+- [Elevation](./elevation.md) - Sistema de elevação e profundidade
 
 ## 🎯 Visão Geral
 
@@ -20,6 +21,7 @@ O KUI Framework oferece mais de 50 componentes prontos para uso, todos baseados 
 - **Type-Safe**: Todos os componentes são totalmente tipados
 - **Acessível**: Baseado no Radix UI com ARIA completo
 - **Customizável**: Variantes, tamanhos e temas
+- **Elevation**: Sistema de elevação para hierarquia visual
 - **Responsivo**: Layout adaptativo automático
 - **SSR Safe**: Compatível com Next.js e outros frameworks
 

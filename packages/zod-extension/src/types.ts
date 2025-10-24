@@ -117,6 +117,16 @@ export type KuiOptions = {
     lg?: number;
   };
 
+  /** Configuração de grid para o formulário como um todo */
+  grid?:
+    | number
+    | {
+        xs?: number;
+        sm?: number;
+        md?: number;
+        lg?: number;
+      };
+
   /** Número de linhas para textarea */
   rows?: number;
 
