@@ -245,6 +245,7 @@ export {
 
 // Theme Components
 export { ThemeToggle } from "./components/ThemeToggle";
+export { ThemeProvider, useTheme } from "./components/ThemeProvider";
 
 // Global Providers (SSR Safe)
 export { GlobalProviders } from "./components/GlobalProviders";

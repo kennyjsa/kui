@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { DialogProvider } from "./dialog/DialogProvider";
 import { ToastProvider } from "./toast/ToastProvider";
-import { ThemeProvider } from "@kui-framework/theme";
+import { ThemeProvider } from "./ThemeProvider";
 
 interface GlobalProvidersProps {
   children: ReactNode;

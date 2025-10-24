@@ -2,7 +2,7 @@
 
 import { Sun, Moon } from "lucide-react";
 import { Button } from "./Button";
-import { useTheme } from "@kui-framework/theme";
+import { useTheme } from "./ThemeProvider";
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();

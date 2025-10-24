@@ -12,12 +12,7 @@ export function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
   return (
     <header className="bg-card border-b border-border px-4 py-3 flex items-center justify-between">
       <div className="flex items-center space-x-4">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onToggleSidebar}
-          className="lg:hidden"
-        >
+        <Button variant="ghost" size="icon" onClick={onToggleSidebar} className="lg:hidden">
           {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
 
