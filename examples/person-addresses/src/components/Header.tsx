@@ -10,7 +10,7 @@ interface HeaderProps {
 
 export function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
   return (
-    <header className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+    <header className="bg-card border-b border-border px-4 py-3 flex items-center justify-between">
       <div className="flex items-center space-x-4">
         <Button
           variant="ghost"
@@ -22,12 +22,12 @@ export function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
         </Button>
 
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">K</span>
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-sm">K</span>
           </div>
           <div>
-            <h1 className="text-lg font-semibold text-gray-900">KUI Framework</h1>
-            <p className="text-xs text-gray-500">Examples & Documentation</p>
+            <h1 className="text-lg font-semibold text-card-foreground">KUI Framework</h1>
+            <p className="text-xs text-muted-foreground">Examples & Documentation</p>
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@ export function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
           variant="ghost"
           size="sm"
           onClick={() => window.open("https://github.com/kennyjsa/kui", "_blank")}
-          className="text-gray-600 hover:text-gray-900"
+          className="text-muted-foreground hover:text-accent-foreground"
         >
           <Github className="h-4 w-4 mr-2" />
           GitHub
@@ -47,7 +47,7 @@ export function Header({ onToggleSidebar, sidebarOpen }: HeaderProps) {
           variant="outline"
           size="sm"
           onClick={() => window.open("/docs", "_blank")}
-          className="text-gray-600 hover:text-gray-900"
+          className="text-muted-foreground hover:text-accent-foreground"
         >
           <ExternalLink className="h-4 w-4 mr-2" />
           Docs

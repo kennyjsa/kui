@@ -86,15 +86,15 @@ export function Sidebar() {
   };
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 h-full overflow-y-auto">
+    <div className="w-64 bg-card border-r border-border h-full overflow-y-auto">
       <div className="p-6">
         <div className="flex items-center space-x-2 mb-8">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">K</span>
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-sm">K</span>
           </div>
           <div>
-            <h1 className="text-lg font-semibold text-gray-900">KUI Framework</h1>
-            <p className="text-xs text-gray-500">v1.0.0</p>
+            <h1 className="text-lg font-semibold text-card-foreground">KUI Framework</h1>
+            <p className="text-xs text-muted-foreground">v1.0.0</p>
           </div>
         </div>
 
@@ -106,7 +106,7 @@ export function Sidebar() {
               <div key={section.title}>
                 <button
                   onClick={() => toggleSection(section.title)}
-                  className="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                  className="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-card-foreground hover:bg-accent rounded-md transition-colors"
                 >
                   <span>{section.title}</span>
                   {isExpanded ? (
@@ -129,8 +129,8 @@ export function Sidebar() {
                           className={cn(
                             "flex items-center space-x-3 px-3 py-2 text-sm rounded-md transition-colors",
                             isActive
-                              ? "bg-blue-50 text-blue-700 border-r-2 border-blue-700"
-                              : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                              ? "bg-primary/10 text-primary border-r-2 border-primary"
+                              : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                           )}
                         >
                           <Icon className="h-4 w-4 flex-shrink-0" />
