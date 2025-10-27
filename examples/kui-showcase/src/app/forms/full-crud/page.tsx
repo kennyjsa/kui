@@ -31,7 +31,6 @@ import { userTrpcProvider } from "@/providers/userTrpcProvider";
 import { Eye, Edit, Trash2, Plus, Search } from "lucide-react";
 
 // Mock data para demonstração
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mockUsers = [
   {
     id: "1",
@@ -107,21 +106,26 @@ export default function FullCRUDPage() {
 
   const usersData = mockUsersData;
   const isLoading = false;
-  const refetch = () => {};
 
   // Mock mutations
   const createMutation = {
     isPending: false,
-    mutateAsync: async () => {},
+    mutateAsync: async (data: any) => {
+      console.log("create", data);
+    },
   };
 
   const updateMutation = {
     isPending: false,
-    mutateAsync: async () => {},
+    mutateAsync: async ({ id, ...data }: { id: string; data: any }) => {
+      console.log("update", id, data);
+    },
   };
 
   const deleteMutation = {
-    mutateAsync: async () => {},
+    mutateAsync: async ({ id }: { id: string }) => {
+      console.log("delete", id);
+    },
   };
 
   const handleCreate = () => {
@@ -340,7 +344,7 @@ export default function FullCRUDPage() {
           </DialogHeader>
 
           <div className="py-4">
-            <KuiDataProvider providers={[userTrpcProvider]}>
+            <KuiDataProvider providers={[{ name: userTrpcProvider.name, provider: userTrpcProvider }]}>
               <FormBuilder
                 schema={userSchema}
                 mode={modalMode}

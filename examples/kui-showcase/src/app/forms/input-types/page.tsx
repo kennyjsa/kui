@@ -41,12 +41,14 @@ const inputTypesSchema = zKUI.object({
     helperText: "Campo de data",
   }),
 
-  timeField: zKUI.time("Hora", {
-    helperText: "Campo de hora",
+  timeField: zKUI.text("Hora", {
+    helperText: "Campo de hora (formato HH:MM)",
+    placeholder: "HH:MM",
   }),
 
-  datetimeField: zKUI.datetime("Data e Hora", {
+  datetimeField: zKUI.text("Data e Hora", {
     helperText: "Campo de data e hora",
+    placeholder: "DD/MM/AAAA HH:MM",
   }),
 
   // Campo de texto longo
@@ -58,12 +60,7 @@ const inputTypesSchema = zKUI.object({
   }),
 
   // Campos de seleção
-  selectField: zKUI.select("Seleção", {
-    options: [
-      { label: "Opção 1", value: "opcao1" },
-      { label: "Opção 2", value: "opcao2" },
-      { label: "Opção 3", value: "opcao3" },
-    ],
+  selectField: zKUI.select("Seleção", ["opcao1", "opcao2", "opcao3"], {
     helperText: "Campo de seleção",
   }),
 
