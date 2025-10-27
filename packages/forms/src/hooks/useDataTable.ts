@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useKuiProvider } from "@kui-framework/core";
+import { useKuiProvider } from "@kui-framework/core/client-only";
 import type { FilterValue } from "@kui-framework/core";
 import { useSearchParams } from "next/navigation";
 

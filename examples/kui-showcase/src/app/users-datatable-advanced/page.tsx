@@ -5,8 +5,8 @@ import { extractFiltersFromSchema } from "@kui-framework/core";
 import { zKUI } from "@kui-framework/zod-extension";
 import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui-framework/ui";
 import { useRouter } from "next/navigation";
-import { trpc } from "@/app/_trpc/client";
-import { useToast } from "@kui-framework/ui/components/toast/use-toast";
+import { trpc } from "@/lib/trpc";
+import { useToast } from "@kui-framework/ui";
 import { useState } from "react";
 
 // Define a Zod schema for the User entity

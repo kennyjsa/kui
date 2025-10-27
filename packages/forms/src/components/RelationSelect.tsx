@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useKuiProvider } from "@kui-framework/core";
+import { useKuiProvider } from "@kui-framework/core/client-only";
 import {
   Select,
   SelectContent,

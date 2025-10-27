@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { router as createTRPCRouter, publicProcedure } from "../trpc";
 import { createDataTableRouter } from "@kui-framework/core";
 
 // Mock data para demonstração

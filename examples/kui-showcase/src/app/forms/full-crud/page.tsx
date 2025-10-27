@@ -13,7 +13,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   Badge,
   Input,
   Select,
@@ -26,13 +25,14 @@ import {
   Skeleton
 } from "@kui-framework/ui";
 import { FormBuilder } from "@kui-framework/forms";
-import { KuiDataProvider } from "@kui-framework/core";
+import { KuiDataProvider } from "@kui-framework/core/client-only";
 import { userSchema } from "@/schemas/user.schema";
 import { userTrpcProvider } from "@/providers/userTrpcProvider";
 import { trpc } from "@/lib/trpc";
-import { Eye, Edit, Trash2, Plus, Search, Filter } from "lucide-react";
+import { Eye, Edit, Trash2, Plus, Search } from "lucide-react";
 
 // Mock data para demonstração
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mockUsers = [
   {
     id: "1",

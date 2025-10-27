@@ -1,5 +1,4 @@
 export { providerRegistry } from "./registry";
-export { KuiDataProvider, useKuiProvider } from "./providers/KuiDataProvider";
 export { createRestProvider } from "./providers/createRestProvider";
 export { createTrpcProvider } from "./providers/createTrpcProvider";
 
@@ -24,3 +23,5 @@ export type { DataTableInput, DataTableResult } from "./providers/createDataTabl
 export { extractFiltersFromSchema } from "./utils/extractFiltersFromSchema";
 export type { ExtractFiltersOptions } from "./utils/extractFiltersFromSchema";
 
+// Export client-only components only when imported
+// Use import { KuiDataProvider } from '@kui-framework/core/client-only' for client components

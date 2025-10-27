@@ -91,8 +91,8 @@ export default function SimpleFormsPage() {
       <div className="text-center space-y-4">
         <h1 className="text-3xl font-bold">Formulários Simples</h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Exemplos de formulários básicos e progressivos, demonstrando o sistema de grid configurável
-          e diferentes layouts responsivos.
+          Exemplos de formulários básicos e progressivos, demonstrando o sistema de grid
+          configurável e diferentes layouts responsivos.
         </p>
       </div>
 
@@ -102,9 +102,7 @@ export default function SimpleFormsPage() {
         <Card elevation={2}>
           <CardHeader>
             <CardTitle>1. Formulário de Login</CardTitle>
-            <CardDescription>
-              Formulário simples com 2 campos: e-mail e senha
-            </CardDescription>
+            <CardDescription>Formulário simples com 2 campos: e-mail e senha</CardDescription>
           </CardHeader>
           <CardContent>
             <FormBuilder
@@ -120,9 +118,7 @@ export default function SimpleFormsPage() {
         <Card elevation={2}>
           <CardHeader>
             <CardTitle>2. Cadastro Rápido</CardTitle>
-            <CardDescription>
-              Formulário com 3 campos: nome, e-mail e senha
-            </CardDescription>
+            <CardDescription>Formulário com 3 campos: nome, e-mail e senha</CardDescription>
           </CardHeader>
           <CardContent>
             <FormBuilder
@@ -175,9 +171,7 @@ export default function SimpleFormsPage() {
       <Card elevation={2}>
         <CardHeader>
           <CardTitle>Demonstração de Grid Responsivo</CardTitle>
-          <CardDescription>
-            Exemplos de diferentes configurações de grid
-          </CardDescription>
+          <CardDescription>Exemplos de diferentes configurações de grid</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -197,7 +191,7 @@ export default function SimpleFormsPage() {
             <div>
               <h4 className="font-semibold mb-2">Grid Responsivo</h4>
               <p className="text-sm text-muted-foreground mb-3">
-                <code>grid={{"{ xs: 1, md: 2, lg: 3 }"}}</code> - Responsivo
+                <code>grid={"{ xs: 1, md: 2, lg: 3 }"}</code> - Responsivo
               </p>
               <FormBuilder
                 schema={buscaAvancadaSchema}
@@ -226,29 +220,43 @@ export default function SimpleFormsPage() {
       <Card elevation={1}>
         <CardHeader>
           <CardTitle>Sistema de Grid</CardTitle>
-          <CardDescription>
-            Como usar o sistema de grid configurável
-          </CardDescription>
+          <CardDescription>Como usar o sistema de grid configurável</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold mb-2">Configurações Disponíveis</h4>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• <code>grid={1}</code> - 1 coluna</li>
-                <li>• <code>grid={2}</code> - 2 colunas</li>
-                <li>• <code>grid={3}</code> - 3 colunas</li>
-                <li>• <code>grid={4}</code> - 4 colunas</li>
+                <li>
+                  • <code>grid={1}</code> - 1 coluna
+                </li>
+                <li>
+                  • <code>grid={2}</code> - 2 colunas
+                </li>
+                <li>
+                  • <code>grid={3}</code> - 3 colunas
+                </li>
+                <li>
+                  • <code>grid={4}</code> - 4 colunas
+                </li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-2">Grid Responsivo</h4>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• <code>xs</code> - Mobile (padrão: 1)</li>
-                <li>• <code>sm</code> - Tablet pequeno</li>
-                <li>• <code>md</code> - Tablet grande</li>
-                <li>• <code>lg</code> - Desktop</li>
+                <li>
+                  • <code>xs</code> - Mobile (padrão: 1)
+                </li>
+                <li>
+                  • <code>sm</code> - Tablet pequeno
+                </li>
+                <li>
+                  • <code>md</code> - Tablet grande
+                </li>
+                <li>
+                  • <code>lg</code> - Desktop
+                </li>
               </ul>
             </div>
           </div>
@@ -256,12 +264,9 @@ export default function SimpleFormsPage() {
           <div className="mt-6 p-4 bg-muted rounded-lg">
             <h5 className="font-semibold mb-2">Exemplo de Uso</h5>
             <pre className="text-sm">
-{`<FormBuilder
-  schema={meuSchema}
-  mode="create"
-  onSubmit={handleSubmit}
-  grid={{ xs: 1, md: 2, lg: 3 }}
-/>`}
+              {
+                '<FormBuilder\n  schema={meuSchema}\n  mode="create"\n  onSubmit={handleSubmit}\n  grid={{ xs: 1, md: 2, lg: 3 }}\n/>'
+              }
             </pre>
           </div>
         </CardContent>

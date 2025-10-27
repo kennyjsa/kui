@@ -1,3 +1,5 @@
+"use client";
+
 import React, { createContext, useContext, ReactNode } from "react";
 import { providerRegistry } from "../registry";
 import type { DataProvider, ProviderConfig } from "../types";
@@ -55,4 +57,3 @@ export function useKuiProvider(name: string): DataProvider {
 
   return provider;
 }
-
