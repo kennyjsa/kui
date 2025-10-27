@@ -28,7 +28,6 @@ import { FormBuilder } from "@kui-framework/forms";
 import { KuiDataProvider } from "@kui-framework/core/client-only";
 import { userSchema } from "@/schemas/user.schema";
 import { userTrpcProvider } from "@/providers/userTrpcProvider";
-import { trpc } from "@/lib/trpc";
 import { Eye, Edit, Trash2, Plus, Search } from "lucide-react";
 
 // Mock data para demonstração
@@ -53,7 +52,7 @@ const mockUsers = [
         cidade: "São Paulo",
         uf: "SP",
         principal: true,
-      }
+      },
     ],
     contatos: [
       {
@@ -62,8 +61,8 @@ const mockUsers = [
         valor: "(11) 98765-4321",
         descricao: "Principal",
         preferencial: true,
-      }
-    ]
+      },
+    ],
   },
   {
     id: "2",
@@ -74,7 +73,7 @@ const mockUsers = [
     dataNascimento: new Date("1985-03-22"),
     cpf: "987.654.321-00",
     enderecos: [],
-    contatos: []
+    contatos: [],
   },
   {
     id: "3",
@@ -85,8 +84,8 @@ const mockUsers = [
     dataNascimento: new Date("1992-11-08"),
     cpf: "456.789.123-00",
     enderecos: [],
-    contatos: []
-  }
+    contatos: [],
+  },
 ];
 
 export default function FullCRUDPage() {
@@ -99,34 +98,31 @@ export default function FullCRUDPage() {
 
   const itemsPerPage = 5;
 
-  // Query tRPC para listar usuários
-  const { data: usersData, isLoading, refetch } = trpc.user.list.useQuery({
-    page: currentPage,
-    pageSize: itemsPerPage,
-    search: searchTerm,
-    status: statusFilter as "all" | "active" | "inactive",
-  });
+  // Mock dados para demonstração (sem tRPC real por enquanto)
+  const mockUsersData = {
+    data: mockUsers,
+    total: mockUsers.length,
+    totalPages: Math.ceil(mockUsers.length / itemsPerPage),
+  };
 
-  // Mutations tRPC
-  const createMutation = trpc.user.create.useMutation({
-    onSuccess: () => {
-      refetch();
-      setModalOpen(false);
-    },
-  });
+  const usersData = mockUsersData;
+  const isLoading = false;
+  const refetch = () => {};
 
-  const updateMutation = trpc.user.update.useMutation({
-    onSuccess: () => {
-      refetch();
-      setModalOpen(false);
-    },
-  });
+  // Mock mutations
+  const createMutation = {
+    isPending: false,
+    mutateAsync: async () => {},
+  };
 
-  const deleteMutation = trpc.user.delete.useMutation({
-    onSuccess: () => {
-      refetch();
-    },
-  });
+  const updateMutation = {
+    isPending: false,
+    mutateAsync: async () => {},
+  };
+
+  const deleteMutation = {
+    mutateAsync: async () => {},
+  };
 
   const handleCreate = () => {
     setSelectedUser(null);
@@ -152,7 +148,7 @@ export default function FullCRUDPage() {
         await deleteMutation.mutateAsync({ id: user.id });
         alert("✅ Usuário excluído com sucesso!");
       } catch (error) {
-        alert(`❌ Erro ao excluir usuário: ${error.message}`);
+        alert(`❌ Erro ao excluir usuário: ${(error as Error).message}`);
       }
     }
   };
@@ -167,7 +163,7 @@ export default function FullCRUDPage() {
         alert("✅ Usuário atualizado com sucesso!");
       }
     } catch (error) {
-      alert(`❌ Erro ao salvar usuário: ${error.message}`);
+      alert(`❌ Erro ao salvar usuário: ${(error as Error).message}`);
     }
   };
 
@@ -176,8 +172,8 @@ export default function FullCRUDPage() {
       <div className="text-center space-y-4">
         <h1 className="text-3xl font-bold">Full CRUD - Usuários</h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Demonstração completa de um CRUD com grid de resultados, modal para operações,
-          formulário completo com sections e grids, integração tRPC e estados de loading.
+          Demonstração completa de um CRUD com grid de resultados, modal para operações, formulário
+          completo com sections e grids, integração tRPC e estados de loading.
         </p>
       </div>
 
@@ -185,9 +181,7 @@ export default function FullCRUDPage() {
       <Card elevation={2}>
         <CardHeader>
           <CardTitle>Controles e Filtros</CardTitle>
-          <CardDescription>
-            Busque, filtre e gerencie usuários
-          </CardDescription>
+          <CardDescription>Busque, filtre e gerencie usuários</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col sm:flex-row gap-4">
@@ -224,9 +218,7 @@ export default function FullCRUDPage() {
       <Card elevation={2}>
         <CardHeader>
           <CardTitle>Usuários Cadastrados</CardTitle>
-          <CardDescription>
-            {usersData?.total || 0} usuário(s) encontrado(s)
-          </CardDescription>
+          <CardDescription>{usersData?.total || 0} usuário(s) encontrado(s)</CardDescription>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -244,12 +236,19 @@ export default function FullCRUDPage() {
             </div>
           ) : (
             <div className="space-y-4">
-              {usersData?.data.map((user) => (
-                <div key={user.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+              {usersData?.data.map((user: any) => (
+                <div
+                  key={user.id}
+                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                >
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                       <span className="text-primary font-semibold">
-                        {user.nome.split(' ').map(n => n[0]).join('').toUpperCase()}
+                        {user.nome
+                          .split(" ")
+                          .map((n: string) => n[0])
+                          .join("")
+                          .toUpperCase()}
                       </span>
                     </div>
                     <div>
@@ -293,7 +292,7 @@ export default function FullCRUDPage() {
                 </div>
               ))}
 
-              {paginatedUsers.length === 0 && (
+              {usersData?.data.length === 0 && (
                 <div className="text-center py-8 text-muted-foreground">
                   Nenhum usuário encontrado
                 </div>
@@ -341,7 +340,7 @@ export default function FullCRUDPage() {
           </DialogHeader>
 
           <div className="py-4">
-            <KuiDataProvider provider={userTrpcProvider}>
+            <KuiDataProvider providers={[userTrpcProvider]}>
               <FormBuilder
                 schema={userSchema}
                 mode={modalMode}
@@ -359,9 +358,7 @@ export default function FullCRUDPage() {
       <Card elevation={1}>
         <CardHeader>
           <CardTitle>Funcionalidades do Full CRUD</CardTitle>
-          <CardDescription>
-            Demonstração completa das funcionalidades implementadas
-          </CardDescription>
+          <CardDescription>Demonstração completa das funcionalidades implementadas</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
