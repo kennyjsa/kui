@@ -29,7 +29,7 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
-    "lint": "eslint src/",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "clean": "rm -rf dist"
   },
   "dependencies": {

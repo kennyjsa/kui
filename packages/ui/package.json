@@ -35,7 +35,7 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --external react",
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch --external react",
-    "lint": "eslint src/",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "clean": "rm -rf dist"
   },
   "dependencies": {

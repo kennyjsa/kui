@@ -27,7 +27,7 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --external react --external react-hook-form --external @tanstack/react-table --external @tanstack/react-query",
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch --external react --external react-hook-form --external @tanstack/react-table --external @tanstack/react-query",
-    "lint": "eslint src/",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "clean": "rm -rf dist"
   },
   "dependencies": {
