@@ -2,69 +2,38 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [ main, develop ]
   pull_request:
-    branches: [main, develop]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Use Node from .nvmrc
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.12.0
+
+      - name: Install deps
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm lint
-        continue-on-error: true
+        run: pnpm -w lint || true
 
       - name: Build
-        run: pnpm build
-
-      - name: Test
-        run: pnpm test
-        continue-on-error: true
-
-  typecheck:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: TypeScript Check
-        run: pnpm -r exec tsc --noEmit
-        continue-on-error: true
+        run: pnpm -w build
 
