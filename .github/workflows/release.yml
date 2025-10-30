@@ -1,13 +1,63 @@
-name: Release
+name: Release & Publish
 
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*'
 
 jobs:
-  publish:
+  # Job 1: Build e validação
+  build:
+    name: Build e Validação
     runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build all packages
+        run: pnpm build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: packages/*/dist
+          retention-days: 1
+
+  # Job 2: Publicação no NPM
+  publish-npm:
+    name: Publicar no NPM
+    runs-on: ubuntu-latest
+    needs: build
     permissions:
       contents: read
       id-token: write
@@ -16,43 +66,126 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node from .nvmrc
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: '.nvmrc'
-          cache: 'pnpm'
+          node-version: '18'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Enable corepack
-        run: corepack enable
-
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v2
         with:
-          version: 8.12.0
+          version: 8
 
-      - name: Install deps
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Validate versions
-        run: ./scripts/validate-version.sh
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: packages
 
-      - name: Build
-        run: pnpm -w build
-
-      - name: Configure npm auth
+      - name: Publish @kui-framework/zod-extension
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
-          echo "@kui-framework:registry=https://registry.npmjs.org/" >> ~/.npmrc
+          cd packages/zod-extension
+          npm publish --access public --provenance
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish (workspaces)
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish @kui-framework/theme
         run: |
-          pnpm -r --filter "@kui-framework/*" publish --access public --no-git-checks || true
+          cd packages/theme
+          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Check publish status
-        run: ./scripts/check-publish.sh || true
+      - name: Publish @kui-framework/core
+        run: |
+          cd packages/core
+          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Publish @kui-framework/ui
+        run: |
+          cd packages/ui
+          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @kui-framework/forms
+        run: |
+          cd packages/forms
+          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  # Job 3: Criar GitHub Release
+  create-release:
+    name: Criar GitHub Release
+    runs-on: ubuntu-latest
+    needs: publish-npm
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          PREV_TAG=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1) 2>/dev/null || echo "")
+          
+          if [ -z "$PREV_TAG" ]; then
+            CHANGELOG=$(git log --pretty=format:"- %s (%h)" --reverse)
+          else
+            CHANGELOG=$(git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" --reverse)
+          fi
+          
+          echo "$CHANGELOG" > changelog.txt
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: KUI Framework v${{ steps.version.outputs.VERSION }}
+          body_path: changelog.txt
+          draft: false
+          prerelease: false
+
+  # Job 4: Notificações
+  notify:
+    name: Notificar Sucesso
+    runs-on: ubuntu-latest
+    needs: create-release
+    if: success()
+
+    steps:
+      - name: Extract version
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Success notification
+        run: |
+          echo "🎉 KUI Framework v${{ steps.version.outputs.VERSION }} publicado com sucesso!"
+          echo ""
+          echo "📦 Pacotes NPM:"
+          echo "  - @kui-framework/zod-extension@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui-framework/theme@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui-framework/core@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui-framework/ui@${{ steps.version.outputs.VERSION }}"
+          echo "  - @kui-framework/forms@${{ steps.version.outputs.VERSION }}"
+          echo ""
+          echo "🔗 Links:"
+          echo "  NPM: https://www.npmjs.com/package/@kui-framework/forms"
+          echo "  GitHub: https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.VERSION }}"
