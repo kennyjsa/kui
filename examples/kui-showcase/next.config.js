@@ -2,11 +2,11 @@
 const nextConfig = {
   reactStrictMode: false,
   transpilePackages: [
-    "@kui-framework/core",
-    "@kui-framework/forms",
-    "@kui-framework/theme",
-    "@kui-framework/ui",
-    "@kui-framework/zod-extension",
+    "@kui/core",
+    "@kui/forms",
+    "@kui/theme",
+    "@kui/ui",
+    "@kui/zod-extension",
   ],
 
   // Configuração mínima absoluta

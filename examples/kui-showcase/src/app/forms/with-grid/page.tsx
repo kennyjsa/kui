@@ -1,10 +1,10 @@
 "use client";
 
-import { KuiDataProvider } from "@kui-framework/core/client-only";
-import { FormBuilder } from "@kui-framework/forms";
+import { KuiDataProvider } from "@kui/core/client-only";
+import { FormBuilder } from "@kui/forms";
 import { pessoaComEnderecoSchema } from "@/schemas/pessoaComEndereco.schema";
 import { mockUserProvider } from "@/providers/mockUserProvider";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui-framework/ui";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui/ui";
 
 export default function WithGridPage() {
   const handleSubmit = async (data: any) => {

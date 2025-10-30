@@ -12,8 +12,8 @@ import {
   type SortingState,
   type ColumnFiltersState,
 } from "@tanstack/react-table";
-import { Button } from "@kui-framework/ui";
-import { Input } from "@kui-framework/ui";
+import { Button } from "@kui/ui";
+import { Input } from "@kui/ui";
 import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import type { DataTableColumn } from "../../types";
 

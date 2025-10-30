@@ -12,7 +12,7 @@ import {
   FormAccordion,
   NavigationAccordion,
   AccordionIcons,
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 export default function AccordionExample() {
   const [activeAccordion, setActiveAccordion] = useState("item1");
@@ -581,7 +581,7 @@ export default function AccordionExample() {
   NavigationAccordion,
   AccordionIcons,
   CommonAccordionConfigs
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 // Accordion básico
 <Accordion

@@ -1,8 +1,8 @@
 "use client";
 
-import { FormBuilder } from "@kui-framework/forms";
+import { FormBuilder } from "@kui/forms";
 import { cadastroSchema } from "@/schemas/cadastro.schema";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui-framework/ui";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui/ui";
 
 export default function WithValidationsPage() {
   const handleSubmit = (data: any) => {

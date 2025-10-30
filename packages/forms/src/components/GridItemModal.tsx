@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogFooter,
   Button,
-} from "@kui-framework/ui";
+} from "@kui/ui";
 import type { FormMode } from "../types";
 import { extractFields } from "../utils/extractFields";
 import { FieldRenderer } from "./FieldRenderer";

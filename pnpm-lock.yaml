@@ -35,19 +35,19 @@ importers:
 
   examples/kui-showcase:
     dependencies:
-      '@kui-framework/core':
+      '@kui/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@kui-framework/forms':
+      '@kui/forms':
         specifier: workspace:*
         version: link:../../packages/forms
-      '@kui-framework/theme':
+      '@kui/theme':
         specifier: workspace:*
         version: link:../../packages/theme
-      '@kui-framework/ui':
+      '@kui/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@kui-framework/zod-extension':
+      '@kui/zod-extension':
         specifier: workspace:*
         version: link:../../packages/zod-extension
       '@tanstack/react-query':
@@ -111,7 +111,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@kui-framework/zod-extension':
+      '@kui/zod-extension':
         specifier: workspace:*
         version: link:../zod-extension
     devDependencies:
@@ -136,13 +136,13 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.3.4
         version: 3.10.0(react-hook-form@7.65.0)
-      '@kui-framework/core':
+      '@kui/core':
         specifier: workspace:*
         version: link:../core
-      '@kui-framework/ui':
+      '@kui/ui':
         specifier: workspace:*
         version: link:../ui
-      '@kui-framework/zod-extension':
+      '@kui/zod-extension':
         specifier: workspace:*
         version: link:../zod-extension
       '@tanstack/react-query':
@@ -204,7 +204,7 @@ importers:
 
   packages/ui:
     dependencies:
-      '@kui-framework/theme':
+      '@kui/theme':
         specifier: workspace:*
         version: link:../theme
       '@radix-ui/react-accordion':

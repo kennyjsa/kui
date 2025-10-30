@@ -12,7 +12,7 @@ import {
   TeamGrid,
   DashboardGrid,
   GridIcons,
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 export default function GridLayoutExample() {
 
@@ -413,7 +413,7 @@ export default function GridLayoutExample() {
   DashboardGrid,
   GridIcons,
   GridPresets
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 // Grid básico
 <Grid cols={3} gap={4} responsive="sm-md">

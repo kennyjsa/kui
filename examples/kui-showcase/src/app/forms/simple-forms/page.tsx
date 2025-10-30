@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { FormBuilder } from "@kui-framework/forms";
-import { zKUI } from "@kui-framework/zod-extension";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui-framework/ui";
+import { FormBuilder } from "@kui/forms";
+import { zKUI } from "@kui/zod-extension";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui/ui";
 
 // Schema para formulário de login
 const loginSchema = zKUI.object({

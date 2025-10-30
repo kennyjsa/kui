@@ -1,4 +1,4 @@
-@import "@kui-framework/theme/globals.css";
+@import "@kui/theme/globals.css";
 
 @tailwind base;
 @tailwind components;

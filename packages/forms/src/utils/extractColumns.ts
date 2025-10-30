@@ -18,7 +18,7 @@ export interface ExtractColumnsOptions {
  *
  * @example
  * ```typescript
- * import { extractColumns } from "@kui-framework/forms";
+ * import { extractColumns } from "@kui/forms";
  * import { userSchema } from "@/schemas/user.schema";
  *
  * const columns = extractColumns(userSchema, {

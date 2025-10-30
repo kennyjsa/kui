@@ -66,8 +66,8 @@ export type AcceptedSchema = z.ZodObject<any> | z.ZodEffects<any>;
  *
  * @example
  * ```tsx
- * import { FormBuilder } from "@kui-framework/forms";
- * import { zKUI } from "@kui-framework/zod-extension";
+ * import { FormBuilder } from "@kui/forms";
+ * import { zKUI } from "@kui/zod-extension";
  *
  * const schema = zKUI.object({
  *   name: zKUI.text("Nome", { required: true }),
@@ -185,7 +185,7 @@ export interface DataTableActionContext {
 export interface DataTableProps<T = any> {
   providerName: string;
   columns: DataTableColumn<T>[];
-  filters?: import("@kui-framework/core").FilterDefinition[];
+  filters?: import("@kui/core").FilterDefinition[];
   enableSearch?: boolean;
   enableViews?: boolean;
   initialView?: "table" | "grid" | "list";

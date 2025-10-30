@@ -10,7 +10,7 @@ import {
   ProfileTabs,
   DataTabs,
   TabIcons,
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 export default function TabsExample() {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -496,7 +496,7 @@ export default function TabsExample() {
   ScrollableTabs,
   TabIcons,
   CommonTabConfigs
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 // Tabs básicos
 <Tabs

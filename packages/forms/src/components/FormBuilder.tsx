@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardHeader, CardTitle, Skeleton } from "@kui-framework/ui";
+import { Button, Card, CardContent, CardHeader, CardTitle, Skeleton } from "@kui/ui";
 import type { FormBuilderProps, AcceptedSchema } from "../types";
 import { useKuiForm } from "../hooks/useKuiForm";
 import { useDerivedFields } from "../hooks/useDerivedFields";

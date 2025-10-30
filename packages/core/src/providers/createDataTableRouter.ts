@@ -32,7 +32,7 @@ export interface DataTableResult<T> {
  * @example
  * ```typescript
  * // server/routers/users.ts
- * import { createDataTableRouter } from "@kui-framework/core";
+ * import { createDataTableRouter } from "@kui/core";
  *
  * export const userRouter = router({
  *   list: createDataTableRouter({

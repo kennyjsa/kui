@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { Button } from "@kui-framework/ui";
-import { Input } from "@kui-framework/ui";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@kui-framework/ui";
-import { Checkbox } from "@kui-framework/ui";
-import { DatePicker, DateRangePicker } from "@kui-framework/ui";
-import { Popover, PopoverContent, PopoverTrigger } from "@kui-framework/ui";
+import { Button } from "@kui/ui";
+import { Input } from "@kui/ui";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@kui/ui";
+import { Checkbox } from "@kui/ui";
+import { DatePicker, DateRangePicker } from "@kui/ui";
+import { Popover, PopoverContent, PopoverTrigger } from "@kui/ui";
 import { Trash2 } from "lucide-react";
-import type { FilterDefinition, FilterValue } from "@kui-framework/core";
+import type { FilterDefinition, FilterValue } from "@kui/core";
 
 export interface FilterPopoverProps {
   filter: FilterValue;

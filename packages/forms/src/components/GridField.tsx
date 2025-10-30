@@ -2,8 +2,8 @@
 
 import React from "react";
 import { Plus, Pencil, Trash2, RotateCcw } from "lucide-react";
-import { Button, Badge, SimplePagination } from "@kui-framework/ui";
-import type { GridOptions } from "@kui-framework/zod-extension";
+import { Button, Badge, SimplePagination } from "@kui/ui";
+import type { GridOptions } from "@kui/zod-extension";
 import type { FormMode } from "../types";
 import { GridItemModal } from "./GridItemModal";
 

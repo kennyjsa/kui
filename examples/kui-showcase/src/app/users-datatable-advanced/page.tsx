@@ -1,12 +1,12 @@
 "use client";
 
-import { DataTable, extractColumns, DataTableVirtualized } from "@kui-framework/forms";
-import { extractFiltersFromSchema } from "@kui-framework/core";
-import { zKUI } from "@kui-framework/zod-extension";
+import { DataTable, extractColumns, DataTableVirtualized } from "@kui/forms";
+import { extractFiltersFromSchema } from "@kui/core";
+import { zKUI } from "@kui/zod-extension";
 import { z } from "zod";
-import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui-framework/ui";
+import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui/ui";
 import { trpc } from "@/lib/trpc";
-import { useToast } from "@kui-framework/ui";
+import { useToast } from "@kui/ui";
 import { useState } from "react";
 
 // Define a Zod schema for the User entity

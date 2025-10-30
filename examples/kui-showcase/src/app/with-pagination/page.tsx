@@ -8,7 +8,7 @@ import {
   PaginationNext,
   PaginationEllipsis,
   PaginationInfo,
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 export default function PaginationExample() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -255,7 +255,7 @@ export default function PaginationExample() {
   PaginationNext,
   PaginationEllipsis,
   PaginationInfo
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 // Pagination básica
 <Pagination

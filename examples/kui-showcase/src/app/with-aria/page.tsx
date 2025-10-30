@@ -12,8 +12,8 @@ import {
   ARIALoading,
   ARIAStatus,
   useARIAAnnouncements,
-} from "@kui-framework/ui";
-import { Button } from "@kui-framework/ui";
+} from "@kui/ui";
+import { Button } from "@kui/ui";
 
 export default function ARIAExample() {
   const [loading, setLoading] = useState(false);

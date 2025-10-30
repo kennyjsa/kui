@@ -12,7 +12,7 @@ import {
   SidebarTab,
   MetadataPanel,
   QuickActions,
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 export default function SidebarExample() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>(["pessoal"]);
@@ -296,7 +296,7 @@ export default function SidebarExample() {
   SidebarTab,
   MetadataPanel,
   QuickActions
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 // FormLayout básico
 <FormLayout

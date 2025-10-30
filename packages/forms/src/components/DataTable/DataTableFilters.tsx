@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@kui-framework/ui";
-import { Badge } from "@kui-framework/ui";
+import { Button } from "@kui/ui";
+import { Badge } from "@kui/ui";
 import { X } from "lucide-react";
-import type { FilterDefinition, FilterValue } from "@kui-framework/core";
+import type { FilterDefinition, FilterValue } from "@kui/core";
 import { FilterPopover } from "./FilterPopover";
 
 export interface DataTableFiltersProps {

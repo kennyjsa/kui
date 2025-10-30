@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { DataTable, extractColumns } from "@kui-framework/forms";
-import { extractFiltersFromSchema } from "@kui-framework/core";
+import { DataTable, extractColumns } from "@kui/forms";
+import { extractFiltersFromSchema } from "@kui/core";
 import { userSchema } from "@/schemas/user.schema";
-import { Button } from "@kui-framework/ui";
+import { Button } from "@kui/ui";
 
 export default function UsersDataTablePage() {
   // Gerar colunas automaticamente do schema

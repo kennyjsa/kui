@@ -1,15 +1,15 @@
 "use client";
 
 import React from "react";
-import { useKuiProvider } from "@kui-framework/core/client-only";
+import { useKuiProvider } from "@kui/core/client-only";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@kui-framework/ui";
-import type { RelationOptions } from "@kui-framework/zod-extension";
+} from "@kui/ui";
+import type { RelationOptions } from "@kui/zod-extension";
 
 export interface RelationSelectProps {
   id: string;

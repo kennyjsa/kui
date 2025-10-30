@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@kui-framework/ui";
-import { useDialog } from "@kui-framework/ui";
+import { Button } from "@kui/ui";
+import { useDialog } from "@kui/ui";
 import { useState, useEffect } from "react";
 import { PageWrapper } from "@/components/PageWrapper";
 
@@ -150,7 +150,7 @@ function DialogExampleContent() {
           <h2 className="text-xl font-semibold">Como Usar</h2>
           <div className="bg-gray-100 p-4 rounded-lg">
             <pre className="text-sm">
-              {`import { useDialog } from "@kui-framework/ui";
+              {`import { useDialog } from "@kui/ui";
 
 const { dialog } = useDialog();
 

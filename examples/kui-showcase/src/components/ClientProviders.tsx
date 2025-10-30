@@ -1,6 +1,6 @@
 "use client";
 
-import { GlobalProviders } from "@kui-framework/ui";
+import { GlobalProviders } from "@kui/ui";
 
 interface ClientProvidersProps {
   children: React.ReactNode;

@@ -1,15 +1,15 @@
 "use client";
 
-import { Button } from "@kui-framework/ui";
-import { Input } from "@kui-framework/ui";
+import { Button } from "@kui/ui";
+import { Input } from "@kui/ui";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@kui-framework/ui";
+} from "@kui/ui";
 import { Filter, Search, Table, Grid, List } from "lucide-react";
-import type { FilterDefinition, FilterValue } from "@kui-framework/core";
+import type { FilterDefinition, FilterValue } from "@kui/core";
 
 export interface DataTableToolbarProps {
   search: string;

@@ -18,7 +18,7 @@ export interface ExtractFiltersOptions {
  *
  * @example
  * ```typescript
- * import { extractFiltersFromSchema } from "@kui-framework/core";
+ * import { extractFiltersFromSchema } from "@kui/core";
  * import { userSchema } from "@/schemas/user.schema";
  *
  * const filters = extractFiltersFromSchema(userSchema, {

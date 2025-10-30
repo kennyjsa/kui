@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu, X, Github, ExternalLink } from "lucide-react";
-import { Button, ThemeToggle } from "@kui-framework/ui";
+import { Button, ThemeToggle } from "@kui/ui";
 
 interface HeaderProps {
   onToggleSidebar: () => void;

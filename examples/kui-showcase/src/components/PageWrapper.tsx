@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { cn } from "@kui-framework/ui";
+import { cn } from "@kui/ui";
 
 interface PageWrapperProps {
   children: ReactNode;

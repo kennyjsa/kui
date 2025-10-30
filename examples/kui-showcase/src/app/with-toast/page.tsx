@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@kui-framework/ui";
-import { useToast } from "@kui-framework/ui";
+import { Button } from "@kui/ui";
+import { useToast } from "@kui/ui";
 import { useEffect, useState } from "react";
 import { PageWrapper } from "@/components/PageWrapper";
 
@@ -155,7 +155,7 @@ function ToastExampleContent() {
           <h2 className="text-xl font-semibold">Como Usar</h2>
           <div className="bg-gray-100 p-4 rounded-lg">
             <pre className="text-sm">
-              {`import { useToast } from "@kui-framework/ui";
+              {`import { useToast } from "@kui/ui";
 
 const { toast } = useToast();
 

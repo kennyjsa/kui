@@ -1,4 +1,4 @@
-import { zKUI } from "@kui-framework/zod-extension";
+import { zKUI } from "@kui/zod-extension";
 import { z } from "zod";
 import { enderecoSchema } from "./endereco.schema";
 import { contatoSchema } from "./contato.schema";

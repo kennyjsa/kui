@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { router as createTRPCRouter, publicProcedure } from "../trpc";
-import { createDataTableRouter } from "@kui-framework/core";
+import { createDataTableRouter } from "@kui/core";
 
 export interface User {
   id: string;

@@ -23,9 +23,9 @@ import {
   Pagination,
   PaginationInfo,
   Skeleton
-} from "@kui-framework/ui";
-import { FormBuilder } from "@kui-framework/forms";
-import { KuiDataProvider } from "@kui-framework/core/client-only";
+} from "@kui/ui";
+import { FormBuilder } from "@kui/forms";
+import { KuiDataProvider } from "@kui/core/client-only";
 import { userSchema } from "@/schemas/user.schema";
 import { userTrpcProvider } from "@/providers/userTrpcProvider";
 import { Eye, Edit, Trash2, Plus, Search } from "lucide-react";

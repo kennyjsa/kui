@@ -1,8 +1,8 @@
 "use client";
 
-import { FormBuilder } from "@kui-framework/forms";
+import { FormBuilder } from "@kui/forms";
 import { pessoaSchema } from "@/schemas/pessoa.schema";
-import { Button } from "@kui-framework/ui";
+import { Button } from "@kui/ui";
 import { useState } from "react";
 
 /**

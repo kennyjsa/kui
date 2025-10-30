@@ -4,7 +4,7 @@ import {
   Breadcrumbs,
   BreadcrumbLink,
   BreadcrumbPage,
-} from "@kui-framework/ui";
+} from "@kui/ui";
 import { Home, User, Settings, FileText, Edit } from "lucide-react";
 
 export default function BreadcrumbsExample() {
@@ -191,7 +191,7 @@ export default function BreadcrumbsExample() {
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 // Breadcrumb básico
 <Breadcrumbs>

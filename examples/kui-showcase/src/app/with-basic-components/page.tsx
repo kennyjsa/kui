@@ -27,7 +27,7 @@ import {
   Skeleton,
   CurrencyInput,
   MaskedInput,
-} from "@kui-framework/ui";
+} from "@kui/ui";
 import { PageWrapper } from "@/components/PageWrapper";
 
 export default function BasicComponentsPage() {

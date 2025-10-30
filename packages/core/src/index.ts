@@ -24,4 +24,4 @@ export { extractFiltersFromSchema } from "./utils/extractFiltersFromSchema";
 export type { ExtractFiltersOptions } from "./utils/extractFiltersFromSchema";
 
 // Export client-only components only when imported
-// Use import { KuiDataProvider } from '@kui-framework/core/client-only' for client components
+// Use import { KuiDataProvider } from '@kui/core/client-only' for client components

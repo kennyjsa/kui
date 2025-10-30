@@ -3,7 +3,7 @@
 import {
   EmptyState,
   EmptyStateIcons,
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 export default function EmptyStatesExample() {
 
@@ -219,7 +219,7 @@ export default function EmptyStatesExample() {
           <h2 className="text-xl font-semibold">Como Usar</h2>
           <div className="bg-gray-100 p-4 rounded-lg">
             <pre className="text-sm">
-{`import { EmptyState, EmptyStateIcons } from "@kui-framework/ui";
+{`import { EmptyState, EmptyStateIcons } from "@kui/ui";
 
 // Empty State básico
 <EmptyState

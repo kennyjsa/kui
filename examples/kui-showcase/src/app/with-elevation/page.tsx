@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui-framework/ui";
-import { Button } from "@kui-framework/ui";
-import { Badge } from "@kui-framework/ui";
-import { Tabs } from "@kui-framework/ui";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@kui-framework/ui";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui/ui";
+import { Button } from "@kui/ui";
+import { Badge } from "@kui/ui";
+import { Tabs } from "@kui/ui";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@kui/ui";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@kui-framework/ui";
+} from "@kui/ui";
 
 export default function ElevationExample() {
   const [elevation, setElevation] = React.useState<0 | 1 | 2 | 3 | 4 | 5>(2);

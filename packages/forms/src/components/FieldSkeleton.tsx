@@ -1,4 +1,4 @@
-import { Skeleton } from "@kui-framework/ui";
+import { Skeleton } from "@kui/ui";
 import type { FieldConfig } from "../types";
 
 /**

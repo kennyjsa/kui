@@ -1,5 +1,5 @@
 {
-  "name": "@kui-framework/forms",
+  "name": "@kui/forms",
   "version": "0.2.9",
   "description": "Formulários KUI Framework - Geração automática de formulários a partir de schemas Zod",
   "keywords": ["kui", "forms", "react-hook-form", "zod", "validation", "form-builder", "auto-form"],
@@ -34,9 +34,9 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@kui-framework/core": "workspace:*",
-    "@kui-framework/ui": "workspace:*",
-    "@kui-framework/zod-extension": "workspace:*",
+    "@kui/core": "workspace:*",
+    "@kui/ui": "workspace:*",
+    "@kui/zod-extension": "workspace:*",
     "@hookform/resolvers": "^3.3.4",
     "@tanstack/react-table": "^8.11.0",
     "@tanstack/react-query": "^5.17.0",
