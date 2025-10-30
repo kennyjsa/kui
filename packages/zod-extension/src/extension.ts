@@ -1,5 +1,12 @@
 import { z } from "zod";
-import type { KuiOptions, RelationOptions, GridOptions, KuiMetadata } from "./types";
+import type {
+  KuiOptions,
+  RelationOptions,
+  GridOptions,
+  KuiMetadata,
+  RadioOptions,
+  SelectOptions,
+} from "./types";
 
 /**
  * Símbolo para armazenar metadados KUI no schema Zod
@@ -9,10 +16,7 @@ export const KUI_METADATA = Symbol("kui_metadata");
 /**
  * Anexa metadados KUI a um schema Zod
  */
-function withKuiMetadata<T extends z.ZodTypeAny>(
-  schema: T,
-  metadata: KuiMetadata
-): T {
+function withKuiMetadata<T extends z.ZodTypeAny>(schema: T, metadata: KuiMetadata): T {
   (schema as any)[KUI_METADATA] = metadata;
   return schema;
 }
@@ -32,46 +36,37 @@ export const zKUI = {
    * Campo identificador (ID) - sempre readonly e oculto no create
    */
   identifier(label: string, options: Partial<KuiOptions> = {}) {
-    return withKuiMetadata(
-      z.string().or(z.number()).optional(),
-      {
-        label,
-        type: "identifier",
-        options: {
-          ...options,
-          readOnly: true,
-          hiddenIn: ["create"],
-        },
-      }
-    );
+    return withKuiMetadata(z.string().or(z.number()).optional(), {
+      label,
+      type: "identifier",
+      options: {
+        ...options,
+        readOnly: true,
+        hiddenIn: ["create"],
+      },
+    });
   },
 
   /**
    * Campo de texto
    */
   text(label: string, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.string(),
-      {
-        label,
-        type: "text",
-        options,
-      }
-    );
+    return withKuiMetadata(z.string(), {
+      label,
+      type: "text",
+      options,
+    });
   },
 
   /**
    * Campo de texto longo (textarea)
    */
   textarea(label: string, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.string(),
-      {
-        label,
-        type: "textarea",
-        options,
-      }
-    );
+    return withKuiMetadata(z.string(), {
+      label,
+      type: "textarea",
+      options,
+    });
   },
 
   /**
@@ -81,147 +76,122 @@ export const zKUI = {
     // Campos derivados são opcionais
     const schema = options.derived ? z.number().optional() : z.number();
 
-    return withKuiMetadata(
-      schema,
-      {
-        label,
-        type: "number",
-        options,
-      }
-    );
+    return withKuiMetadata(schema, {
+      label,
+      type: "number",
+      options,
+    });
   },
 
   /**
    * Campo de valor monetário
    */
   currency(label: string, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.number(),
-      {
-        label,
-        type: "currency",
-        options: {
-          currency: "BRL",
-          locale: "pt-BR",
-          ...options,
-        },
-      }
-    );
+    return withKuiMetadata(z.number(), {
+      label,
+      type: "currency",
+      options: {
+        currency: "BRL",
+        locale: "pt-BR",
+        ...options,
+      },
+    });
   },
 
   /**
    * Campo de data
    */
   date(label: string, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.date().or(z.string()),
-      {
-        label,
-        type: "date",
-        options,
-      }
-    );
+    return withKuiMetadata(z.date().or(z.string()), {
+      label,
+      type: "date",
+      options,
+    });
   },
 
   /**
    * Campo booleano (checkbox/switch)
    */
   boolean(label: string, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.boolean(),
-      {
-        label,
-        type: "boolean",
-        options,
-      }
-    );
+    return withKuiMetadata(z.boolean(), {
+      label,
+      type: "boolean",
+      options,
+    });
   },
 
   /**
    * Campo checkbox
    */
   checkbox(label: string, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.boolean().default(false),
-      {
-        label,
-        type: "checkbox",
-        options,
-      }
-    );
+    return withKuiMetadata(z.boolean().default(false), {
+      label,
+      type: "checkbox",
+      options,
+    });
   },
 
   /**
    * Campo radio group
    */
-  radio(label: string, radioOptions: Array<{ label: string; value: string }>, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.string(),
-      {
-        label,
-        type: "radio",
-        options: {
-          ...options,
-          options: radioOptions,
-        },
-      }
-    );
+  radio(label: string, radioOptions: RadioOptions = {}) {
+    return withKuiMetadata(z.string(), {
+      label,
+      type: "radio",
+      options: radioOptions,
+    });
   },
 
   /**
    * Campo switch (toggle)
    */
   switch(label: string, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.boolean().default(false),
-      {
-        label,
-        type: "switch",
-        options,
-      }
-    );
+    return withKuiMetadata(z.boolean().default(false), {
+      label,
+      type: "switch",
+      options,
+    });
   },
 
   /**
    * Campo de email
    */
   email(label: string, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.string().email(),
-      {
-        label,
-        type: "email",
-        options,
-      }
-    );
+    return withKuiMetadata(z.string().email(), {
+      label,
+      type: "email",
+      options,
+    });
   },
 
   /**
    * Campo de senha
    */
   password(label: string, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.string(),
-      {
-        label,
-        type: "password",
-        options,
-      }
-    );
+    return withKuiMetadata(z.string(), {
+      label,
+      type: "password",
+      options,
+    });
   },
 
   /**
    * Campo de seleção (select)
    */
-  select(label: string, values: string[], options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.enum(values as [string, ...string[]]),
-      {
-        label,
-        type: "select",
-        options,
-      }
-    );
+  select(label: string, selectOptions: SelectOptions) {
+    // Validar que há pelo menos uma opção
+    if (!selectOptions.options || selectOptions.options.length === 0) {
+      throw new Error(`zKUI.select("${label}", ...) precisa de pelo menos uma opção`);
+    }
+
+    // Extrair os valores das opções e converter para string
+    const values = selectOptions.options.map((opt) => String(opt.value)) as [string, ...string[]];
+
+    return withKuiMetadata(z.enum(values), {
+      label,
+      type: "select",
+      options: selectOptions,
+    });
   },
 
   /**
@@ -229,7 +199,10 @@ export const zKUI = {
    */
   rating(label: string, options: KuiOptions = {}) {
     return withKuiMetadata(
-      z.number().min(0).max(options.max || 5),
+      z
+        .number()
+        .min(0)
+        .max(options.max || 5),
       {
         label,
         type: "rating",
@@ -245,63 +218,51 @@ export const zKUI = {
    * Campo de seleção de cor
    */
   color(label: string, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      z.string().regex(/^#[0-9A-F]{6}$/i, "Cor inválida"),
-      {
-        label,
-        type: "color",
-        options,
-      }
-    );
+    return withKuiMetadata(z.string().regex(/^#[0-9A-F]{6}$/i, "Cor inválida"), {
+      label,
+      type: "color",
+      options,
+    });
   },
 
   /**
    * Campo de upload de arquivo
    */
   file(label: string, options: KuiOptions = {}) {
-    return withKuiMetadata(
-      options.multiple ? z.array(z.any()) : z.any(),
-      {
-        label,
-        type: "file",
-        options: {
-          preview: true,
-          ...options,
-        },
-      }
-    );
+    return withKuiMetadata(options.multiple ? z.array(z.any()) : z.any(), {
+      label,
+      type: "file",
+      options: {
+        preview: true,
+        ...options,
+      },
+    });
   },
 
   /**
    * Campo de data do sistema - automático e readonly
    */
   systemDate(label: string, options: Partial<KuiOptions> = {}) {
-    return withKuiMetadata(
-      z.date().or(z.string()),
-      {
-        label,
-        type: "systemDate",
-        options: {
-          ...options,
-          readOnly: true,
-          derived: true,
-        },
-      }
-    );
+    return withKuiMetadata(z.date().or(z.string()), {
+      label,
+      type: "systemDate",
+      options: {
+        ...options,
+        readOnly: true,
+        derived: true,
+      },
+    });
   },
 
   /**
    * Campo de relação/associação
    */
   relation(label: string, relationOptions: RelationOptions) {
-    return withKuiMetadata(
-      relationOptions.multiple ? z.array(z.any()) : z.any(),
-      {
-        label,
-        type: "relation",
-        options: relationOptions,
-      }
-    );
+    return withKuiMetadata(relationOptions.multiple ? z.array(z.any()) : z.any(), {
+      label,
+      type: "relation",
+      options: relationOptions,
+    });
   },
 
   /**

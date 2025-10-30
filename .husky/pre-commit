@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Executar lint em todos os pacotes antes do commit
+echo "🔍 Executando lint..."
+pnpm lint
+
 # Validar versões dos pacotes antes de commit
 # (útil para commits de release)
 if git diff --cached --name-only | grep -q "package.json"; then

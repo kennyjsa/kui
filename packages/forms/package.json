@@ -1,6 +1,6 @@
 {
   "name": "@kui-framework/forms",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Formulários KUI Framework - Geração automática de formulários a partir de schemas Zod",
   "keywords": ["kui", "forms", "react-hook-form", "zod", "validation", "form-builder", "auto-form"],
   "homepage": "https://github.com/kennyjsa/kui#readme",
@@ -25,9 +25,9 @@
     }
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --external react --external react-hook-form",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch --external react --external react-hook-form",
-    "lint": "eslint src/",
+    "build": "tsup src/index.ts --format cjs,esm --dts --external react --external react-hook-form --external @tanstack/react-table --external @tanstack/react-query",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch --external react --external react-hook-form --external @tanstack/react-table --external @tanstack/react-query",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "clean": "rm -rf dist"
   },
   "dependencies": {
@@ -35,6 +35,9 @@
     "@kui-framework/ui": "workspace:*",
     "@kui-framework/zod-extension": "workspace:*",
     "@hookform/resolvers": "^3.3.4",
+    "@tanstack/react-table": "^8.11.0",
+    "@tanstack/react-query": "^5.17.0",
+    "react-window": "^1.8.8",
     "react-hook-form": "^7.49.3",
     "zod": "^3.22.4"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@kui-framework/core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Core KUI Framework - Providers, registry e integração com backends (REST/tRPC)",
   "keywords": ["kui", "core", "provider", "trpc", "rest", "data", "backend"],
   "homepage": "https://github.com/kennyjsa/kui#readme",
@@ -22,12 +22,17 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
+    },
+    "./client-only": {
+      "types": "./dist/client-only.d.ts",
+      "import": "./dist/client-only.mjs",
+      "require": "./dist/client-only.js"
     }
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
-    "lint": "eslint src/",
+    "build": "tsup src/index.ts src/client-only.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts src/client-only.ts --format cjs,esm --dts --watch",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "clean": "rm -rf dist"
   },
   "dependencies": {

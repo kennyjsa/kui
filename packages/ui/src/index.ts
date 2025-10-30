@@ -258,3 +258,24 @@ export { ThemeProvider, useTheme } from "./components/ThemeProvider";
 // Global Providers (SSR Safe)
 export { GlobalProviders } from "./components/GlobalProviders";
 
+// New components for DataTable
+export { Popover, PopoverContent, PopoverTrigger } from "./components/Popover";
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuGroup,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuRadioGroup,
+} from "./components/DropdownMenu";
+export { DatePicker, DateRangePicker } from "./components/DatePicker";
+

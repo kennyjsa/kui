@@ -157,3 +157,43 @@ export interface FieldRendererProps {
   errors: any;
 }
 
+/**
+ * Definição de uma coluna do DataTable
+ */
+export interface DataTableColumn<T = any> {
+  key: string;
+  label: string;
+  sortable?: boolean;
+  render?: (value: any, row: T) => React.ReactNode;
+  width?: string;
+}
+
+/**
+ * Contexto para ações do DataTable
+ */
+export interface DataTableActionContext {
+  refetch: () => void;
+  invalidate: () => void;
+  optimisticUpdate: (updater: (items: any[]) => any[]) => void;
+  optimisticRemove: (id: string | number) => void;
+  optimisticPatch: (id: string | number, patch: any) => void;
+}
+
+/**
+ * Props do DataTable
+ */
+export interface DataTableProps<T = any> {
+  providerName: string;
+  columns: DataTableColumn<T>[];
+  filters?: import("@kui-framework/core").FilterDefinition[];
+  enableSearch?: boolean;
+  enableViews?: boolean;
+  initialView?: "table" | "grid" | "list";
+  pageSize?: number;
+  enableUrlState?: boolean;
+  renderCard?: (item: T) => React.ReactNode;
+  emptyState?: React.ReactNode;
+  actions?: (row: T, context: DataTableActionContext) => React.ReactNode;
+  useTanStackTable?: boolean;
+}
+
