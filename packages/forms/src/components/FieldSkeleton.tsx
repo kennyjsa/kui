@@ -17,7 +17,7 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
   const gridClass = getGridClass(options?.layout);
 
   switch (type) {
-    case "identifier":
+    case "identifier": {
       // ID geralmente oculto no create, pequeno no edit
       return (
         <div className={gridClass}>
@@ -27,10 +27,11 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
     case "text":
     case "email":
-    case "password":
+    case "password": {
       return (
         <div className={gridClass}>
           <div className="space-y-2">
@@ -39,8 +40,9 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
-    case "textarea":
+    case "textarea": {
       const rows = options?.rows || 4;
       const height = rows * 24 + 16; // Aproximadamente
       return (
@@ -51,9 +53,10 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
     case "number":
-    case "currency":
+    case "currency": {
       return (
         <div className={gridClass}>
           <div className="space-y-2">
@@ -62,9 +65,10 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
     case "date":
-    case "systemDate":
+    case "systemDate": {
       return (
         <div className={gridClass}>
           <div className="space-y-2">
@@ -73,9 +77,10 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
     case "select":
-    case "relation":
+    case "relation": {
       return (
         <div className={gridClass}>
           <div className="space-y-2">
@@ -84,8 +89,9 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
-    case "checkbox":
+    case "checkbox": {
       return (
         <div className={gridClass}>
           <div className="flex items-center space-x-2">
@@ -94,8 +100,9 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
-    case "switch":
+    case "switch": {
       return (
         <div className={gridClass}>
           <div className="flex items-center justify-between">
@@ -104,8 +111,9 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
-    case "radio":
+    case "radio": {
       const radioOptions = options?.options || [1, 2, 3];
       return (
         <div className={gridClass}>
@@ -120,8 +128,9 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
-    case "rating":
+    case "rating": {
       return (
         <div className={gridClass}>
           <div className="space-y-2">
@@ -134,8 +143,9 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
-    case "color":
+    case "color": {
       return (
         <div className={gridClass}>
           <div className="space-y-2">
@@ -147,8 +157,9 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
-    case "file":
+    case "file": {
       return (
         <div className={gridClass}>
           <div className="space-y-2">
@@ -157,8 +168,9 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
-    case "grid":
+    case "grid": {
       const columns = options?.columns || [];
       const numColumns = columns.length || 3;
       const pageSize = options?.pageSize || 5;
@@ -188,8 +200,9 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
 
-    default:
+    default: {
       // Fallback genérico
       return (
         <div className={gridClass}>
@@ -199,6 +212,7 @@ export function FieldSkeleton({ config }: FieldSkeletonProps) {
           </div>
         </div>
       );
+    }
   }
 }
 

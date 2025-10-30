@@ -38,9 +38,10 @@ export function DataTableFilters({
         return filter.value instanceof Date
           ? filter.value.toLocaleDateString("pt-BR")
           : String(filter.value);
-      case "select":
+      case "select": {
         const option = filterDef.options?.find(opt => opt.value === filter.value);
         return option?.label || String(filter.value);
+      }
       default:
         return String(filter.value);
     }

@@ -1,4 +1,4 @@
-import type { ZodTypeAny } from "zod";
+import { z } from "zod";
 
 /**
  * Opção label/value reutilizável
@@ -300,7 +300,7 @@ export type GridOptions = KuiOptions & {
    * Schema Zod dos itens do grid
    * Deve ser criado com zKUI.object()
    */
-  itemSchema: ZodTypeAny;
+  itemSchema: z.ZodObject<any>;
 
   /**
    * Colunas visíveis no grid (formato tabela)

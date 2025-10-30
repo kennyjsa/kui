@@ -46,7 +46,8 @@ export const userSchema = zKUI.object({
     compute: (values) => {
       if (!values.dataNascimento) return null;
       const today = new Date();
-      const birthDate = new Date(values.dataNascimento);
+      const raw = values.dataNascimento as unknown as string | number | Date;
+      const birthDate = raw instanceof Date ? raw : new Date(raw);
       let age = today.getFullYear() - birthDate.getFullYear();
       const monthDiff = today.getMonth() - birthDate.getMonth();
       if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
@@ -118,17 +119,7 @@ export const userSchema = zKUI.object({
     options: [
       { label: "Português (Brasil)", value: "pt-BR" },
       { label: "English (US)", value: "en-US" },
-      { label: "Español", value: "es-ES" },
-      { label: "Français", value: "fr-FR" },
     ],
-    helperText: "Idioma preferido para a interface",
-  }),
-
-  observacoes: zKUI.textarea("Observações", {
-    rows: 4,
-    maxLength: 500,
-    placeholder: "Observações adicionais sobre o usuário...",
-    helperText: "Observações opcionais (máximo 500 caracteres)",
   }),
 });
 
