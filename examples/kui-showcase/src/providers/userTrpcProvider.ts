@@ -10,7 +10,7 @@ export const userTrpcProvider = createTrpcProvider({
   router: trpc.user,
   procedures: {
     list: "list",
-    get: "getById", 
+    get: "getById",
     create: "create",
     update: "update",
     delete: "delete",

@@ -60,7 +60,12 @@ const inputTypesSchema = zKUI.object({
   }),
 
   // Campos de seleção
-  selectField: zKUI.select("Seleção", ["opcao1", "opcao2", "opcao3"], {
+  selectField: zKUI.select("Seleção", {
+    options: [
+      { label: "Opção 1", value: "opcao1" },
+      { label: "Opção 2", value: "opcao2" },
+      { label: "Opção 3", value: "opcao3" },
+    ],
     helperText: "Campo de seleção",
   }),
 

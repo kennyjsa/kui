@@ -23,9 +23,7 @@ export default function WithValidationsPage() {
       <Card elevation={2}>
         <CardHeader>
           <CardTitle>Formulário com Validações</CardTitle>
-          <CardDescription>
-            Campos condicionais e validações cross-field
-          </CardDescription>
+          <CardDescription>Campos condicionais e validações cross-field</CardDescription>
         </CardHeader>
         <CardContent>
           <FormBuilder schema={cadastroSchema} mode="create" onSubmit={handleSubmit} />
@@ -38,15 +36,20 @@ export default function WithValidationsPage() {
         <Card elevation={1}>
           <CardHeader>
             <CardTitle className="text-purple-600">🔀 Campos Condicionais</CardTitle>
-            <CardDescription>
-              Campos que aparecem baseados em outros valores
-            </CardDescription>
+            <CardDescription>Campos que aparecem baseados em outros valores</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="text-sm space-y-2">
-              <li>• Selecione <strong>"Pessoa Física"</strong> → exibe <strong>CPF</strong></li>
-              <li>• Selecione <strong>"Pessoa Jurídica"</strong> → exibe <strong>CNPJ</strong> e <strong>Nome Fantasia</strong></li>
-              <li>• Implementado com <code className="bg-purple-100 px-1 rounded">showIf</code></li>
+              <li>
+                • Selecione <strong>"Pessoa Física"</strong> → exibe <strong>CPF</strong>
+              </li>
+              <li>
+                • Selecione <strong>"Pessoa Jurídica"</strong> → exibe <strong>CNPJ</strong> e{" "}
+                <strong>Nome Fantasia</strong>
+              </li>
+              <li>
+                • Implementado com <code className="bg-purple-100 px-1 rounded">showIf</code>
+              </li>
             </ul>
           </CardContent>
         </Card>
@@ -55,15 +58,19 @@ export default function WithValidationsPage() {
         <Card elevation={1}>
           <CardHeader>
             <CardTitle className="text-blue-600">✅ Validações Cross-Field</CardTitle>
-            <CardDescription>
-              Validações que dependem de múltiplos campos
-            </CardDescription>
+            <CardDescription>Validações que dependem de múltiplos campos</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="text-sm space-y-2">
-              <li>• <strong>Senha</strong> deve ter no mínimo 6 caracteres</li>
-              <li>• <strong>Confirmar Senha</strong> deve ser igual à Senha</li>
-              <li>• Implementado com <code className="bg-blue-100 px-1 rounded">.refine()</code></li>
+              <li>
+                • <strong>Senha</strong> deve ter no mínimo 6 caracteres
+              </li>
+              <li>
+                • <strong>Confirmar Senha</strong> deve ser igual à Senha
+              </li>
+              <li>
+                • Implementado com <code className="bg-blue-100 px-1 rounded">.refine()</code>
+              </li>
             </ul>
           </CardContent>
         </Card>
@@ -73,15 +80,18 @@ export default function WithValidationsPage() {
       <Card elevation={1}>
         <CardHeader>
           <CardTitle>Código do Schema</CardTitle>
-          <CardDescription>
-            Exemplo de implementação de validações avançadas
-          </CardDescription>
+          <CardDescription>Exemplo de implementação de validações avançadas</CardDescription>
         </CardHeader>
         <CardContent>
           <pre className="text-xs bg-gray-900 text-gray-100 p-4 rounded overflow-x-auto">
             {`const cadastroSchema = zKUI
   .object({
-    tipoPessoa: zKUI.select("Tipo", ["fisica", "juridica"]),
+    tipoPessoa: zKUI.select("Tipo", {
+      options: [
+        { label: "Física", value: "fisica" },
+        { label: "Jurídica", value: "juridica" },
+      ],
+    }),
 
     // Campo condicional
     cpf: zKUI.text("CPF", {

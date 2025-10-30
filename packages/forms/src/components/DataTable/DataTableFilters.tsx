@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Button } from "@kui-framework/ui";
 import { Badge } from "@kui-framework/ui";
 import { X } from "lucide-react";

@@ -1,10 +1,10 @@
 "use client";
 
-import { DataTable, extractColumns, DataTableAdvanced, DataTableVirtualized } from "@kui-framework/forms";
+import { DataTable, extractColumns, DataTableVirtualized } from "@kui-framework/forms";
 import { extractFiltersFromSchema } from "@kui-framework/core";
 import { zKUI } from "@kui-framework/zod-extension";
+import { z } from "zod";
 import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@kui-framework/ui";
-import { useRouter } from "next/navigation";
 import { trpc } from "@/lib/trpc";
 import { useToast } from "@kui-framework/ui";
 import { useState } from "react";
@@ -23,10 +23,9 @@ const userSchema = zKUI.object({
   observacoes: zKUI.text("Observações").optional(),
 });
 
-type User = zKUI.infer<typeof userSchema>;
+type User = z.infer<typeof userSchema>;
 
 export default function UsersAdvancedPage() {
-  const router = useRouter();
   const { toast } = useToast();
   const [viewMode, setViewMode] = useState<"standard" | "advanced" | "virtualized">("standard");
 
@@ -61,46 +60,34 @@ export default function UsersAdvancedPage() {
 
   const deleteUserMutation = trpc.user.delete.useMutation({
     onSuccess: () => {
-      toast({
-        title: "Sucesso",
-        description: "Usuário excluído com sucesso.",
-      });
+      toast.success("Sucesso", "Usuário excluído com sucesso.");
     },
     onError: (error) => {
-      toast({
-        title: "Erro",
-        description: `Falha ao excluir usuário: ${error.message}`,
-        variant: "destructive",
-      });
+      toast.error("Erro", `Falha ao excluir usuário: ${error.message}`);
     },
   });
 
   const updateUserMutation = trpc.user.update.useMutation({
     onSuccess: () => {
-      toast({
-        title: "Sucesso",
-        description: "Usuário atualizado com sucesso.",
-      });
+      toast.success("Sucesso", "Usuário atualizado com sucesso.");
     },
     onError: (error) => {
-      toast({
-        title: "Erro",
-        description: `Falha ao atualizar usuário: ${error.message}`,
-        variant: "destructive",
-      });
+      toast.error("Erro", `Falha ao atualizar usuário: ${error.message}`);
     },
   });
 
   const handleEdit = (user: User) => {
     console.log("Edit user:", user);
-    toast({ title: "Editar", description: `Editando usuário: ${user.nome}` });
+    toast.info("Editar", `Editando usuário: ${user.nome}`);
   };
 
   const handleDelete = async (user: User, context: any) => {
+    if (!user.id) return;
+    
     if (confirm(`Tem certeza que deseja excluir o usuário ${user.nome}?`)) {
       context.optimisticRemove(user.id);
       try {
-        await deleteUserMutation.mutateAsync({ id: user.id });
+        await deleteUserMutation.mutateAsync({ id: String(user.id) });
         context.invalidate();
       } catch (error) {
         context.invalidate();
@@ -109,9 +96,24 @@ export default function UsersAdvancedPage() {
   };
 
   const handleToggleStatus = async (user: User, context: any) => {
+    if (!user.id) return;
+    
     context.optimisticPatch(user.id, { ativo: !user.ativo });
     try {
-      await updateUserMutation.mutateAsync({ ...user, ativo: !user.ativo });
+      await updateUserMutation.mutateAsync({ 
+        id: String(user.id),
+        nome: user.nome,
+        email: user.email,
+        telefone: user.telefone,
+        ativo: !user.ativo,
+        dataNascimento: user.dataNascimento instanceof Date ? user.dataNascimento : new Date(user.dataNascimento),
+        cpf: user.cpf,
+        enderecos: [],
+        contatos: [],
+        receberNotificacoes: user.receberNotificacoes,
+        idioma: user.idioma,
+        observacoes: user.observacoes
+      });
       context.invalidate();
     } catch (error) {
       context.invalidate();

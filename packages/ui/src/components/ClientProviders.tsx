@@ -1,8 +1,8 @@
 "use client";
 
 import { ReactNode } from 'react';
-import { Toaster } from './Toaster';
-import { DialogProvider } from './DialogProvider';
+import { Toast, ToastProvider } from "./toast/Toaster";
+import { DialogProvider } from "./dialog/DialogProvider";
 
 interface ClientProvidersProps {
   children: ReactNode;
@@ -11,8 +11,10 @@ interface ClientProvidersProps {
 export function ClientProviders({ children }: ClientProvidersProps) {
   return (
     <DialogProvider>
-      {children}
-      <Toaster />
+      <ToastProvider>
+        {children}
+        <Toast />
+      </ToastProvider>
     </DialogProvider>
   );
 }

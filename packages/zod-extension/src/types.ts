@@ -1,4 +1,17 @@
 /**
+ * Opção label/value reutilizável
+ */
+export type KuiLabelValueOption = {
+  label: string;
+  value: string | number;
+};
+
+/**
+ * Array de opções label/value
+ */
+export type KuiLabelValueOptions = Array<KuiLabelValueOption>;
+
+/**
  * Opções de configuração para campos KUI
  *
  * @example
@@ -140,7 +153,7 @@ export type KuiOptions = {
   locale?: string;
 
   /** Opções para select, radio, etc */
-  options?: Array<{ label: string; value: string | number }>;
+  options?: KuiLabelValueOptions;
 
   /** Número máximo para rating */
   max?: number;
@@ -159,6 +172,39 @@ export type KuiOptions = {
 
   /** Exibe preview de imagens */
   preview?: boolean;
+};
+
+/**
+ * Opções para campos de radio
+ * @example
+ * ```tsx
+ * zKUI.radio("Opções", {
+ *   options: [
+ *     { label: "Opção A", value: "a" },
+ *     { label: "Opção B", value: "b" },
+ *     { label: "Opção C", value: "c" },
+ *   ]
+ * })
+ * ```
+ */
+export type RadioOptions = KuiOptions & {
+  options?: KuiLabelValueOptions;
+};
+
+/**
+ * Opções para campos de select
+ * @example
+ * ```tsx
+ * zKUI.select("Opções", {
+ *   options: [
+ *     { label: "Opção A", value: "a" },
+ *     { label: "Opção B", value: "b" },
+ *     { label: "Opção C", value: "c" },
+ *   ]
+
+ */
+export type SelectOptions = KuiOptions & {
+  options: KuiLabelValueOptions;
 };
 
 /**
@@ -316,6 +362,5 @@ export type GridOptions = KuiOptions & {
 export interface KuiMetadata {
   label: string;
   type: string;
-  options: KuiOptions | RelationOptions | GridOptions;
+  options: KuiOptions | RelationOptions | GridOptions | RadioOptions | SelectOptions;
 }
-

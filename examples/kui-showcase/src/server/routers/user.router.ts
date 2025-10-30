@@ -2,8 +2,39 @@ import { z } from "zod";
 import { router as createTRPCRouter, publicProcedure } from "../trpc";
 import { createDataTableRouter } from "@kui-framework/core";
 
+export interface User {
+  id: string;
+  nome: string;
+  email: string;
+  telefone?: string | null;
+  ativo?: boolean | null;
+  dataNascimento?: Date | null;
+  cpf?: string | null;
+  enderecos: {
+    id: string;
+    cep: string;
+    rua: string;
+    qtdEnderecos: string;
+    complemento: string;
+    bairro: string;
+    cidade: string;
+    uf: string;
+    principal: boolean;
+  }[];
+  contatos: {
+    id: string;
+    tipo: string;
+    valor: string;
+    descricao: string;
+    preferencial: boolean;
+  }[];
+  receberNotificacoes: boolean;
+  idioma: string;
+  observacoes?: string | null;
+}
+
 // Mock data para demonstração
-let mockUsers = [
+let mockUsers: User[] = [
   {
     id: "1",
     nome: "João Silva",
@@ -102,6 +133,11 @@ export const userRouter = createTRPCRouter({
         filteredUsers.sort((a, b) => {
           const aVal = a[input.sortBy as keyof typeof a];
           const bVal = b[input.sortBy as keyof typeof b];
+
+          // Tratar valores null/undefined
+          if (aVal == null && bVal == null) return 0;
+          if (aVal == null) return input.sortOrder === "asc" ? -1 : 1;
+          if (bVal == null) return input.sortOrder === "asc" ? 1 : -1;
 
           if (aVal < bVal) return input.sortOrder === "asc" ? -1 : 1;
           if (aVal > bVal) return input.sortOrder === "asc" ? 1 : -1;

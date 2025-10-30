@@ -22,7 +22,11 @@ export const cadastroSchema = zKUI
     }),
 
     // Tipo de pessoa
-    tipoPessoa: zKUI.select("Tipo de Pessoa", ["fisica", "juridica"], {
+    tipoPessoa: zKUI.select("Tipo de Pessoa", {
+      options: [
+        { label: "Física", value: "fisica" },
+        { label: "Jurídica", value: "juridica" },
+      ],
       required: true,
       helperText: "Selecione o tipo de pessoa",
     }),

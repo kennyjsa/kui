@@ -1,4 +1,5 @@
 import { zKUI } from "@kui-framework/zod-extension";
+import { z } from "zod";
 import { enderecoSchema } from "./endereco.schema";
 import { contatoSchema } from "./contato.schema";
 
@@ -131,4 +132,4 @@ export const userSchema = zKUI.object({
   }),
 });
 
-export type User = zKUI.infer<typeof userSchema>;
+export type User = z.infer<typeof userSchema>;

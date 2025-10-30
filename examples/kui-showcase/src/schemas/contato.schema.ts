@@ -1,4 +1,5 @@
 import { zKUI } from "@kui-framework/zod-extension";
+import { z } from "zod";
 
 /**
  * Schema para contato
@@ -32,4 +33,4 @@ export const contatoSchema = zKUI.object({
   }),
 });
 
-export type Contato = zKUI.infer<typeof contatoSchema>;
+export type Contato = z.infer<typeof contatoSchema>;

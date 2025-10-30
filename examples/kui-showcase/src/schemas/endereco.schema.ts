@@ -1,4 +1,5 @@
 import { zKUI } from "@kui-framework/zod-extension";
+import { z } from "zod";
 
 /**
  * Schema para endereço
@@ -69,4 +70,4 @@ export const enderecoSchema = zKUI.object({
   }),
 });
 
-export type Endereco = zKUI.infer<typeof enderecoSchema>;
+export type Endereco = z.infer<typeof enderecoSchema>;
