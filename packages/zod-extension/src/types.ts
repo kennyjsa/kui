@@ -1,3 +1,5 @@
+import type { ZodTypeAny } from "zod";
+
 /**
  * Opção label/value reutilizável
  */
@@ -112,7 +114,7 @@ export type KuiOptions = {
    * @returns Valor calculado do campo
    * @example (values) => values.quantity * values.price
    */
-  compute?: (values: any) => any;
+  compute?: (values: Record<string, unknown>) => unknown;
 
   /**
    * Função que determina se o campo deve ser exibido (campos condicionais)
@@ -120,7 +122,7 @@ export type KuiOptions = {
    * @returns true para mostrar, false para ocultar
    * @example (values) => values.paymentMethod === "credit_card"
    */
-  showIf?: (values: any) => boolean;
+  showIf?: (values: Record<string, unknown>) => boolean;
 
   /** Configuração de layout responsivo */
   layout?: {
@@ -298,7 +300,7 @@ export type GridOptions = KuiOptions & {
    * Schema Zod dos itens do grid
    * Deve ser criado com zKUI.object()
    */
-  itemSchema: any;
+  itemSchema: ZodTypeAny;
 
   /**
    * Colunas visíveis no grid (formato tabela)
@@ -319,26 +321,24 @@ export type GridOptions = KuiOptions & {
   allowCreate?: boolean;
 
   /**
-   * Permite editar itens existentes
+   * Permite editar itens
    * @default true
    */
   allowEdit?: boolean;
 
   /**
-   * Permite remover itens
+   * Permite excluir itens
    * @default true
    */
   allowDelete?: boolean;
 
   /**
-   * Mínimo de itens obrigatórios
-   * @example 1 // pelo menos 1 item obrigatório
+   * Quantidade mínima de itens obrigatória
    */
   minItems?: number;
 
   /**
-   * Máximo de itens permitidos
-   * @example 5 // no máximo 5 itens
+   * Quantidade máxima de itens permitida
    */
   maxItems?: number;
 

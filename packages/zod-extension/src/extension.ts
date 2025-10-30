@@ -13,11 +13,14 @@ import type {
  */
 export const KUI_METADATA = Symbol("kui_metadata");
 
+/** Tipo auxiliar para schemas com metadados KUI */
+type SchemaWithKuiMeta = z.ZodTypeAny & { [KUI_METADATA]?: KuiMetadata };
+
 /**
  * Anexa metadados KUI a um schema Zod
  */
 function withKuiMetadata<T extends z.ZodTypeAny>(schema: T, metadata: KuiMetadata): T {
-  (schema as any)[KUI_METADATA] = metadata;
+  (schema as SchemaWithKuiMeta)[KUI_METADATA] = metadata;
   return schema;
 }
 
@@ -25,7 +28,7 @@ function withKuiMetadata<T extends z.ZodTypeAny>(schema: T, metadata: KuiMetadat
  * Obtém metadados KUI de um schema Zod
  */
 export function getKuiMetadata(schema: z.ZodTypeAny): KuiMetadata | undefined {
-  return (schema as any)[KUI_METADATA];
+  return (schema as SchemaWithKuiMeta)[KUI_METADATA];
 }
 
 /**
